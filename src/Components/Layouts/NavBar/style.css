@@ -1,0 +1,20 @@
+.active{
+    font-weight: 700;
+    background-color: #f9275a;
+    color: white;
+    padding: 7px;
+    border-radius: 3px;
+
+}
+
+@media (max-width:1024px) {
+    .active{
+      font-weight: 400;
+        background-color: #f9275a;
+        margin: 40px 0;
+        color: white;
+        padding: 2px;
+        border-radius: 3px;
+    
+    }
+}

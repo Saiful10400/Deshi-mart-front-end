@@ -1,0 +1,9 @@
+.active{
+    padding-left: 8px;
+}
+
+@media (max-width:1024px) {
+    .active{
+        margin: 0;
+    }
+}

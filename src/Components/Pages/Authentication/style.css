@@ -1,0 +1,6 @@
+.authContainer{
+    background: url("../../../assets/NewSite/authentication/asideImg.avif") no-repeat , linear-gradient(135deg, #000000c2, #00000073);
+    background-size: cover;
+    background-position: top center;
+    background-blend-mode: overlay;
+}
