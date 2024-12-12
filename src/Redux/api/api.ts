@@ -4,7 +4,7 @@ import { getToken } from "../../Utils/getToken";
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://apollow-assignment-5-back-end.vercel.app/api",
+    baseUrl: "http://localhost:8000/api",
     prepareHeaders: (header) => {
       if (getToken()) header.set("Authorization", getToken() as string);
     },
@@ -18,223 +18,236 @@ export const baseApi = createApi({
     "allBookingForAdmin",
   ],
   endpoints: (builder) => {
-    return {
-      signup: builder.mutation({
-        query: (payload) => {
-          return {
-            url: "/auth/signup",
-            method: "POST",
-            body: payload,
-          };
-        },
-      }),
-      login: builder.mutation({
-        query: (payload) => {
-          return {
-            url: "/auth/login",
-            method: "POST",
-            body: payload,
-          };
-        },
-      }),
+    return{
 
-      getLoggedInUser: builder.query({
-        query: () => {
-          console.log("api is calling.")
-          return {
-            url: `/auth/getCurrentUser`,
-            method: "GET",
-          };
-        },
-      }),
+// All Post querys.
 
-      getAroom: builder.query({
-        query: ({ id }) => {
-          return {
-            url: `/rooms/${id}`,
-            method: "GET",
-          };
-        },
-        providesTags: ["rooms"],
-      }),
-      getRooms: builder.query({
-        query: () => {
-          return {
-            url: `/rooms`,
-            method: "GET",
-          };
-        },
-        providesTags: ["rooms"],
-      }),
 
-      updateRoom: builder.mutation({
-        query: ({ _id, ...rest }) => {
-          return {
-            url: `/rooms/${_id}`,
-            method: "PUT",
-            body: rest,
-          };
-        },
-        invalidatesTags: ["rooms", "slots"],
-      }),
+// auth
 
-      deleteRoom: builder.mutation({
-        query: ({ id }) => {
-          return {
-            url: `/rooms/${id}`,
-            method: "DELETE",
-          };
-        },
-        invalidatesTags: ["rooms"],
-      }),
-      createARoom: builder.mutation({
-        query: (payload) => {
-          return {
-            url: `/rooms`,
-            method: "POST",
-            body: payload,
-          };
-        },
-        invalidatesTags: ["rooms"],
-      }),
+signup:builder.mutation({
+  query:(payload)=>({
+    url:"/auth/signup",
+    method:"POST",
+    body:payload
+  })
+}),
 
-      getSlot: builder.query({
-        query: () => {
-          return {
-            url: `/slots/availability`,
-            method: "GET",
-          };
-        },
-        providesTags: ["slots"],
-      }),
-      getSpecificSlot: builder.query({
-        query: (url) => {
-          return {
-            url: url,
-            method: "GET",
-          };
-        },
-        providesTags: ["slots"],
-      }),
 
-      updateSlot: builder.mutation({
-        query: ({ slotId, roomId: room, date, startTime, endTime }) => {
-          return {
-            url: `/slots/${slotId}`,
-            method: "PUT",
-            body: { room, date, startTime, endTime },
-          };
-        },
-        invalidatesTags: ["slots"],
-      }),
+login:builder.mutation({
+  query:(payload)=>({
+    url:"/auth/login",
+    method:"POST",
+    body:payload
+  })
+}),
 
-      deleteSlot: builder.mutation({
-        query: ({ id }) => {
-          return {
-            url: `/slots/${id}`,
-            method: "DELETE",
-          };
-        },
-        invalidatesTags: ["slots"],
-      }),
 
-      createAslot: builder.mutation({
-        query: (payload) => {
-          return {
-            url: `/slots`,
-            method: "POST",
-            body: payload,
-          };
-        },
-        invalidatesTags: ["slots"],
-      }),
+changePassword:builder.mutation({
+  query:(payload)=>({
+    url:"",
+    method:"POST",
+    body:payload
+  })
+}),
 
-      createAbooking: builder.mutation({
-        query: (payload) => {
-          return {
-            url: `/booking`,
-            method: "POST",
-            body: payload,
-          };
-        },
-        invalidatesTags: ["booking"],
-      }),
-      getABooking: builder.query({
-        query: (payload) => {
-          return {
-            url: `/booking/${payload.id}`,
-            method: "GET",
-          };
-        },
-      }),
-      getAuserAllBookings: builder.query({
-        query: (payload) => {
-          return {
-            url: `/booking/users-all/${payload}`,
-            method: "GET",
-          };
-        },
-      }),
-      getAllBookingForAdmin: builder.query({
-        query: () => {
-          return {
-            url: `/booking`,
-            method: "GET",
-          };
-        },
-        providesTags: ["allBookingForAdmin"],
-      }),
 
-      deleteABooking: builder.mutation({
-        query: (payload) => {
-          return {
-            url: `/booking/${payload}`,
-            method: "DELETE",
-          };
-        },
-        invalidatesTags:["allBookingForAdmin"]
-      }),
-      confirmABooking: builder.mutation({
-        query: (payload) => {
-          return {
-            url: `/booking/${payload.id}?action=${payload.action}`,
-            method: "PUT",
-          };
-        },
-        invalidatesTags:["allBookingForAdmin"]
-      }),
+resetPasswordGetToken:builder.mutation({
+  query:(payload)=>({
+    url:"/auth/reset",
+    method:"POST",
+    body:payload
+  })
+}),
 
-      getPaymentUrl: builder.query({
-        query: (payload) => {
-          return {
-            url: `/pay/${payload}`,
-            method: "GET",
-          };
-        },
-      }),
-    };
+
+resetPassword:builder.mutation({
+  query:(payload)=>{
+    console.log(payload)
+   return {
+    url:"/auth/reset-new-password",
+    method:"POST",
+    body:payload.data,
+    headers:{authorization:payload.token}
+  }}
+}),
+
+// vendor
+
+createStore:builder.mutation({
+  query:(payload)=>({
+    url:"",
+    method:"POST",
+    body:payload
+  })
+}),
+
+
+manageStore:builder.mutation({
+  query:(payload)=>({
+    url:"",
+    method:"POST",
+    body:payload
+  })
+}),
+
+
+createCoupne:builder.mutation({
+  query:(payload)=>({
+    url:"",
+    method:"POST",
+    body:payload
+  })
+}),
+
+
+manageCoupne:builder.mutation({
+  query:(payload)=>({
+    url:"",
+    method:"POST",
+    body:payload
+  })
+}),
+
+
+createProduct:builder.mutation({
+  query:(payload)=>({
+    url:"",
+    method:"POST",
+    body:payload
+  })
+}),
+
+
+manageProduct:builder.mutation({
+  query:(payload)=>({
+    url:"",
+    method:"POST",
+    body:payload
+  })
+}),
+
+
+// Admin
+
+
+createCategory:builder.mutation({
+  query:(payload)=>({
+    url:"",
+    method:"POST",
+    body:payload
+  })
+}),
+
+
+manageCategory:builder.mutation({
+  query:(payload)=>({
+    url:"",
+    method:"POST",
+    body:payload
+  })
+}),
+
+
+deleteStoreAdmin:builder.mutation({
+  query:(payload)=>({
+    url:"",
+    method:"POST",
+    body:payload
+  })
+}),
+
+
+// user
+
+
+addRecentProduct:builder.mutation({
+  query:(payload)=>({
+    url:"",
+    method:"POST",
+    body:payload
+  })
+}),
+
+
+// GET apis.
+
+
+getRecentProduct:builder.query({
+  query:()=>({
+    url:"",
+    method:"GET"
+  })
+}),
+
+
+getAllUserAndVendors:builder.query({
+  query:()=>({
+    url:"",
+    method:"GET"
+  })
+}),
+
+
+getSingleOrAllStore:builder.query({
+  query:()=>({
+    url:"",
+    method:"GET"
+  })
+}),
+
+
+getAllCategory:builder.query({
+  query:()=>({
+    url:"",
+    method:"GET"
+  })
+}),
+
+
+getSingleOrAllProducts:builder.query({
+  query:()=>({
+    url:"",
+    method:"GET"
+  })
+}),
+
+
+
+
+
+
+
+
+
+
+    }
   },
 });
 
 export const {
-  useConfirmABookingMutation,
-  useDeleteABookingMutation,
-  useGetAllBookingForAdminQuery,
-  useLoginMutation,
+  // Mutations
   useSignupMutation,
-  useGetLoggedInUserQuery,
-  useGetRoomsQuery,
-  useUpdateRoomMutation,
-  useDeleteRoomMutation,
-  useGetSlotQuery,
-  useDeleteSlotMutation,
-  useUpdateSlotMutation,
-  useCreateARoomMutation,
-  useCreateAslotMutation,
-  useGetAroomQuery,
-  useGetSpecificSlotQuery,
-  useCreateAbookingMutation,
-  useGetABookingQuery,
-  useGetPaymentUrlQuery,
-  useGetAuserAllBookingsQuery,
-} = baseApi;
+  useLoginMutation,
+  useChangePasswordMutation,
+  useResetPasswordGetTokenMutation,
+  useResetPasswordMutation,
+  useCreateStoreMutation,
+  useManageStoreMutation,
+  useCreateCoupneMutation,
+  useManageCoupneMutation,
+  useCreateProductMutation,
+  useManageProductMutation,
+  useCreateCategoryMutation,
+  useManageCategoryMutation,
+  useDeleteStoreAdminMutation,
+  useAddRecentProductMutation,
+
+  // Queries
+  useGetRecentProductQuery,
+  useGetAllUserAndVendorsQuery,
+  useGetSingleOrAllStoreQuery,
+  useGetAllCategoryQuery,
+  useGetSingleOrAllProductsQuery
+}
+ = baseApi;

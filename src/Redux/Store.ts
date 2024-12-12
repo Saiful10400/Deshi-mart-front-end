@@ -1,18 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./feathcer/counterSlice";
 import { baseApi } from "./api/api";
-import DashboardReducer from "./feathcer/DashboardSlice";
-import cartReducer from "./feathcer/CartSlice";
 import authReducer from "./feathcer/AuthSlice";
+import loadingReducer from "./feathcer/loadingSlice";
 
 
 
 
 const store=configureStore({
     reducer:{
-        counterStore:counterReducer,
-        cartStore:cartReducer,
-        DashbpardStore:DashboardReducer,
+        loadingStore:loadingReducer,
         authStore:authReducer,
         [baseApi.reducerPath]:baseApi.reducer,
         
