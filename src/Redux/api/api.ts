@@ -173,6 +173,15 @@ addRecentProduct:builder.mutation({
 // GET apis.
 
 
+getLoggedInUser:builder.query({
+  query:(token)=>({
+    url:`/auth/loggedIn-user`,
+    method:"GET",
+    headers:{authorization:token}
+  })
+}),
+
+
 getRecentProduct:builder.query({
   query:()=>({
     url:"",
@@ -199,7 +208,7 @@ getSingleOrAllStore:builder.query({
 
 getAllCategory:builder.query({
   query:()=>({
-    url:"",
+    url:"/common/category",
     method:"GET"
   })
 }),
@@ -248,6 +257,7 @@ export const {
   useGetAllUserAndVendorsQuery,
   useGetSingleOrAllStoreQuery,
   useGetAllCategoryQuery,
-  useGetSingleOrAllProductsQuery
+  useGetSingleOrAllProductsQuery,
+  useGetLoggedInUserQuery
 }
  = baseApi;

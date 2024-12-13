@@ -1,8 +1,47 @@
 import logo from "../../../assets/logo.jpg"
 import { Search, ShoppingCart,History } from 'lucide-react';
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../../Redux/feathcer/hoocks";
+
 
 const Navbar = () => {
+
+    interface TroleData {
+        buyerId: string;
+        userId: string;
+        status: string;
+        email: string;
+        name: string;
+        photo: string;
+        isDeleted: boolean;
+        created: string; // ISO date string
+        updated: string; // ISO date string
+    }
+
+
+    interface TuserData {
+        admin: TroleData| null; // or you can use `admin?: null` if this field is optional
+        buyer:TroleData| null; // The `buyer` can also be null if it's optional
+        vendor:TroleData| null; // The `vendro` can also be null if it's optional
+        email: string;
+        role: string;
+    }
+
+
+
+
+   
+const{loggedInUser,isLoading}:{loggedInUser:TuserData|null,isLoading:boolean }=useAppSelector(s=>s.authStore)
+
+const userData=()=>{
+    if(!loggedInUser) return null
+    
+    if(loggedInUser.role==="Admin")return loggedInUser.admin
+    if(loggedInUser.role==="User")return loggedInUser.buyer
+    if(loggedInUser.role==="Vendor")return loggedInUser.vendor
+}
+
+ 
     return (
        <div className="mt-5">
          <div className="flex items-center justify-between">
@@ -15,10 +54,24 @@ const Navbar = () => {
             <div className="flex justify-between items-center gap-12">
                 <span className="flex flex-col items-center"><ShoppingCart className=""/> <span className="font-bold">Cart</span></span>
                 <span className="flex flex-col items-center"><History className=""/> <span className="font-bold">History</span></span>
-                <span className="flex items-center gap-4">
+                
+
+                
+                {/* profile photo manage. */}
+
+                {
+                    loggedInUser && !isLoading?
+                    <button className="w-[50px] h-[50px]  rounded-full overflow-hidden">
+                        <img className="w-full h-full object-cover" src={userData()?.photo} alt="" />
+                    </button>:
+                    <span className="flex items-center gap-4">
                     <Link className="text-lg font-semibold text-black" to={"/signup"}>Signup</Link>
                     <Link to={"/login"}><button className="text-lg font-semibold text-white  bg-black px-3 py-2 rounded-3xl">Login</button></Link>
                 </span>
+                }
+
+
+
             </div>
 
         </div>

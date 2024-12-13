@@ -3,9 +3,11 @@ import useSendPost from "../../Utils/useSendPost";
 import { useLoginMutation } from "../../Redux/api/api";
 import useShowResponse from "../../Utils/useShowResponse";
 import ManupulateLocalStorageToken from "../../Utils/ManupulateLocalStorage";
+import useGetThenSetCurrentUser from "../../Utils/useGetThenSetCurrentUser";
+
 
 const Login = () => {
-
+  const setCurrentUser=useGetThenSetCurrentUser()
   const[send,startLoading]=useSendPost(useLoginMutation)
   const showResponse=useShowResponse()
 
@@ -20,8 +22,12 @@ const Login = () => {
     const response=await send({email,password})
     ManupulateLocalStorageToken(response.data?.token,"setItem")
     showResponse(response)
+    setCurrentUser()
    
   }
+
+
+
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="text-center min-w-[600px] shadow-2xl rounded-2xl flex flex-col justify-center gap-2 py-11">

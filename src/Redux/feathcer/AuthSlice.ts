@@ -10,13 +10,12 @@ const AuthSlice=createSlice({
     initialState,
     reducers:{
         setUser:(state,action)=>{
-            console.log("user is setting",action.payload,"from auth slice.")
             state.loggedInUser=action.payload
             state.isLoading=false
         },
-        removeUser:(state)=>{
-            state.loggedInUser=null
-        },
+        // removeUser:(state)=>{
+        //     state.loggedInUser=null
+        // },
         setLoading:(state,action)=>{
             state.isLoading=action.payload
         }
@@ -24,6 +23,6 @@ const AuthSlice=createSlice({
 })
 
 
-export const{removeUser,setLoading,setUser}=AuthSlice.actions
+export const{setUser,setLoading}=AuthSlice.actions
 const authReducer=AuthSlice.reducer
 export default authReducer

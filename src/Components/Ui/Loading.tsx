@@ -1,8 +1,23 @@
-import { useAppSelector } from "../../Redux/feathcer/hoocks";
+
+import { useEffect } from "react";
 import loading from "../../../assets/loading.gif";
+import { useAppSelector } from "../../Redux/feathcer/hoocks";
+import useGetThenSetCurrentUser from "../../Utils/useGetThenSetCurrentUser";
+
 
 const Loading = () => {
   const { loadingStatus } = useAppSelector((s) => s.loadingStore);
+
+
+// set current loggedin user.
+const setCurrentUser=useGetThenSetCurrentUser()
+useEffect(()=>{
+setCurrentUser()
+},[])
+
+
+
+
   if (loadingStatus) {
     return (
       <div className="w-full h-screen absolute top-0 left-0 bg-[#f0efef75] flex justify-center items-center">
