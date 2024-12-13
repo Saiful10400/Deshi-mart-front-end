@@ -6,7 +6,7 @@ const DashboardShops = () => {
     const{data}=useGetSingleOrAllStoreQuery(null)
     console.log(data)
     return (
-        <div className="grid grid-cols-5 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
             {
                 data?.data?.result?.map((item,idx)=><SingleStoreCard key={idx} data={item}/>)
             }

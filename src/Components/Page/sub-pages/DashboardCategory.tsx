@@ -10,7 +10,7 @@ const DashboardCategory = () => {
     
 
     return (
-        <div className="grid grid-cols-6 gap-6">
+        <div className="grid grid-cols-6 grid-cols-2 gap-6">
             <CreateCategory/>
             {
                 data?.data?.map(item=><UpdateCategory key={item.categoryId} data={item}/>)
