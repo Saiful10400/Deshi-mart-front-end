@@ -10,227 +10,212 @@ export const baseApi = createApi({
     },
   }),
   tagTypes: [
-    "Products",
-    "authentication",
-    "rooms",
-    "slots",
-    "booking",
-    "allBookingForAdmin",
+    "category",
+    "user",
+    "shop"
   ],
   endpoints: (builder) => {
-    return{
+    return {
+      // All Post querys.
 
-// All Post querys.
+      // auth
 
+      signup: builder.mutation({
+        query: (payload) => ({
+          url: "/auth/signup",
+          method: "POST",
+          body: payload,
+        }),
+      }),
 
-// auth
+      login: builder.mutation({
+        query: (payload) => ({
+          url: "/auth/login",
+          method: "POST",
+          body: payload,
+        }),
+      }),
 
-signup:builder.mutation({
-  query:(payload)=>({
-    url:"/auth/signup",
-    method:"POST",
-    body:payload
-  })
-}),
+      changePassword: builder.mutation({
+        query: (payload) => ({
+          url: "",
+          method: "POST",
+          body: payload,
+        }),
+      }),
 
+      resetPasswordGetToken: builder.mutation({
+        query: (payload) => ({
+          url: "/auth/reset",
+          method: "POST",
+          body: payload,
+        }),
+      }),
 
-login:builder.mutation({
-  query:(payload)=>({
-    url:"/auth/login",
-    method:"POST",
-    body:payload
-  })
-}),
+      resetPassword: builder.mutation({
+        query: (payload) => {
+          console.log(payload);
+          return {
+            url: "/auth/reset-new-password",
+            method: "POST",
+            body: payload.data,
+            headers: { authorization: payload.token },
+          };
+        },
+      }),
 
+      // vendor
 
-changePassword:builder.mutation({
-  query:(payload)=>({
-    url:"",
-    method:"POST",
-    body:payload
-  })
-}),
+      createStore: builder.mutation({
+        query: (payload) => ({
+          url: "",
+          method: "POST",
+          body: payload,
+        }),
+      }),
 
+      manageStore: builder.mutation({
+        query: (payload) => ({
+          url: "",
+          method: "POST",
+          body: payload,
+        }),
+      }),
 
-resetPasswordGetToken:builder.mutation({
-  query:(payload)=>({
-    url:"/auth/reset",
-    method:"POST",
-    body:payload
-  })
-}),
+      createCoupne: builder.mutation({
+        query: (payload) => ({
+          url: "",
+          method: "POST",
+          body: payload,
+        }),
+      }),
 
+      manageCoupne: builder.mutation({
+        query: (payload) => ({
+          url: "",
+          method: "POST",
+          body: payload,
+        }),
+      }),
 
-resetPassword:builder.mutation({
-  query:(payload)=>{
-    console.log(payload)
-   return {
-    url:"/auth/reset-new-password",
-    method:"POST",
-    body:payload.data,
-    headers:{authorization:payload.token}
-  }}
-}),
+      createProduct: builder.mutation({
+        query: (payload) => ({
+          url: "",
+          method: "POST",
+          body: payload,
+        }),
+      }),
 
-// vendor
+      manageProduct: builder.mutation({
+        query: (payload) => ({
+          url: "",
+          method: "POST",
+          body: payload,
+        }),
+      }),
 
-createStore:builder.mutation({
-  query:(payload)=>({
-    url:"",
-    method:"POST",
-    body:payload
-  })
-}),
+      // Admin
 
+      createCategory: builder.mutation({
+        query: (payload) => ({
+          url: "/admin/create-category",
+          method: "POST",
+          body: payload,
+        }),
+        invalidatesTags:["category"]
+      }),
 
-manageStore:builder.mutation({
-  query:(payload)=>({
-    url:"",
-    method:"POST",
-    body:payload
-  })
-}),
+      manageCategory: builder.mutation({
+        query: (payload) => ({
+          url: `/admin/manage-category/${payload.id}?delete=${payload.delete}`,
+          method: "POST",
+          body: {name:payload.name},
+        }),
+        invalidatesTags:["category"]
+      }),
 
+      manageUser: builder.mutation({
+        query: (payload) => ({
+          url: `/admin/manage-user/${payload.id}?delete=${payload.delete}`,
+          method: "POST",
+        }),
+        invalidatesTags:["user"]
+      }),
 
-createCoupne:builder.mutation({
-  query:(payload)=>({
-    url:"",
-    method:"POST",
-    body:payload
-  })
-}),
+      deleteStoreAdmin: builder.mutation({
+        query: (payload) => ({
+          url: "",
+          method: "POST",
+          body: payload,
+        }),
+      }),
 
+      // user
 
-manageCoupne:builder.mutation({
-  query:(payload)=>({
-    url:"",
-    method:"POST",
-    body:payload
-  })
-}),
+      addRecentProduct: builder.mutation({
+        query: (payload) => ({
+          url: "",
+          method: "POST",
+          body: payload,
+        }),
+      }),
 
+      // GET apis.
 
-createProduct:builder.mutation({
-  query:(payload)=>({
-    url:"",
-    method:"POST",
-    body:payload
-  })
-}),
+      getLoggedInUser: builder.query({
+        query: (token) => ({
+          url: `/auth/loggedIn-user`,
+          method: "GET",
+          headers: { authorization: token },
+        }),
+      }),
 
+      getRecentProduct: builder.query({
+        query: () => ({
+          url: "",
+          method: "GET",
+        }),
+      }),
 
-manageProduct:builder.mutation({
-  query:(payload)=>({
-    url:"",
-    method:"POST",
-    body:payload
-  })
-}),
+      getAllUserAndVendors: builder.query({
+        query: (page) => ({
+          url: `/common/user?offset=${(page-1)*10}&limit=${10}`,
+          method: "GET",
+        }),
+        providesTags:["user"]
+      }),
 
+      getSingleOrAllStore: builder.query({
+        query: () => ({
+          url: "",
+          method: "GET",
+        }),
+      }),
 
-// Admin
+      getAllCategory: builder.query({
+        query: () => ({
+          url: "/common/category",
+          method: "GET",
+        }),
+        providesTags:["category"]
+      }),
 
+      getSingleOrAllProducts: builder.query({
+        query: (query) => {
+          let baseUrl = "/common/products?";
+          const keys = Object.keys(query);
 
-createCategory:builder.mutation({
-  query:(payload)=>({
-    url:"",
-    method:"POST",
-    body:payload
-  })
-}),
+          keys.forEach(
+            (item) => (baseUrl = baseUrl + item + "=" + query[item])
+          );
 
-
-manageCategory:builder.mutation({
-  query:(payload)=>({
-    url:"",
-    method:"POST",
-    body:payload
-  })
-}),
-
-
-deleteStoreAdmin:builder.mutation({
-  query:(payload)=>({
-    url:"",
-    method:"POST",
-    body:payload
-  })
-}),
-
-
-// user
-
-
-addRecentProduct:builder.mutation({
-  query:(payload)=>({
-    url:"",
-    method:"POST",
-    body:payload
-  })
-}),
-
-
-// GET apis.
-
-
-getLoggedInUser:builder.query({
-  query:(token)=>({
-    url:`/auth/loggedIn-user`,
-    method:"GET",
-    headers:{authorization:token}
-  })
-}),
-
-
-getRecentProduct:builder.query({
-  query:()=>({
-    url:"",
-    method:"GET"
-  })
-}),
-
-
-getAllUserAndVendors:builder.query({
-  query:()=>({
-    url:"",
-    method:"GET"
-  })
-}),
-
-
-getSingleOrAllStore:builder.query({
-  query:()=>({
-    url:"",
-    method:"GET"
-  })
-}),
-
-
-getAllCategory:builder.query({
-  query:()=>({
-    url:"/common/category",
-    method:"GET"
-  })
-}),
-
-
-getSingleOrAllProducts:builder.query({
-  query:()=>({
-    url:"",
-    method:"GET"
-  })
-}),
-
-
-
-
-
-
-
-
-
-
-    }
+          return {
+            url: baseUrl,
+            method: "GET",
+          };
+        },
+      }),
+    };
   },
 });
 
@@ -251,6 +236,7 @@ export const {
   useManageCategoryMutation,
   useDeleteStoreAdminMutation,
   useAddRecentProductMutation,
+  useManageUserMutation,
 
   // Queries
   useGetRecentProductQuery,
@@ -258,6 +244,5 @@ export const {
   useGetSingleOrAllStoreQuery,
   useGetAllCategoryQuery,
   useGetSingleOrAllProductsQuery,
-  useGetLoggedInUserQuery
-}
- = baseApi;
+  useGetLoggedInUserQuery,
+} = baseApi;

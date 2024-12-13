@@ -4,28 +4,35 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "../../Redux/feathcer/hoocks";
 
 
+interface TroleData {
+    buyerId: string;
+    userId: string;
+    status: string;
+    email: string;
+    name: string;
+    photo: string;
+    isDeleted: boolean;
+    created: string; // ISO date string
+    updated: string; // ISO date string
+}
+
+
+export interface TuserData {
+    admin: TroleData| null; // or you can use `admin?: null` if this field is optional
+    buyer:TroleData| null; // The `buyer` can also be null if it's optional
+    vendor:TroleData| null; // The `vendro` can also be null if it's optional
+    email: string;
+    role: string;
+    userId:string,
+    status:string
+}
+
+
+
+
 const Navbar = () => {
 
-    interface TroleData {
-        buyerId: string;
-        userId: string;
-        status: string;
-        email: string;
-        name: string;
-        photo: string;
-        isDeleted: boolean;
-        created: string; // ISO date string
-        updated: string; // ISO date string
-    }
-
-
-    interface TuserData {
-        admin: TroleData| null; // or you can use `admin?: null` if this field is optional
-        buyer:TroleData| null; // The `buyer` can also be null if it's optional
-        vendor:TroleData| null; // The `vendro` can also be null if it's optional
-        email: string;
-        role: string;
-    }
+   
 
 
 
