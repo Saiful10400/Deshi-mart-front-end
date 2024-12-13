@@ -74,7 +74,7 @@ export const baseApi = createApi({
         }),
       }),
 
-      manageStore: builder.mutation({
+      deleteStore: builder.mutation({
         query: (payload) => ({
           url: "",
           method: "POST",
@@ -142,12 +142,13 @@ export const baseApi = createApi({
         invalidatesTags:["user"]
       }),
 
-      deleteStoreAdmin: builder.mutation({
-        query: (payload) => ({
-          url: "",
+      manageStoreAdmin: builder.mutation({
+        query: ({ id, isDelete, ...payload }) => ({
+          url: `/admin/manage-shop/${id}?delete=${isDelete}`,
           method: "POST",
           body: payload,
         }),
+        invalidatesTags:["shop"]
       }),
 
       // user
@@ -187,9 +188,10 @@ export const baseApi = createApi({
 
       getSingleOrAllStore: builder.query({
         query: () => ({
-          url: "",
+          url: "/common/store",
           method: "GET",
         }),
+        providesTags:["shop"]
       }),
 
       getAllCategory: builder.query({
@@ -227,14 +229,14 @@ export const {
   useResetPasswordGetTokenMutation,
   useResetPasswordMutation,
   useCreateStoreMutation,
-  useManageStoreMutation,
+  useDeleteStoreMutation,
   useCreateCoupneMutation,
   useManageCoupneMutation,
   useCreateProductMutation,
   useManageProductMutation,
   useCreateCategoryMutation,
   useManageCategoryMutation,
-  useDeleteStoreAdminMutation,
+  useManageStoreAdminMutation,
   useAddRecentProductMutation,
   useManageUserMutation,
 
