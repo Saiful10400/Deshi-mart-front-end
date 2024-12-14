@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import { useGetAllUserAndVendorsQuery } from "../../../Redux/api/api";
-import numberToNumberArray from "../../../Utils/numberToNumberArray";
-import SingleUserCard from "../../Ui/SingleUserCard";
+import numberToNumberArray from "../../../../Utils/numberToNumberArray";
+import { useGetAllUserAndVendorsQuery } from "../../../../Redux/api/api";
+import SingleUserCard from "../../../Ui/SingleUserCard";
+
+
+
 
 const DashboardUser = () => {
   const [page, setPage] = useState(1);

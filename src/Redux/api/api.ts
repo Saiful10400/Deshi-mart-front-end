@@ -9,11 +9,7 @@ export const baseApi = createApi({
       if (getToken()) header.set("Authorization", getToken() as string);
     },
   }),
-  tagTypes: [
-    "category",
-    "user",
-    "shop"
-  ],
+  tagTypes: ["category", "user", "shop", "product"],
   endpoints: (builder) => {
     return {
       // All Post querys.
@@ -68,10 +64,19 @@ export const baseApi = createApi({
 
       createStore: builder.mutation({
         query: (payload) => ({
-          url: "",
+          url: "/vendor/create-shop",
           method: "POST",
           body: payload,
         }),
+      }),
+
+      manageStoreFollow: builder.mutation({
+        query: (payload) => ({
+          url: "/store/manage-follow",
+          method: "POST",
+          body: payload,
+        }),
+        invalidatesTags:["shop"]
       }),
 
       deleteStore: builder.mutation({
@@ -100,18 +105,24 @@ export const baseApi = createApi({
 
       createProduct: builder.mutation({
         query: (payload) => ({
-          url: "",
+          url: "/vendor/create-product",
           method: "POST",
           body: payload,
         }),
+        invalidatesTags: ["product"],
       }),
 
       manageProduct: builder.mutation({
-        query: (payload) => ({
-          url: "",
-          method: "POST",
-          body: payload,
-        }),
+        query: (payload) => {
+          console.log({ payload });
+
+          return {
+            url: `/vendor/manage-product/${payload.id}?delete=${payload.delete}&duplicate=${payload.duplicate}`,
+            method: "POST",
+            body: payload.data,
+          };
+        },
+        invalidatesTags: ["product"],
       }),
 
       // Admin
@@ -122,16 +133,16 @@ export const baseApi = createApi({
           method: "POST",
           body: payload,
         }),
-        invalidatesTags:["category"]
+        invalidatesTags: ["category"],
       }),
 
       manageCategory: builder.mutation({
         query: (payload) => ({
           url: `/admin/manage-category/${payload.id}?delete=${payload.delete}`,
           method: "POST",
-          body: {name:payload.name},
+          body: { name: payload.name },
         }),
-        invalidatesTags:["category"]
+        invalidatesTags: ["category"],
       }),
 
       manageUser: builder.mutation({
@@ -139,7 +150,7 @@ export const baseApi = createApi({
           url: `/admin/manage-user/${payload.id}?delete=${payload.delete}`,
           method: "POST",
         }),
-        invalidatesTags:["user"]
+        invalidatesTags: ["user"],
       }),
 
       manageStoreAdmin: builder.mutation({
@@ -148,7 +159,7 @@ export const baseApi = createApi({
           method: "POST",
           body: payload,
         }),
-        invalidatesTags:["shop"]
+        invalidatesTags: ["shop"],
       }),
 
       // user
@@ -180,18 +191,48 @@ export const baseApi = createApi({
 
       getAllUserAndVendors: builder.query({
         query: (page) => ({
-          url: `/common/user?offset=${(page-1)*10}&limit=${10}`,
+          url: `/common/user?offset=${(page - 1) * 10}&limit=${10}`,
           method: "GET",
         }),
-        providesTags:["user"]
+        providesTags: ["user"],
+      }),
+
+      getAStoreAllProduct: builder.query({
+        query: (payload) => ({
+          url: `/common/store-products/${payload.id}?offset=${
+            (payload.page - 1) * 3
+          }&limit=${3}`,
+          method: "GET",
+        }),
+        providesTags: ["product"],
+      }),
+
+      getAStoreAllProductNotDashboard: builder.query({
+        query: (payload) => ({
+          url: `/common/store-products/${payload.id}?offset=${
+            (payload.page - 1) * 3
+          }&limit=${payload.limit}`,
+          method: "GET",
+        }),
+        providesTags: ["product"],
       }),
 
       getSingleOrAllStore: builder.query({
-        query: () => ({
-          url: "/common/store",
-          method: "GET",
-        }),
-        providesTags:["shop"]
+        query: (payload) => {
+          let baseUrl;
+
+          if (payload.id) {
+            baseUrl = `/common/store?id=${payload.id}`;
+          } else {
+            baseUrl = "/common/store";
+          }
+
+          return {
+            url: baseUrl,
+            method: "GET",
+          };
+        },
+        providesTags: ["shop"],
       }),
 
       getAllCategory: builder.query({
@@ -199,17 +240,19 @@ export const baseApi = createApi({
           url: "/common/category",
           method: "GET",
         }),
-        providesTags:["category"]
+        providesTags: ["category"],
       }),
 
       getSingleOrAllProducts: builder.query({
         query: (query) => {
           let baseUrl = "/common/products?";
-          const keys = Object.keys(query);
+          if (query) {
+            const keys = Object.keys(query);
 
-          keys.forEach(
-            (item) => (baseUrl = baseUrl + item + "=" + query[item])
-          );
+            keys.forEach(
+              (item) => (baseUrl = baseUrl + item + "=" + query[item])
+            );
+          }
 
           return {
             url: baseUrl,
@@ -239,12 +282,15 @@ export const {
   useManageStoreAdminMutation,
   useAddRecentProductMutation,
   useManageUserMutation,
+  useManageStoreFollowMutation,
 
   // Queries
   useGetRecentProductQuery,
+  useGetAStoreAllProductNotDashboardQuery,
   useGetAllUserAndVendorsQuery,
   useGetSingleOrAllStoreQuery,
   useGetAllCategoryQuery,
   useGetSingleOrAllProductsQuery,
   useGetLoggedInUserQuery,
+  useGetAStoreAllProductQuery,
 } = baseApi;

@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
-import DashboardAside from "../Component/Dashboard/DashboardAside";
-import DashboardHeader from "../Component/Dashboard/DashboardHeader";
+import DashboardAside from "../Component/adminDashboard/DashboardAside";
+import DashboardHeader from "../Component/adminDashboard/DashboardHeader";
 import { useState } from "react";
 
 const AdminDashboard = () => {

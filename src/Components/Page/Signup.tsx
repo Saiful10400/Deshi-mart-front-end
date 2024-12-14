@@ -32,6 +32,7 @@ const Signup = () => {
     startLoading();
     const response = await send(formateData);
     showResponse(response);
+    
   };
 
   return (

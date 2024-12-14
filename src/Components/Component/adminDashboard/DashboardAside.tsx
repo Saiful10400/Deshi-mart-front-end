@@ -41,7 +41,7 @@ const DashboardAside = ({setterFn,setterState}) => {
 
 console.log(window.innerWidth)
   return (
-    <div className={`bg-[#ececec] min-h-screen lg:pt-6 pl-3 relative lg:fixed  ${setterState?"block":window.innerWidth<600&&"hidden"}`}>
+    <div className={`bg-[#ececec] min-h-screen lg:pt-6 pl-3 fixed lg:relative  ${setterState?"block":window.innerWidth<600&&"hidden"}`}>
       <div className="flex items-center justify-between">
       <img className="w-[70%]" src={logo} alt="" />
       <button onClick={()=>setterFn(false)} className="lg:hidden"><X/></button>

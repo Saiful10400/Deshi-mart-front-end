@@ -11,6 +11,7 @@ interface TroleData {
     email: string;
     name: string;
     photo: string;
+    shopId:string
     isDeleted: boolean;
     created: string; // ISO date string
     updated: string; // ISO date string

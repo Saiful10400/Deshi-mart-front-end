@@ -1,5 +1,6 @@
-import { useGetSingleOrAllStoreQuery } from "../../../Redux/api/api";
-import SingleStoreCard from "../../Ui/SingleStoreCard";
+import { useGetSingleOrAllStoreQuery } from "../../../../Redux/api/api";
+import SingleStoreCard from "../../../Ui/SingleStoreCard";
+
 
  
 const DashboardShops = () => {

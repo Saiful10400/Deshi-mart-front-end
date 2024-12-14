@@ -1,6 +1,7 @@
-import { useGetAllCategoryQuery } from "../../../Redux/api/api";
-import CreateCategory from "../../Ui/CreateCategory";
-import UpdateCategory from "../../Ui/UpdateCategory";
+import { useGetAllCategoryQuery } from "../../../../Redux/api/api";
+import CreateCategory from "../../../Ui/CreateCategory";
+import UpdateCategory from "../../../Ui/UpdateCategory";
+
 
  
 
