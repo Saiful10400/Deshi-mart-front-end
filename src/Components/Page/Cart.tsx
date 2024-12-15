@@ -49,7 +49,7 @@ const checkCoupon=async(e)=>{
 console.log(products)
 
 
-// make payment.
+// make it.
 
 const [sendPaymentcrd, startLoader] = useSendPost(useCreatePaymentLinkMutation); 
 
