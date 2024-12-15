@@ -1,6 +1,5 @@
-import { createSlice, current } from "@reduxjs/toolkit";
-import { Flag } from "lucide-react";
-import Swal from "sweetalert2";
+import { createSlice } from "@reduxjs/toolkit";
+ 
 type Tproduct = {
   image: string;
   name: string;

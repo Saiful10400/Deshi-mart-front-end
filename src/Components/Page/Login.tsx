@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useSendPost from "../../Utils/useSendPost";
 import { useLoginMutation } from "../../Redux/api/api";
 import useShowResponse from "../../Utils/useShowResponse";
@@ -7,6 +7,9 @@ import useGetThenSetCurrentUser from "../../Utils/useGetThenSetCurrentUser";
 
 
 const Login = () => {
+
+  const move=useNavigate()
+
   const setCurrentUser=useGetThenSetCurrentUser()
   const[send,startLoading]=useSendPost(useLoginMutation)
   const showResponse=useShowResponse()
@@ -23,6 +26,19 @@ const Login = () => {
     ManupulateLocalStorageToken(response.data?.token,"setItem")
     showResponse(response)
     setCurrentUser()
+
+    console.log(response.data?.data?.role)
+    
+    if(response.data?.data?.role==="Admin"){
+      move("/admin-dashboard/users")
+    }
+    else if(response.data?.data?.role==="Vendor"){
+      move("/vendor-dashboard/my-shop")
+    } else{
+      move("/")
+    }
+
+
    
   }
 

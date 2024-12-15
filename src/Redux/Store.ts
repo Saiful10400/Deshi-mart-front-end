@@ -3,12 +3,14 @@ import { baseApi } from "./api/api";
 import authReducer from "./feathcer/AuthSlice";
 import loadingReducer from "./feathcer/loadingSlice";
 import cartReducer from "./feathcer/CartSlice";
+import filterReducer from "./feathcer/FilterSlice";
 
 const store = configureStore({
   reducer: {
     loadingStore: loadingReducer,
     authStore: authReducer,
     cartStore: cartReducer,
+    filterStore: filterReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

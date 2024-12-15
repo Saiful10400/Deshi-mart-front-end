@@ -10,7 +10,7 @@ const Home = () => {
 
 
         <div className="flex flex-col lg:flex-row gap-8 items-start">
-          <div className="w-[20%] bg-gray-300 px-4 pt-10 rounded-xl min-h-[calc(100vh-232px)] sticky top-[232px]">
+          <div className="w-[20%] bg-gray-300 px-4 pt-10 rounded-xl min-h-[calc(100vh-232px)] sticky top-0">
             <HomeAsideSorting />
           </div>
           <div className="w-[80%]">

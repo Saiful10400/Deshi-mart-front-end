@@ -138,7 +138,7 @@ const VendorDashboardCreateProduct = () => {
               </label>
 
               <label className="w-full" htmlFor="description">
-                <h1 className="text-xl font-semibold">Stock Availabel:</h1>
+                <h1 className="text-xl font-semibold">Stock Description:</h1>
                 <textarea
                   name="stock"
                   className="outline-none resize-none border text-lg pl-2 py-1 rounded-md w-full"

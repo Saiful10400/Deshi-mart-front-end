@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useSignupMutation } from "../../Redux/api/api";
 import useSendPost from "../../Utils/useSendPost";
@@ -17,7 +17,7 @@ const Signup = () => {
   const [send, startLoading] = useSendPost(useSignupMutation);
 
   const showResponse = useShowResponse();
-
+const move=useNavigate()
   const formSubmitHandle = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -32,6 +32,8 @@ const Signup = () => {
     startLoading();
     const response = await send(formateData);
     showResponse(response);
+
+    move("/login")
     
   };
 

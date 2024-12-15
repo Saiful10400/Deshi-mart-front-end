@@ -1,25 +1,29 @@
 # Acowork
 
-**Live URL**: [https://apollow-assignment-5-front-end.vercel.app/](https://apollow-assignment-5-front-end.vercel.app)
+ 
 
 ## Overview
 
-Acowork is a co-working space platform that offers seamless room booking experiences, allowing users to check real-time availability, schedule meetings, and manage their reservations effortlessly.
+Our e-commerce website is a dynamic and user-friendly platform designed to provide customers with a seamless shopping experience. Featuring a diverse range of products, our website combines modern design with cutting-edge technology to meet the needs of every shopper.
 
-## Features
+### Key Features
 
-- **Real-time Availability:** Instantly check room availability and secure your space without delays.
-- **Instant Booking Confirmation:** Get immediate confirmation of your booking to avoid any last-minute hassles.
-- **Flexible Scheduling:** Book rooms by the hour, day, or for extended periods, tailored to your needs.
-- **Manage Bookings:** Easily view, update, reschedule, or cancel your bookings from a user-friendly dashboard.
-- **Secure Payments:** Enjoy safe and seamless transactions with multiple payment methods.
-- **Detailed Room Information:** View room features, amenities, and pricing before making a booking.
-- **24/7 Support:** Our customer service team is available around the clock to assist with any issues or questions.
+- **Real-time Product Availability:** Instantly check the availability of products and make purchases without delays.  
+- **Instant Order Confirmation:** Receive immediate confirmation of your order to ensure a smooth shopping experience.  
+- **Advanced Product Filters:** Easily find the exact product you’re looking for with powerful search and filter options.  
+- **Secure Payments:** Enjoy safe and reliable transactions with support for multiple payment methods.  
+- **Personalized Recommendations:** Get product suggestions based on your browsing and purchasing history.  
+- **User-friendly Dashboard:** Manage your account, track orders, view purchase history, and update details effortlessly.  
+- **Responsive Design:** Experience a seamless shopping experience across all devices, including mobile, tablet, and desktop.  
+- **Wishlist Functionality:** Save products you love and purchase them later at your convenience.  
+- **Customer Reviews & Ratings:** Make informed buying decisions by reading reviews and ratings from other shoppers.  
+- **24/7 Customer Support:** Get round-the-clock assistance from our support team for any inquiries or issues.  
+
 
 ## Technology Used
 
 - **Frontend:** React, TypeScript, Vite, MUI, DaisyUI
-- **Backend:** Node.js, Express, MongoDB (Mongoose)
+- **Backend:** Node.js, Express, Postgress sql
 - **State Management:** Redux, RTK Query
 - **Deployment:** [Vercel]
   
@@ -28,7 +32,7 @@ Acowork is a co-working space platform that offers seamless room booking experie
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/Saiful10400/Apollow-Assignment-5-front-end
+    git clone https://github.com/Saiful10400/Apollow-Assignment-9-front-end
     ```
 
 2. Navigate to the project directory:

@@ -13,9 +13,9 @@ const AuthSlice=createSlice({
             state.loggedInUser=action.payload
             state.isLoading=false
         },
-        // removeUser:(state)=>{
-        //     state.loggedInUser=null
-        // },
+        removeUser:(state)=>{
+            state.loggedInUser=null
+        },
         setLoading:(state,action)=>{
             state.isLoading=action.payload
         }
@@ -23,6 +23,6 @@ const AuthSlice=createSlice({
 })
 
 
-export const{setUser,setLoading}=AuthSlice.actions
+export const{setUser,setLoading,removeUser}=AuthSlice.actions
 const authReducer=AuthSlice.reducer
 export default authReducer

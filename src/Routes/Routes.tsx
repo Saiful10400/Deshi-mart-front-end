@@ -23,6 +23,8 @@ import PaymentStatus from "../Components/Ui/PaymentStatus";
 import NavHistory from "../Components/Page/NavHistory";
 import NavHistoryProducts from "../Components/Page/NavHistoryProducts";
 import NavHIstoryOrders from "../Components/Page/NavHIstoryOrders";
+import AllProducts from "../Components/Page/AllProducts";
+import FollowingShopProducts from "../Components/Page/FollowingShopProducts";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -35,20 +37,28 @@ const routes = createBrowserRouter([
       {
         path: "/history",
         Component: NavHistory,
-        children:[
+        children: [
           {
-            index:true,
-            Component:NavHistoryProducts
+            index: true,
+            Component: NavHistoryProducts,
           },
           {
-            path:"last-orders",
-            Component:NavHIstoryOrders
-          }
-        ]
+            path: "last-orders",
+            Component: NavHIstoryOrders,
+          },
+        ],
       },
       {
         path: "/",
         Component: Home,
+      },
+      {
+        path: "/following-shop",
+        Component: FollowingShopProducts,
+      },
+      {
+        path: "/all-product",
+        Component: AllProducts,
       },
       {
         path: "/product/:id",
