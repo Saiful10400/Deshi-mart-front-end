@@ -4,7 +4,7 @@ import SingleStoreCard from "../../../Ui/SingleStoreCard";
 
  
 const DashboardShops = () => {
-    const{data}=useGetSingleOrAllStoreQuery(null)
+    const{data}=useGetSingleOrAllStoreQuery({})
     console.log(data)
     return (
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">

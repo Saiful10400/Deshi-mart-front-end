@@ -1,10 +1,12 @@
 import { useParams } from "react-router";
-import { useGetSingleOrAllProductsQuery } from "../../Redux/api/api";
+import { useAddRecentProductMutation, useGetSingleOrAllProductsQuery } from "../../Redux/api/api";
 import { Link } from "react-router-dom";
 import { FlipHorizontal, Star, StarHalfIcon } from "lucide-react";
 import SectionTittle from "../Ui/SectionTittle";
 import "./css/singlleProduct.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAppSelector } from "../../Redux/feathcer/hoocks";
+import useSendPost from "../../Utils/useSendPost";
 
 type Tproduct = {
   image: string;
@@ -43,6 +45,22 @@ const SingleProductDetails = () => {
 
   const[product1,setProduct1]=useState(null)
   const[product2,setProduct2]=useState(null)
+
+
+  const{loggedInUser}=useAppSelector(s=>s.authStore)
+  const [send] = useSendPost(useAddRecentProductMutation); //initiate request
+
+  // add recetnt product.
+  useEffect(()=>{
+
+    if(loggedInUser && product){
+ send({userId:loggedInUser?.userId,productId:product?.productId})
+    }
+
+  },[loggedInUser,product])
+
+
+
 
 
 

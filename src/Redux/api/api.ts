@@ -48,6 +48,22 @@ export const baseApi = createApi({
         }),
       }),
 
+      checkCoupon: builder.mutation({
+        query: (payload) => ({
+          url: `/store/check-coupon/${payload.storeId}`,
+          method: "POST",
+          body: { code: payload.code },
+        }),
+      }),
+
+      createPaymentLink: builder.mutation({
+        query: (payload) => ({
+          url: `/order/create-payment-link`,
+          method: "POST",
+          body: payload,
+        }),
+      }),
+
       resetPassword: builder.mutation({
         query: (payload) => {
           console.log(payload);
@@ -68,6 +84,7 @@ export const baseApi = createApi({
           method: "POST",
           body: payload,
         }),
+        invalidatesTags: ["user"],
       }),
 
       manageStoreFollow: builder.mutation({
@@ -76,7 +93,7 @@ export const baseApi = createApi({
           method: "POST",
           body: payload,
         }),
-        invalidatesTags:["shop"]
+        invalidatesTags: ["shop"],
       }),
 
       deleteStore: builder.mutation({
@@ -110,6 +127,15 @@ export const baseApi = createApi({
           body: payload,
         }),
         invalidatesTags: ["product"],
+      }),
+
+      updateOrDeleteShop: builder.mutation({
+        query: (payload) => ({
+          url: `/vendor/manage-shop/${payload.id}`,
+          method: "POST",
+          body: payload.data,
+        }),
+        invalidatesTags: ["user"],
       }),
 
       manageProduct: builder.mutation({
@@ -166,10 +192,11 @@ export const baseApi = createApi({
 
       addRecentProduct: builder.mutation({
         query: (payload) => ({
-          url: "",
+          url: "/user/add-recent",
           method: "POST",
           body: payload,
         }),
+        invalidatesTags: ["product"],
       }),
 
       // GET apis.
@@ -180,13 +207,15 @@ export const baseApi = createApi({
           method: "GET",
           headers: { authorization: token },
         }),
+        providesTags: ["user"],
       }),
 
       getRecentProduct: builder.query({
-        query: () => ({
-          url: "",
+        query: (payload) => ({
+          url: `/user/get-recent/${payload.id}`,
           method: "GET",
         }),
+        providesTags: ["product"],
       }),
 
       getAllUserAndVendors: builder.query({
@@ -283,6 +312,9 @@ export const {
   useAddRecentProductMutation,
   useManageUserMutation,
   useManageStoreFollowMutation,
+  useUpdateOrDeleteShopMutation,
+  useCheckCouponMutation,
+  useCreatePaymentLinkMutation,
 
   // Queries
   useGetRecentProductQuery,

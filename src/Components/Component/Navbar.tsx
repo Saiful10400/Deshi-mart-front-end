@@ -1,6 +1,6 @@
 import logo from "../../../assets/logo.jpg"
 import { Search, ShoppingCart,History } from 'lucide-react';
-import { Link } from "react-router-dom";
+import { Link, useHref, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../Redux/feathcer/hoocks";
 
 
@@ -34,8 +34,7 @@ export interface TuserData {
 const Navbar = () => {
 
    
-
-
+ 
 
 
    
@@ -60,8 +59,8 @@ const userData=()=>{
                 <Search className="text-gray-400 text-xs absolute block top-[20%] left-2"/>
             </form>
             <div className="flex justify-between items-center gap-12">
-                <span className="flex flex-col items-center"><ShoppingCart className=""/> <span className="font-bold">Cart</span></span>
-                <span className="flex flex-col items-center"><History className=""/> <span className="font-bold">History</span></span>
+                <Link to={"/cart"} className="flex flex-col items-center"><ShoppingCart className=""/> <span className="font-bold">Cart</span></Link>
+                <Link to={"/history"} className="flex flex-col items-center"><History className=""/> <span className="font-bold">History</span></Link>
                 
 
                 

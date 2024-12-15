@@ -18,11 +18,34 @@ import DashboardCustomersReview from "../Components/Page/sub-pages/VendorDashboa
 import DashboardOrderHistory from "../Components/Page/sub-pages/VendorDashboard/DashboardOrderHistory";
 import SingleProductDetails from "../Components/Page/SingleProductDetails";
 import SingleShopDetails from "../Components/Page/SingleShopDetails";
+import Cart from "../Components/Page/Cart";
+import PaymentStatus from "../Components/Ui/PaymentStatus";
+import NavHistory from "../Components/Page/NavHistory";
+import NavHistoryProducts from "../Components/Page/NavHistoryProducts";
+import NavHIstoryOrders from "../Components/Page/NavHIstoryOrders";
 const routes = createBrowserRouter([
   {
     path: "/",
     Component: Root,
     children: [
+      {
+        path: "/cart",
+        Component: Cart,
+      },
+      {
+        path: "/history",
+        Component: NavHistory,
+        children:[
+          {
+            index:true,
+            Component:NavHistoryProducts
+          },
+          {
+            path:"last-orders",
+            Component:NavHIstoryOrders
+          }
+        ]
+      },
       {
         path: "/",
         Component: Home,
@@ -41,6 +64,10 @@ const routes = createBrowserRouter([
   {
     path: "/login",
     Component: Login,
+  },
+  {
+    path: "/payment-status/:id",
+    Component: PaymentStatus,
   },
 
   {
