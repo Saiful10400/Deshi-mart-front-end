@@ -100,11 +100,11 @@ const SingleProductDetails = () => {
 
 
   return (
-    <div className="lg:mt-16">
+    <div className="lg:mt-16 lg:px-0 px-3">
       <div>
         {/* product description. */}
 
-        <div className="flex flex-col lg:flex-row items-start lg:gap-16">
+        <div className="flex  flex-col lg:flex-row items-start lg:gap-16">
           <img
             className="w-[500px] h-[300px] object-contain"
             src={product?.image}
@@ -164,8 +164,10 @@ const SingleProductDetails = () => {
 
         {/* description */}
 
-        <SectionTittle txt="Description" />
-        <p className="mt-3">{product?.description}</p>
+       <div className="mt-4">
+       <SectionTittle txt="Description" />
+       <p className="mt-3">{product?.description}</p>
+       </div>
       </div>
 
       {/* comparison */}
@@ -173,7 +175,7 @@ const SingleProductDetails = () => {
         <SectionTittle txt="Compare" />
         <div className="">
           <div>
-            <table className="w-full">
+            <table >
               <thead>
                 <tr>
                   <th></th>
@@ -236,7 +238,7 @@ const SingleProductDetails = () => {
                   <td>
                     {" "}
                     <img
-                      className="h-[200px] mx-auto"
+                      className="lg:h-[200px] object-contain mx-auto"
                       src={product?.image}
                       alt=""
                     />
@@ -244,7 +246,7 @@ const SingleProductDetails = () => {
                   <td>
                     {" "}
                     <img
-                      className="h-[200px] mx-auto"
+                      className="h-[200px] object-contain mx-auto"
                       src={product1?.image}
                       alt=""
                     />
@@ -252,11 +254,17 @@ const SingleProductDetails = () => {
                   <td>
                     {" "}
                     <img
-                      className="h-[200px] mx-auto"
+                      className="h-[200px] object-contain mx-auto"
                       src={product2?.image}
                       alt=""
                     />
                   </td>
+                </tr>
+                <tr>
+                  <td>Category</td>
+                  <td>{product?.categoryref?.name}</td>
+                  <td>{product1?.categoryref?.name}</td>
+                  <td>{product2?.categoryref?.name}</td>
                 </tr>
                 <tr>
                   <td>Name</td>

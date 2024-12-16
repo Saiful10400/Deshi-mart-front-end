@@ -74,10 +74,15 @@ const Navbar = () => {
 
   return (
     <div className="mt-5">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col lg:flex-row items-center justify-between">
+
+
         <Link to={"/"}>
           <img className="w-[150px]" src={logo} alt="" />
         </Link>
+
+
+
         <form onSubmit={handleSearch} className="relative flex">
           <input
             type="text"
@@ -90,6 +95,8 @@ const Navbar = () => {
           </button>
           <Search className="text-gray-400 text-xs absolute block top-[20%] left-2" />
         </form>
+
+
         <div className="flex justify-between items-center gap-12">
           <Link to={"/cart"} className="flex flex-col items-center">
             <ShoppingCart className="" />{" "}
@@ -139,6 +146,9 @@ const Navbar = () => {
             </span>
           )}
         </div>
+
+
+
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ const PrivateRoute = ({ children,role }) => {
   useEffect(() => {
     if(!getToken())return
     axios
-      .get("https://apollow-assignment-5-back-end.vercel.app/api/auth/getCurrentUser", {
+      .get("https://e-commerce9.vercel.app/api/auth/getCurrentUser", {
         headers: {
           authorization: getToken(),
         },

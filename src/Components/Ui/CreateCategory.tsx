@@ -7,16 +7,15 @@ import useShowResponse from "../../Utils/useShowResponse";
 const CreateCategory = () => {
   const [clicked, setClicked] = useState(false);
 
-  const [categoryName, setCategoryName] = useState("");
-
+  
   const [send, startLoading] = useSendPost(useCreateCategoryMutation);
   const showResponse = useShowResponse();
 
-  const createCategory = async () => {
-    console.log(categoryName.length);
-    if (categoryName.length === 0) return;
+  const createCategory = async (e) => {
+  e.preventDefault()
+  
     startLoading();
-    const response = await send({ name: categoryName });
+    const response = await send({ name: e.target.name.value,logo:e.target.file.value });
     showResponse(response);
     setClicked(false);
   };
@@ -24,22 +23,30 @@ const CreateCategory = () => {
   return (
     <>
       {clicked ? (
-        <div className="flex flex-col justify-start gap-4 items-center bg-gray-200  rounded-lg shadow-xl p-2">
+        <form onSubmit={createCategory} className="flex flex-col justify-start gap-4 items-center bg-gray-200  rounded-lg shadow-xl p-2">
           <div className="flex w-full items-center justify-between">
-            <button onClick={createCategory}>
+            <button  >
               <Check />
             </button>
-            <button onClick={() => setClicked(false)}>
+            <button type="button" onClick={() => setClicked(false)}>
               <X />
             </button>
           </div>
           <input
-            onChange={(e) => setCategoryName(e.target.value)}
+             
             type="text"
+            name="name"
             className="w-full rounded-sm pl-1"
             placeholder="Category name"
           />
-        </div>
+          <input
+          name="file"
+            
+            type="file"
+            className="w-full rounded-sm pl-1"
+            placeholder="Category name"
+          />
+        </form>
       ) : (
         <button
           onClick={() => setClicked(true)}

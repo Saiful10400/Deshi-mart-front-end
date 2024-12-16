@@ -27,6 +27,11 @@ if(filterStore.searchTerm!==""){
 }
 
 
+if(filterStore.category!==""){
+  setCrd(prev=>({...prev,limit:10,category:filterStore.category}))   
+}
+
+
   },[filterStore])
 
 
@@ -58,7 +63,7 @@ if(filterStore.searchTerm!==""){
     <div>
       <SectionTittle txt="All products" />
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 pl-5 gap-5">
+      <div className="grid grid-cols-2 lg:grid-cols-5 pl-5 gap-5">
         {data?.data?.result?.map((item: Tproduct, idx: number) => (
           <SignleProductCard key={idx} data={item} />
         ))}

@@ -28,7 +28,7 @@ const [data,setData]=useState([])
 
 useEffect(()=>{
     if(loggedInUser){
-        axios.post(`http://localhost:8000/api/common/product-following`,{followingStore:loggedInUser?.followingStore})
+        axios.post(`https://e-commerce9.vercel.app/api/common/product-following`,{followingStore:loggedInUser?.followingStore})
         .then(res=>setData(res?.data?.data))
     }
 
