@@ -25,6 +25,8 @@ import NavHistoryProducts from "../Components/Page/NavHistoryProducts";
 import NavHIstoryOrders from "../Components/Page/NavHIstoryOrders";
 import AllProducts from "../Components/Page/AllProducts";
 import FollowingShopProducts from "../Components/Page/FollowingShopProducts";
+import ChangePassword from "../Components/Page/ChangePassword";
+import FlashSale from "../Components/Page/FlashSale";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -61,6 +63,10 @@ const routes = createBrowserRouter([
         Component: AllProducts,
       },
       {
+        path: "/flash-sale",
+        Component: FlashSale,
+      },
+      {
         path: "/product/:id",
         Component: SingleProductDetails,
       },
@@ -74,6 +80,10 @@ const routes = createBrowserRouter([
   {
     path: "/login",
     Component: Login,
+  },
+  {
+    path: "/change-password",
+    Component: ChangePassword,
   },
   {
     path: "/payment-status/:id",

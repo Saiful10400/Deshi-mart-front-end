@@ -3,6 +3,7 @@ import { useState } from "react";
 import useSendPost from "../../Utils/useSendPost";
 import { useCreateCategoryMutation } from "../../Redux/api/api";
 import useShowResponse from "../../Utils/useShowResponse";
+import createFormData from "../../Utils/createFormData";
 
 const CreateCategory = () => {
   const [clicked, setClicked] = useState(false);
@@ -15,7 +16,7 @@ const CreateCategory = () => {
   e.preventDefault()
   
     startLoading();
-    const response = await send({ name: e.target.name.value,logo:e.target.file.value });
+    const response = await send(createFormData({ name: e.target.name.value,logo:e.target.file.files[0] }));
     showResponse(response);
     setClicked(false);
   };

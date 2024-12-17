@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
 import {
   useAddRecentProductMutation,
+  useGetAllProductQuery,
   useGetSingleOrAllProductsQuery,
 } from "../../Redux/api/api";
 import { Link } from "react-router-dom";
@@ -13,6 +14,7 @@ import useSendPost from "../../Utils/useSendPost";
 import SingleproductDetailsReview from "../Component/SingleproductDetailsReview";
 import Swal from "sweetalert2";
 import { clearCart, setProduct } from "../../Redux/feathcer/CartSlice";
+import notification from "../../Utils/showMessage";
 
 type Tproduct = {
   image: string;
@@ -44,6 +46,9 @@ const SingleProductDetails = () => {
   const product: Tproduct = data?.data;
   const { data: sameCAtgoryData } = useGetSingleOrAllProductsQuery({
     category: product?.categoryref?.name,
+    not: product?.productId,
+    limit: 4,
+    offset: 0,
   });
 
   const thisCategoryDatas: Tproduct[] = sameCAtgoryData?.data?.result;
@@ -60,10 +65,6 @@ const SingleProductDetails = () => {
       send({ userId: loggedInUser?.userId, productId: product?.productId });
     }
   }, [loggedInUser, product]);
-
-
-
-
 
   // add to cart handle.
   const dispatch = useAppDispatch();
@@ -84,90 +85,124 @@ const SingleProductDetails = () => {
         denyButtonText: `Retain the current`,
       }).then((result) => {
         if (result.isConfirmed) {
-          dispatch(clearCart(product))
+          dispatch(clearCart(product));
           Swal.fire("All cart product replaced", "", "success");
         }
       });
-    }else{
-
+    } else {
       dispatch(setProduct(product));
     }
-
   };
 
+  // all product for dropdown.
 
+  const { data: rowAllProducts } = useGetAllProductQuery(null);
 
-
+  const AllProducts = rowAllProducts?.data?.result;
 
   return (
     <div className="lg:mt-16 lg:px-0 px-3">
-      <div>
-        {/* product description. */}
+      <div className="flex flex-col gap-4 lg:flex-row">
+        <div className="lg:w-[80%]">
+          {/* product description. */}
+          <div className="flex  flex-col lg:flex-row items-start lg:gap-16">
+            <img
+              className="w-[500px] h-[300px] object-contain"
+              src={product?.image}
+              alt=""
+            />
 
-        <div className="flex  flex-col lg:flex-row items-start lg:gap-16">
-          <img
-            className="w-[500px] h-[300px] object-contain"
-            src={product?.image}
-            alt=""
-          />
+            <div>
+              <h1 className="text-4xl font-bold">{product?.name}</h1>
 
-          <div>
-            <h1 className="text-4xl font-bold">{product?.name}</h1>
+              <div className="mt-5">
+                <span className="bg-gray-200 p-1 rounded-md shadow-md font-semibold">
+                  {product?.categoryref?.name}
+                </span>
+              </div>
 
-            <div className="mt-5">
-              <span className="bg-gray-200 p-1 rounded-md shadow-md font-semibold">
-                {product?.categoryref?.name}
-              </span>
-            </div>
-
-            <Link
-              to={`/shop/${product?.shop?.shopId}`}
-              className="flex items-center gap-5 mt-8"
-            >
-              <img
-                className="w-[50px] rounded-full object-cover h-[50px]"
-                src={product?.shop?.logo}
-                alt=""
-              />
-              <span className="font-semibold">{product?.shop?.name}</span>
-            </Link>
-
-            <h1 className="text-4xl font-bold mt-3">
-              Price: {product?.price} Tk{" "}
-              <span className="text-xs font-mono">
-                (only {product?.inventoryCount} on stock.)
-              </span>
-            </h1>
-
-            <div className="flex gap-1 mt-4">
-              <Star fill="#faca51" color="#faca51" />
-              <Star fill="#faca51" color="#faca51" />
-              <Star fill="#faca51" color="#faca51" />
-              <Star fill="#faca51" color="#faca51" />
-              <StarHalfIcon fill="#faca51" color="#faca51" />
-              <span>({product?._count.review})</span>
-            </div>
-
-            <div className="flex gap-2">
-              <button onClick={productAddandle} className="btn  text-lg lg:px-36 mt-5 hover:text-black btn-primary bg-[#f27f20] text-white hover:bg-transparent hover:border-[#f27f20] border-[#f27f20]">
-                Add to cart
-              </button>
-              <a
-                href="#compare"
-                className="btn  text-lg  mt-5 hover:text-black btn-primary bg-[#f27f20] text-white hover:bg-transparent hover:border-[#f27f20] border-[#f27f20]"
+              <Link
+                to={`/shop/${product?.shop?.shopId}`}
+                className="flex items-center gap-5 mt-8"
               >
-                <FlipHorizontal />
-              </a>
+                <img
+                  className="w-[50px] rounded-full object-cover h-[50px]"
+                  src={product?.shop?.logo}
+                  alt=""
+                />
+                <span className="font-semibold">{product?.shop?.name}</span>
+              </Link>
+
+              <h1 className="text-4xl font-bold mt-3">
+                Price: {product?.price} Tk{" "}
+                <span className="text-xs font-mono">
+                  (only {product?.inventoryCount} on stock.)
+                </span>
+              </h1>
+
+              <div className="flex gap-1 mt-4">
+                <Star fill="#faca51" color="#faca51" />
+                <Star fill="#faca51" color="#faca51" />
+                <Star fill="#faca51" color="#faca51" />
+                <Star fill="#faca51" color="#faca51" />
+                <StarHalfIcon fill="#faca51" color="#faca51" />
+                <span>({product?._count.review})</span>
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={productAddandle}
+                  className="btn  text-lg lg:px-36 mt-5 hover:text-black btn-primary bg-[#f27f20] text-white hover:bg-transparent hover:border-[#f27f20] border-[#f27f20]"
+                >
+                  Add to cart
+                </button>
+                <a
+                  href="#compare"
+                  className="btn  text-lg  mt-5 hover:text-black btn-primary bg-[#f27f20] text-white hover:bg-transparent hover:border-[#f27f20] border-[#f27f20]"
+                >
+                  <FlipHorizontal />
+                </a>
+              </div>
             </div>
           </div>
+
+          {/* description */}
+
+          <div className="mt-4">
+            <SectionTittle txt="Description" />
+            <p className="mt-3">{product?.description}</p>
+          </div>
         </div>
-
-        {/* description */}
-
-       <div className="mt-4">
-       <SectionTittle txt="Description" />
-       <p className="mt-3">{product?.description}</p>
-       </div>
+        <div className="lg:w-[20%] ">
+          {/* same category product. */}
+          <h1 className="font-semibold text-xl mb-4">Related Products</h1>
+          {thisCategoryDatas?.length > 0 ? (
+            <div className="pl-3 flex flex-col gap-2">
+              {thisCategoryDatas?.map((item) => {
+                return (
+                  <Link
+                    className="flex gap-3 p-2 shadow-lg rounded-lg"
+                    to={`/product/${item?.productId}`}
+                  >
+                    <img
+                      className="w-[80px] h-[80px]"
+                      src={item.image}
+                      alt=""
+                    />
+                    <div>
+                      <h1 className="text-xl font-semibold">{item?.name}</h1>
+                      <h1 className="font-semibold text-sm">
+                        {item?.price} tk
+                      </h1>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          ) : (
+            <h1>No product found</h1>
+          )}
+        </div>
       </div>
 
       {/* comparison */}
@@ -175,18 +210,34 @@ const SingleProductDetails = () => {
         <SectionTittle txt="Compare" />
         <div className="">
           <div>
-            <table >
+            <table className="w-full">
               <thead>
                 <tr>
                   <th></th>
+                  <th>{product?.name}</th>
+
                   <th>
                     <select
-                      disabled
-                      value={JSON.stringify(product)}
+                      onChange={(e) => {
+                        const parsedDAta = JSON.parse(e.target.value);
+
+                        if (
+                          parsedDAta?.categoryref?.name !==
+                          product.categoryref.name
+                        ) {
+                          notification(
+                            "You can't compare with diffrent category",
+                            "error"
+                          );
+                          setProduct1(null);
+                        } else {
+                          setProduct1(parsedDAta);
+                        }
+                      }}
                       className="w-full"
                     >
                       <option value="">Select one</option>
-                      {thisCategoryDatas?.map((item) => (
+                      {AllProducts?.map((item) => (
                         <option
                           key={item?.productId}
                           value={JSON.stringify(item)}
@@ -199,24 +250,22 @@ const SingleProductDetails = () => {
 
                   <th>
                     <select
-                      onChange={(e) => setProduct1(JSON.parse(e.target.value))}
-                      className="w-full"
-                    >
-                      <option value="">Select one</option>
-                      {thisCategoryDatas?.map((item) => (
-                        <option
-                          key={item?.productId}
-                          value={JSON.stringify(item)}
-                        >
-                          {item?.name}
-                        </option>
-                      ))}
-                    </select>
-                  </th>
+                      onChange={(e) => {
+                        const parsedDAta = JSON.parse(e.target.value);
 
-                  <th>
-                    <select
-                      onChange={(e) => setProduct2(JSON.parse(e.target.value))}
+                        if (
+                          parsedDAta?.categoryref?.name !==
+                          product.categoryref.name
+                        ) {
+                          notification(
+                            "You can't compare with diffrent category",
+                            "error"
+                          );
+                          setProduct2(null);
+                        } else {
+                          setProduct2(parsedDAta);
+                        }
+                      }}
                       className="w-full"
                     >
                       <option value="">Select one</option>
@@ -306,7 +355,7 @@ const SingleProductDetails = () => {
         </div>
       </div>
 
-      <SingleproductDetailsReview  product={product} />
+      <SingleproductDetailsReview product={product} />
     </div>
   );
 };

@@ -36,7 +36,7 @@ const RecoverPassword = () => {
         ) : (
           <>
             <h1 className="text-3xl font-bold">Recover your password</h1>
-            <h1 className="text-sm font-medium">Pleace enter your e-mail</h1>
+            <h1 className="text-sm font-medium">Please enter your e-mail</h1>
           </>
         )}
 

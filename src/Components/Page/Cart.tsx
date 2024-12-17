@@ -75,62 +75,65 @@ const makePayment=async()=>{
 
 
 
-
+console.log(loggedInUser)
 
 
 
   return (
+    products?.length===0?<div className="min-h-[50vh] w-full flex justify-center items-center">
+<h1 className="font-semibold text-xl">No product on cart.</h1>
+    </div> :
     <div className="flex lg:flex-row flex-col mt-16 gap-10">
-      <div className="flex flex-col gap-3 lg:w-[70%] shadow-xl rounded-xl p-6">
-        {products?.map((item) => (
-          <CartPageSingleProduct key={item.productId} data={item} />
-        ))}
-      </div>
-      <div className="lg:w-[30%] p-5 min-h-12 shadow-xl rounded-xl">
-
-        <form onSubmit={checkCoupon} className="flex items-center gap-3 mb-6">
-            <input name="code" placeholder="Coupne code" type="text" className="border outline-none border-black rounded-sm text-lg p-1 py-0" />
-            <button className="btn btn-sm btn-success">Apply</button>
-        </form>
-
-
-        <div className="text-xl flex gap-3 items-end">
-          <h1 className="font-semibold text-xl lg:text-2xl">Total product:</h1>{" "}
-          <span className="text-lg lg:text-xl">{products.length}</span>
-        </div>
-
-
-        <div className="mt-16">
-        <div className="text-xl flex gap-3 items-end">
-          <h1 className="font-semibold text-xl lg:text-2xl">Sub total:</h1>{" "}
-          <span className="text-lg lg:text-xl">{subTotal()} tk</span>
-        </div>
-
-
-        <div className="text-xl flex gap-3 items-end border-b-2 border-black pb-3">
-          <h1 className="font-semibold text-xl lg:text-2xl">CouponDiscount:</h1>{" "}
-          <span className="text-lg lg:text-xl">{coupneDis}</span>
-        </div>
-
-        <div className="text-xl flex gap-3 items-end ">
-          <h1 className="font-semibold text-xl lg:text-2xl">Grand total:</h1>{" "}
-          <span className="text-lg lg:text-xl">{subTotal()-coupneDis}</span>
-        </div>
-
-        <button onClick={makePayment} className="btn btn-warning w-1/2 mt-5 text-lg">Pay</button>
-        
-        </div>
-
-       
-
-
-
-
-
-
-
-      </div>
+    <div className="flex flex-col gap-3 lg:w-[70%] shadow-xl rounded-xl p-6">
+      {products?.map((item) => (
+        <CartPageSingleProduct key={item.productId} data={item} />
+      ))}
     </div>
+    <div className="lg:w-[30%] p-5 min-h-12 shadow-xl rounded-xl">
+
+      <form onSubmit={checkCoupon} className="flex items-center gap-3 mb-6">
+          <input name="code" placeholder="Coupne code" type="text" className="border outline-none border-black rounded-sm text-lg p-1 py-0" />
+          <button className="btn btn-sm btn-success">Apply</button>
+      </form>
+
+
+      <div className="text-xl flex gap-3 items-end">
+        <h1 className="font-semibold text-xl lg:text-2xl">Total product:</h1>{" "}
+        <span className="text-lg lg:text-xl">{products.length}</span>
+      </div>
+
+
+      <div className="mt-16">
+      <div className="text-xl flex gap-3 items-end">
+        <h1 className="font-semibold text-xl lg:text-2xl">Sub total:</h1>{" "}
+        <span className="text-lg lg:text-xl">{subTotal()} tk</span>
+      </div>
+
+
+      <div className="text-xl flex gap-3 items-end border-b-2 border-black pb-3">
+        <h1 className="font-semibold text-xl lg:text-2xl">CouponDiscount:</h1>{" "}
+        <span className="text-lg lg:text-xl">{coupneDis}</span>
+      </div>
+
+      <div className="text-xl flex gap-3 items-end ">
+        <h1 className="font-semibold text-xl lg:text-2xl">Grand total:</h1>{" "}
+        <span className="text-lg lg:text-xl">{subTotal()-coupneDis}</span>
+      </div>
+
+      <button disabled={loggedInUser?.status==="Block"} onClick={makePayment} className="btn btn-warning w-1/2 mt-5 text-lg">Pay</button>
+      
+      </div>
+
+     
+
+
+
+
+
+
+
+    </div>
+  </div>
   );
 };
 

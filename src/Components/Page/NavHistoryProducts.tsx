@@ -25,7 +25,7 @@ const NavHistoryProducts = () => {
 
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 ">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 ">
             {
                 data?.data?.map(item=><SignleProductCard key={item.product.productId} data={item.product}/>)
             }

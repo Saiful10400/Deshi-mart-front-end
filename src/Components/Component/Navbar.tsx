@@ -5,6 +5,7 @@ import {
   History,
   LogOut,
   LayoutDashboard,
+  RectangleEllipsis,
 } from "lucide-react";
 import { Link, useHref, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../Redux/feathcer/hoocks";
@@ -65,23 +66,36 @@ const Navbar = () => {
 
   const [hideMenu, setHideMenu] = useState(true);
 
-  const dispathc=useAppDispatch()
+  const dispathc = useAppDispatch();
 
   const logoutHandle = () => {
-    dispatch(removeUser())
-    localStorage.removeItem("token")
+    dispatch(removeUser());
+    localStorage.removeItem("token");
   };
+
+  // dashboard routeing handle.
+  const manageDashboardRouting = () => {
+    if (!loggedInUser?.role) return;
+
+    if (loggedInUser?.role === "Vendor") {
+      move("/vendor-dashboard/my-shop");
+    }
+    if (loggedInUser?.role === "Admin") {
+      move("/admin-dashboard/users");
+    }
+  };
+
+
+const{products}=useAppSelector(s=>s.cartStore)
+
+
 
   return (
     <div className="mt-5">
-      <div className="flex flex-col lg:flex-row items-center justify-between">
-
-
+      <div className="flex flex-col lg:flex-row  items-center justify-between   left-0">
         <Link to={"/"}>
           <img className="w-[150px]" src={logo} alt="" />
         </Link>
-
-
 
         <form onSubmit={handleSearch} className="relative flex">
           <input
@@ -96,12 +110,18 @@ const Navbar = () => {
           <Search className="text-gray-400 text-xs absolute block top-[20%] left-2" />
         </form>
 
-
         <div className="flex justify-between items-center gap-12">
+
+
+          <div className="relative">
           <Link to={"/cart"} className="flex flex-col items-center">
-            <ShoppingCart className="" />{" "}
+            <ShoppingCart className="" /> 
             <span className="font-bold">Cart</span>
           </Link>
+          <span className="absolute bottom-8 px-1 rounded-full left-8 bg-[#f27f20] text-white">{products?.length}</span>
+          </div>
+
+
           <Link to={"/history"} className="flex flex-col items-center">
             <History className="" /> <span className="font-bold">History</span>
           </Link>
@@ -122,14 +142,43 @@ const Navbar = () => {
               </button>
 
               <div
-                 
-                className={`absolute  w-[180px] p-3 h-[200px] top-16 right-0 bg-gray-300 rounded-lg gap-3  flex-col ${hideMenu?"hidden":"flex"}`}
+                className={`absolute  w-[250px] p-3 h-[280px] top-16 right-0 bg-gray-100 rounded-lg gap-3  flex-col ${
+                  hideMenu ? "hidden" : "flex"
+                }`}
               >
-                <button onClick={logoutHandle} className="btn btn-error w-full flex items-center gap-2">
-                  <LogOut /> Logout
-                </button>
-                <button className="btn btn-primary w-full flex items-center gap-2">
+                <div className="flex items-start gap-4">
+                  <img
+                    src={userData()?.photo}
+                    className="w-[40px] h-[40px] rounded-lg"
+                    alt=""
+                  />
+                  <div>
+                    <h1 className="font-bold text-base">
+                      {userData()?.name.toUpperCase()}
+                    </h1>
+                    <h1 className="text-xs font-semibold">
+                      {loggedInUser?.role}
+                    </h1>
+                  </div>
+                </div>
+
+                <button
+                  onClick={manageDashboardRouting}
+                  className="btn btn-ghost w-full  mt-5 flex items-center justify-start gap-2"
+                >
                   <LayoutDashboard /> Dashboard
+                </button>
+                <Link to={"/change-password"}
+                  
+                  className="btn btn-ghost w-full flex items-center justify-start gap-2"
+                >
+                  <RectangleEllipsis /> Change password
+                </Link>
+                <button
+                  onClick={logoutHandle}
+                  className="btn btn-ghost w-full flex items-center justify-start gap-2"
+                >
+                  <LogOut /> Logout
                 </button>
               </div>
             </div>
@@ -146,9 +195,6 @@ const Navbar = () => {
             </span>
           )}
         </div>
-
-
-
       </div>
     </div>
   );

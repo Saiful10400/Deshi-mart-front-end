@@ -1,5 +1,11 @@
-# Acowork
+# Cartify
 
+## Admin Login Credentials
+
+For admin access, use the following credentials:
+
+- **E-mail**: `Admin@g.com`
+- **Password**: `admin admin`
  
 
 ## Overview

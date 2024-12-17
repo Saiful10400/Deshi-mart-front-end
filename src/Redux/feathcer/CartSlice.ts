@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
- 
+import notification from "../../Utils/showMessage";
+
 type Tproduct = {
   image: string;
   name: string;
@@ -31,14 +32,22 @@ const CartSlice = createSlice({
   initialState,
   reducers: {
     setProduct: (state, action: { payload: Tproduct }) => {
-      state.products.push(action.payload);
+      const isExist = state.products.find(
+        (item) => item.productId === action.payload.productId
+      );
+
+      if (isExist) {
+        notification("Product is already exist on cart.", "error");
+      } else {
+        state.products.push(action.payload);
+      }
     },
-    clearCart: (state,action) => {
-      state.products=[action.payload]
+    clearCart: (state, action) => {
+      state.products = [action.payload];
     },
   },
 });
 
-export const { setProduct,clearCart } = CartSlice.actions;
+export const { setProduct, clearCart } = CartSlice.actions;
 const cartReducer = CartSlice.reducer;
 export default cartReducer;

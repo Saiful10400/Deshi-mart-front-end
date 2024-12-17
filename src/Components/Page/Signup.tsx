@@ -41,7 +41,7 @@ const move=useNavigate()
     <div className="flex justify-center items-center min-h-screen">
       <div className="text-center min-w-[600px] shadow-2xl rounded-2xl flex flex-col justify-center gap-2 py-11">
         <h1 className="text-3xl font-bold">Create your account</h1>
-        <h1 className="text-sm font-medium">Pleace enter your details</h1>
+        <h1 className="text-sm font-medium">Please enter your details</h1>
 
         <form onSubmit={formSubmitHandle}>
           <div className="w-[60%] mx-auto flex-col gap-5 flex">

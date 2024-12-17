@@ -18,8 +18,8 @@ const Root = () => {
 
     return (
         <div className="lg:w-[1700px] mx-auto">
-            <Navbar/>
-            <Outlet/>
+            <div className="sticky z-10 bg-white lg:py-2 top-0"><Navbar/></div>
+            <div className="relative px-3 lg:px-0"><Outlet/></div>
             <button onClick={scrollToTop} className="fixed bottom-6 right-5"><ArrowUpCircleIcon width={40} height={40}/></button>
         </div>
     );

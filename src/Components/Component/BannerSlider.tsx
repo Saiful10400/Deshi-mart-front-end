@@ -21,7 +21,7 @@ import banner4 from "../../../assets/banner/banner4.webp"
 
 const BannerSlider = () => {
     return (
-        <div className="lg:w-[50%]">
+        <div className="lg:w-[50%] h-[200px] lg:h-[720px]">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -36,10 +36,10 @@ const BannerSlider = () => {
         modules={[Autoplay, Pagination]}
         className="mySwiper"
       >
-        <SwiperSlide><img src={banner1} alt="" /> </SwiperSlide>
-        <SwiperSlide><img src={banner3} alt="" /> </SwiperSlide>
-        <SwiperSlide><img src={banner2} alt="" /> </SwiperSlide>
-        <SwiperSlide><img src={banner4} alt="" /> </SwiperSlide>
+        <SwiperSlide><img className="w-full h-full object-cover rounded-lg" src={banner1} alt="" /> </SwiperSlide>
+        <SwiperSlide><img className="w-full h-full object-cover rounded-lg" src={banner2} alt="" /> </SwiperSlide>
+        <SwiperSlide><img className="w-full h-full object-cover rounded-lg" src={banner3} alt="" /> </SwiperSlide>
+        <SwiperSlide><img className="w-full h-full object-cover rounded-lg" src={banner4} alt="" /> </SwiperSlide>
         
       </Swiper>
       

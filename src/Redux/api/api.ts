@@ -4,7 +4,8 @@ import { getToken } from "../../Utils/getToken";
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://e-commerce9.vercel.app/api",
+    // baseUrl: "https://e-commerce9.vercel.app/api",
+    baseUrl: "http://localhost:8000/api",
     prepareHeaders: (header) => {
       if (getToken()) header.set("Authorization", getToken() as string);
     },
@@ -34,7 +35,7 @@ export const baseApi = createApi({
 
       changePassword: builder.mutation({
         query: (payload) => ({
-          url: "",
+          url: "/auth/update",
           method: "POST",
           body: payload,
         }),
@@ -349,6 +350,34 @@ export const baseApi = createApi({
 
 
 
+      getAllProduct: builder.query({
+        query: (query) => {
+          let baseUrl = "/common/products?";
+          if (query) {
+            const keys = Object.keys(query);
+
+            keys.forEach(
+              (item) => (baseUrl = baseUrl + item + "=" + query[item]+"&")
+            );
+          }
+
+          return {
+            url: baseUrl,
+            method: "GET",
+          };
+        },
+        providesTags:["product"]
+      }),
+
+
+
+
+
+
+
+
+
+
       getAstoreAllreveiw: builder.query({
         query: (payload) => ({
           url: `/user/all-review/${payload.id}`,
@@ -417,4 +446,5 @@ export const {
   useGetSingleOrAllProductsQuery,
   useGetLoggedInUserQuery,
   useGetAStoreAllProductQuery,
+  useGetAllProductQuery
 } = baseApi;

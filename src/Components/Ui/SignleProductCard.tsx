@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../Redux/feathcer/hoocks";
 import { clearCart, setProduct } from "../../Redux/feathcer/CartSlice";
 import Swal from "sweetalert2";
+import hotDeal from "../../../assets/hotDeal.gif"
+
 
 export type Tproduct = {
   image: string;
@@ -56,8 +58,12 @@ const SignleProductCard = ({ data }: { data: Tproduct }) => {
 
   };
 
+ 
+
+
   return (
-    <div className="shadow-md rounded-lg py-3">
+    <div className="shadow-md rounded-lg relative py-3">
+     {data?.flashSale && <img className="absolute top-0 left-0 w-[50px] h-[60px] rounded-full object-cover" src={hotDeal} alt="" />}
       <Link to={`/product/${data.productId}`}>
         <img
           className="h-[200px] rounded-lg w-full object-contain"
