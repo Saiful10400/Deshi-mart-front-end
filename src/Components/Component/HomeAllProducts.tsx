@@ -40,14 +40,14 @@ const HomeAllProducts = () => {
       }));
     }
 
-    if (loggedInUser?.userId) {
-      setCrd((prev) => ({
-        ...prev,
-        limit: 10,
-        shopFollower:loggedInUser?.userId
-      }));
-    }
-  }, [filterStore,loggedInUser]);
+    // if (loggedInUser?.userId) {
+    //   setCrd((prev) => ({
+    //     ...prev,
+    //     limit: 10,
+    //     shopFollower:loggedInUser?.userId
+    //   }));
+    // }
+  }, [filterStore]);
 
   const handelInfiniteScroll = async () => {
     try {

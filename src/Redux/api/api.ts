@@ -4,13 +4,13 @@ import { getToken } from "../../Utils/getToken";
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
-    // baseUrl: "https://e-commerce9.vercel.app/api",
-    baseUrl: "http://localhost:8000/api",
+    baseUrl: "https://e-commerce9.vercel.app/api",
+    // baseUrl: "http://localhost:8000/api",
     prepareHeaders: (header) => {
       if (getToken()) header.set("Authorization", getToken() as string);
     },
   }),
-  tagTypes: ["category", "user", "shop", "product","review"],
+  tagTypes: ["category", "user", "shop", "product","review","coupne"],
   endpoints: (builder) => {
     return {
       // All Post querys.
@@ -113,10 +113,11 @@ export const baseApi = createApi({
 
       createCoupne: builder.mutation({
         query: (payload) => ({
-          url: "",
+          url: "/vendor/create-coupne",
           method: "POST",
           body: payload,
         }),
+        invalidatesTags:["coupne"]
       }),
 
       manageCoupne: builder.mutation({
@@ -126,6 +127,8 @@ export const baseApi = createApi({
           body: payload,
         }),
       }),
+
+     
 
       createProduct: builder.mutation({
         query: (payload) => ({
@@ -387,6 +390,17 @@ export const baseApi = createApi({
       }),
 
 
+      aShopAllCoupne: builder.query({
+        query: (payload) => ({
+          url: `/vendor/get-shopsAllCoupne/${payload.id}`,
+          method: "GET",
+        }),
+        providesTags: ["coupne"],
+      }),
+
+   
+
+
       
 
       giveReviewAnswer: builder.mutation({
@@ -397,6 +411,9 @@ export const baseApi = createApi({
         }),
         invalidatesTags:["review"]
       }),
+      
+
+    
 
 
 
@@ -411,6 +428,7 @@ export const baseApi = createApi({
 export const {
   // Mutations
   useGetAstoreAllreveiwQuery,
+  useAShopAllCoupneQuery,
   useSignupMutation,
   useGiveReviewAnswerMutation,
   useLoginMutation,
@@ -445,6 +463,7 @@ export const {
   useGetAllCategoryQuery,
   useGetSingleOrAllProductsQuery,
   useGetLoggedInUserQuery,
+  
   useGetAStoreAllProductQuery,
   useGetAllProductQuery
 } = baseApi;

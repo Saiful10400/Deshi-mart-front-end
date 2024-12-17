@@ -6,18 +6,17 @@ const initialState = {
   category: "",
 };
 
-const filterSlice = createSlice({
-  name: "Cart",
+const allProductSlice = createSlice({
+  name: "AllProductFilter",
   initialState,
   reducers: {
-    addSearchTerm: (state, action) => {
-   
+    setSearchTerm: (state, action) => {
       state.searchTerm = action.payload;
     },
-    addPrice: (state, action) => {
+    SetPrice: (state, action) => {
       state.price = action.payload;
     },
-    addCategory: (state, action) => {
+    setCategory: (state, action) => {
       state.category = action.payload;
     },
 
@@ -29,7 +28,7 @@ const filterSlice = createSlice({
   },
 });
 
-export const { addSearchTerm, addPrice, addCategory, clearState } =
-  filterSlice.actions;
-const filterReducer = filterSlice.reducer;
-export default filterReducer;
+export const { setSearchTerm,SetPrice,setCategory,clearState } =
+  allProductSlice.actions;
+const allproductFilterReducer = allProductSlice.reducer;
+export default allproductFilterReducer;

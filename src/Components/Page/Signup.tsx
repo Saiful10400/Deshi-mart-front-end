@@ -72,7 +72,7 @@ const move=useNavigate()
                 Select role
               </option>
 
-              <option value="Admin">Admin</option>
+              {/* <option value="Admin">Admin</option> */}
               <option value="Vendor">Vendor</option>
               <option value="User">User</option>
             </select>

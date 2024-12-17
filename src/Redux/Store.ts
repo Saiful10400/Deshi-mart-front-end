@@ -4,6 +4,7 @@ import authReducer from "./feathcer/AuthSlice";
 import loadingReducer from "./feathcer/loadingSlice";
 import cartReducer from "./feathcer/CartSlice";
 import filterReducer from "./feathcer/FilterSlice";
+import allproductFilterReducer from "./feathcer/AllProductSlice";
 
 const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
     authStore: authReducer,
     cartStore: cartReducer,
     filterStore: filterReducer,
+    allProductFilterStore: allproductFilterReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

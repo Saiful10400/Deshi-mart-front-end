@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logo from "../../../../assets/logo.png";
 import { ArrowLeftRight, BoxesIcon, ChartBar, History, MessageCircleHeart, Store, StoreIcon, Users, X } from "lucide-react";
 
@@ -45,7 +45,7 @@ const VendorDashboardAside = ({ setterFn, setterState }) => {
       }`}
     >
       <div className="flex items-center justify-between">
-        <img className="w-[70%]" src={logo} alt="" />
+        <Link to={"/"}><img className="w-[70%]" src={logo} alt="" /></Link>
         <button onClick={() => setterFn(false)} className="lg:hidden">
           <X />
         </button>

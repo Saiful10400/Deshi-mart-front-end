@@ -24,7 +24,7 @@ const steps = numberToNumberArray(Math.ceil(totalData / 10));
 
  
 
-console.log(data)
+ 
 
 
 

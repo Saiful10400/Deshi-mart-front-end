@@ -7,11 +7,12 @@ import {
   LayoutDashboard,
   RectangleEllipsis,
 } from "lucide-react";
-import { Link, useHref, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../Redux/feathcer/hoocks";
 import { addSearchTerm } from "../../Redux/feathcer/FilterSlice";
 import { useState } from "react";
 import { removeUser } from "../../Redux/feathcer/AuthSlice";
+import { setSearchTerm } from "../../Redux/feathcer/AllProductSlice";
 
 interface TroleData {
   buyerId: string;
@@ -55,14 +56,33 @@ const Navbar = () => {
   // search handel.
   const move = useNavigate();
   const dispatch = useAppDispatch();
+
+
+  const url=useLocation()
+ 
+
   const handleSearch = (e) => {
     e.preventDefault();
 
     const text = e.target.searchtext.value;
 
-    dispatch(addSearchTerm(text));
-    move("/");
+    if(url.pathname==="/all-product"){
+      console.log("enteredddd.")
+      dispatch(setSearchTerm(text));
+     
+
+    } else{
+      dispatch(addSearchTerm(text));
+      move("/");
+    }
+
+   
   };
+
+
+
+
+
 
   const [hideMenu, setHideMenu] = useState(true);
 
@@ -92,13 +112,14 @@ const{products}=useAppSelector(s=>s.cartStore)
 
   return (
     <div className="mt-5">
-      <div className="flex flex-col lg:flex-row  items-center justify-between   left-0">
+      <div className="flex flex-col lg:flex-row  items-center justify-between  gap-8 pb-5 lg:pb-0 lg:gap-0 left-0">
         <Link to={"/"}>
           <img className="w-[150px]" src={logo} alt="" />
         </Link>
 
         <form onSubmit={handleSearch} className="relative flex">
           <input
+          required
             type="text"
             name="searchtext"
             placeholder="Search product"
