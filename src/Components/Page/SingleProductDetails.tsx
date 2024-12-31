@@ -100,6 +100,13 @@ const SingleProductDetails = () => {
 
   const AllProducts = rowAllProducts?.data?.result;
 
+
+
+const[productCount,setProductCount]=useState(1)
+
+
+
+
   return (
     <div className="lg:mt-16 lg:px-0 px-3">
       <div className="flex flex-col gap-4 lg:flex-row">
@@ -149,19 +156,21 @@ const SingleProductDetails = () => {
                 <span>({product?._count.review})</span>
               </div>
 
-              <div className="flex gap-2">
+              <div className=" flex items-end gap-5">
                 <button
                   onClick={productAddandle}
                   className="btn  text-lg lg:px-36 mt-5 hover:text-black btn-primary bg-[#f27f20] text-white hover:bg-transparent hover:border-[#f27f20] border-[#f27f20]"
                 >
                   Add to cart
                 </button>
-                <a
-                  href="#compare"
-                  className="btn  text-lg  mt-5 hover:text-black btn-primary bg-[#f27f20] text-white hover:bg-transparent hover:border-[#f27f20] border-[#f27f20]"
-                >
-                  <FlipHorizontal />
-                </a>
+
+                <div className=" grid grid-cols-3 h-[50px]">
+                  <button onClick={()=>setProductCount(p=>p+1)} className="text-3xl border">+</button>
+                  <span className="min-w-5 border   text-center  flex justify-center items-center px-4  ">
+                    {productCount}
+                  </span>
+                  <button onClick={()=>setProductCount(p=>p!==0?p-1:p)} className="text-3xl border"> - </button>
+                </div>
               </div>
             </div>
           </div>

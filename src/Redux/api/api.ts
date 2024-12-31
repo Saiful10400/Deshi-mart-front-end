@@ -10,7 +10,7 @@ export const baseApi = createApi({
       if (getToken()) header.set("Authorization", getToken() as string);
     },
   }),
-  tagTypes: ["category", "user", "shop", "product","review","coupne"],
+  tagTypes: ["category", "user", "shop", "product", "review", "coupne"],
   endpoints: (builder) => {
     return {
       // All Post querys.
@@ -40,12 +40,6 @@ export const baseApi = createApi({
           body: payload,
         }),
       }),
-
-
-
-
-
-     
 
       resetPasswordGetToken: builder.mutation({
         query: (payload) => ({
@@ -117,7 +111,7 @@ export const baseApi = createApi({
           method: "POST",
           body: payload,
         }),
-        invalidatesTags:["coupne"]
+        invalidatesTags: ["coupne"],
       }),
 
       manageCoupne: builder.mutation({
@@ -127,8 +121,6 @@ export const baseApi = createApi({
           body: payload,
         }),
       }),
-
-     
 
       createProduct: builder.mutation({
         query: (payload) => ({
@@ -220,24 +212,28 @@ export const baseApi = createApi({
 
       // GET apis.
 
-
       // get all orders.
 
       getAllorderbyId: builder.query({
         query: (paload) => {
           return {
-            url: `/order/get-all-order-by-id?id=${paload.id}&role=${paload.role}&offset=${(paload.page-1)*10}&limit=${10}`,
+            url: `/order/get-all-order-by-id?id=${paload.id}&role=${
+              paload.role
+            }&offset=${(paload.page - 1) * 10}&limit=${10}`,
             method: "GET",
-          }
+          };
         },
         providesTags: ["user"],
       }),
-
-
-
-
-
-
+      getAllStore: builder.query({
+        query: () => {
+          return {
+            url: `/store/all-store`,
+            method: "GET",
+          };
+        },
+        providesTags: ["shop"],
+      }),
 
       getLoggedInUser: builder.query({
         query: (token) => ({
@@ -282,18 +278,15 @@ export const baseApi = createApi({
         providesTags: ["product"],
       }),
 
-
-
-
       getallFollowingProduct: builder.query({
         query: (payload) => ({
-          url: `/common/product-following/${payload.id}?offset=${(payload.page - 1) * 3}&limit=${3}`,
+          url: `/common/product-following/${payload.id}?offset=${
+            (payload.page - 1) * 3
+          }&limit=${3}`,
           method: "GET",
         }),
         providesTags: ["product"],
       }),
-
-
 
       getAStoreAllProductNotDashboard: builder.query({
         query: (payload) => ({
@@ -338,7 +331,7 @@ export const baseApi = createApi({
             const keys = Object.keys(query);
 
             keys.forEach(
-              (item) => (baseUrl = baseUrl + item + "=" + query[item]+"&")
+              (item) => (baseUrl = baseUrl + item + "=" + query[item] + "&")
             );
           }
 
@@ -347,11 +340,8 @@ export const baseApi = createApi({
             method: "GET",
           };
         },
-        providesTags:["product"]
+        providesTags: ["product"],
       }),
-
-
-
 
       getAllProduct: builder.query({
         query: (query) => {
@@ -360,7 +350,7 @@ export const baseApi = createApi({
             const keys = Object.keys(query);
 
             keys.forEach(
-              (item) => (baseUrl = baseUrl + item + "=" + query[item]+"&")
+              (item) => (baseUrl = baseUrl + item + "=" + query[item] + "&")
             );
           }
 
@@ -369,17 +359,8 @@ export const baseApi = createApi({
             method: "GET",
           };
         },
-        providesTags:["product"]
+        providesTags: ["product"],
       }),
-
-
-
-
-
-
-
-
-
 
       getAstoreAllreveiw: builder.query({
         query: (payload) => ({
@@ -389,7 +370,6 @@ export const baseApi = createApi({
         providesTags: ["review"],
       }),
 
-
       aShopAllCoupne: builder.query({
         query: (payload) => ({
           url: `/vendor/get-shopsAllCoupne/${payload.id}`,
@@ -398,29 +378,14 @@ export const baseApi = createApi({
         providesTags: ["coupne"],
       }),
 
-   
-
-
-      
-
       giveReviewAnswer: builder.mutation({
         query: (payload) => ({
           url: `/user/answer-review/${payload.id}`,
           method: "POST",
-          body: {message:payload.message},
+          body: { message: payload.message },
         }),
-        invalidatesTags:["review"]
+        invalidatesTags: ["review"],
       }),
-      
-
-    
-
-
-
-
-
-
-
     };
   },
 });
@@ -463,7 +428,8 @@ export const {
   useGetAllCategoryQuery,
   useGetSingleOrAllProductsQuery,
   useGetLoggedInUserQuery,
-  
+  useGetAllStoreQuery,
+
   useGetAStoreAllProductQuery,
-  useGetAllProductQuery
+  useGetAllProductQuery,
 } = baseApi;

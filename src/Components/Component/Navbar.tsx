@@ -6,11 +6,14 @@ import {
   LogOut,
   LayoutDashboard,
   RectangleEllipsis,
+  User,
+  LogIn,
+  UserPlus,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../Redux/feathcer/hoocks";
 import { addSearchTerm } from "../../Redux/feathcer/FilterSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { removeUser } from "../../Redux/feathcer/AuthSlice";
 import { setSearchTerm } from "../../Redux/feathcer/AllProductSlice";
 
@@ -57,32 +60,21 @@ const Navbar = () => {
   const move = useNavigate();
   const dispatch = useAppDispatch();
 
-
-  const url=useLocation()
- 
+  const url = useLocation();
 
   const handleSearch = (e) => {
     e.preventDefault();
 
     const text = e.target.searchtext.value;
 
-    if(url.pathname==="/all-product"){
-      console.log("enteredddd.")
+    if (url.pathname === "/all-product") {
+      console.log("enteredddd.");
       dispatch(setSearchTerm(text));
-     
-
-    } else{
+    } else {
       dispatch(addSearchTerm(text));
       move("/");
     }
-
-   
   };
-
-
-
-
-
 
   const [hideMenu, setHideMenu] = useState(true);
 
@@ -105,13 +97,18 @@ const Navbar = () => {
     }
   };
 
+  const { products } = useAppSelector((s) => s.cartStore);
 
-const{products}=useAppSelector(s=>s.cartStore)
+  const [showAuthbtn, setShowAuthBtn] = useState(false);
 
-
+  useEffect(() => {
+    const event = () => setShowAuthBtn(false);
+    window.addEventListener("click", event);
+    return () => removeEventListener("click", event);
+  }, []);
 
   return (
-    <div className="mt-5">
+    <div className="mt-5 ">
       <div className="flex flex-col lg:flex-row  items-center justify-between  gap-8 pb-5 lg:pb-0 lg:gap-0 left-0">
         <Link to={"/"}>
           <img className="w-[150px]" src={logo} alt="" />
@@ -119,7 +116,7 @@ const{products}=useAppSelector(s=>s.cartStore)
 
         <form onSubmit={handleSearch} className="relative flex">
           <input
-          required
+            required
             type="text"
             name="searchtext"
             placeholder="Search product"
@@ -131,23 +128,18 @@ const{products}=useAppSelector(s=>s.cartStore)
           <Search className="text-gray-400 text-xs absolute block top-[20%] left-2" />
         </form>
 
-        <div className="flex justify-between items-center gap-12">
+        <div className="flex justify-between items-center gap-6">
 
-
-          <div className="relative">
-          <Link to={"/cart"} className="flex flex-col items-center">
-            <ShoppingCart className="" /> 
-            <span className="font-bold">Cart</span>
+          <Link to={"/cart"} className="border p-2 rounded-full relative">
+            <ShoppingCart height={20} width={20} />
+            <span className="absolute bottom-[70%] text-sm left-[75%] p-1 bg-[#f97316] text-white font-semibold rounded-full flex justify-center items-center h-[25px] w-[25px]">
+              {10*products?.length}
+            </span>
           </Link>
-          <span className="absolute bottom-8 px-1 rounded-full left-8 bg-[#f27f20] text-white">{products?.length}</span>
-          </div>
 
-
-          <Link to={"/history"} className="flex flex-col items-center">
+          {/* <Link to={"/history"} className="flex flex-col items-center">
             <History className="" /> <span className="font-bold">History</span>
-          </Link>
-
-          {/* profile photo manage. */}
+          </Link> */}
 
           {loggedInUser && !isLoading ? (
             <div className="relative">
@@ -189,8 +181,8 @@ const{products}=useAppSelector(s=>s.cartStore)
                 >
                   <LayoutDashboard /> Dashboard
                 </button>
-                <Link to={"/change-password"}
-                  
+                <Link
+                  to={"/change-password"}
                   className="btn btn-ghost w-full flex items-center justify-start gap-2"
                 >
                   <RectangleEllipsis /> Change password
@@ -204,15 +196,31 @@ const{products}=useAppSelector(s=>s.cartStore)
               </div>
             </div>
           ) : (
-            <span className="flex items-center gap-4">
-              <Link className="text-lg font-semibold text-black" to={"/signup"}>
-                Signup
-              </Link>
-              <Link to={"/login"}>
-                <button className="text-lg font-semibold text-white  bg-black px-3 py-2 rounded-3xl">
-                  Login
-                </button>
-              </Link>
+            <span className="flex relative items-center gap-4">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowAuthBtn((p) => !p);
+                }}
+                className="border p-2 rounded-full"
+              >
+                <User height={20} width={20} />
+              </button>
+
+              {showAuthbtn && (
+                <div className="absolute  top-[150%] border pr-16 pl-2 rounded-lg  right-[0%]">
+                  <Link className="text-base font-medium  " to={"/signup"}>
+                    <button className="text-base flex gap-4 hover:text-[#e75d0b] items-center font-medium  py-2 rounded-3xl">
+                      <UserPlus /> Signup
+                    </button>
+                  </Link>
+                  <Link to={"/login"}>
+                    <button className="text-base flex gap-4 hover:text-[#e75d0b] items-center font-medium  py-2 rounded-3xl">
+                      <LogIn /> Login
+                    </button>
+                  </Link>
+                </div>
+              )}
             </span>
           )}
         </div>
