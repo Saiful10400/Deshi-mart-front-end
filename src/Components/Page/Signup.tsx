@@ -4,6 +4,8 @@ import { useSignupMutation } from "../../Redux/api/api";
 import useSendPost from "../../Utils/useSendPost";
 import createFormData from "../../Utils/createFormData";
 import useShowResponse from "../../Utils/useShowResponse";
+import Input from "../Ui/Input";
+import loginModel from "../../../assets/loginmodel.png";
 
 // export interface Tuser {
 //     email: string;
@@ -17,7 +19,7 @@ const Signup = () => {
   const [send, startLoading] = useSendPost(useSignupMutation);
 
   const showResponse = useShowResponse();
-const move=useNavigate()
+  const move = useNavigate();
   const formSubmitHandle = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -25,77 +27,84 @@ const move=useNavigate()
       name: form.name.value,
       email: form.email.value,
       password: form.password.value,
-      photo: form.file.files[0],
-      role: form.role.value,
+      role: "User",
     });
 
     startLoading();
     const response = await send(formateData);
     showResponse(response);
 
-    move("/login")
-    
+    move("/login");
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="text-center min-w-[600px] shadow-2xl rounded-2xl flex flex-col justify-center gap-2 py-11">
-        <h1 className="text-3xl font-bold">Create your account</h1>
-        <h1 className="text-sm font-medium">Please enter your details</h1>
-
-        <form onSubmit={formSubmitHandle}>
-          <div className="w-[60%] mx-auto flex-col gap-5 flex">
-            <input
-              placeholder="Name"
-              name="name"
-              type="text"
-              className="w-full block outline-none border-b border-black"
-            />
-            <input
-              placeholder="E-mail"
-              name="email"
-              type="text"
-              className="w-full block outline-none border-b border-black"
-            />
-            <input
-              placeholder="Password"
-              name="password"
-              type="text"
-              className="w-full block outline-none border-b border-black"
-            />
-
-            <select
-              name="role"
-              className="w-full block outline-none border-black"
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="text-center w-[60%] p-10 px-12 shadow-2xl rounded-2xl gap-12 flex items-center justify-between">
+        <img
+          src={loginModel}
+          className="h-[500px] w-1/2 object-cover rounded-2xl"
+          alt=""
+        />
+        <div className="flex  w-[50%] justify-center items-center">
+          <div className="bg-white rounded-lg w-full max-w-[500px]">
+            <h1 className="text-3xl font-bold mb-6 text-center">
+              User Account
+            </h1>
+            <form
+              onSubmit={formSubmitHandle}
+              className="space-y-4 flex flex-col "
             >
-              <option value="" hidden>
-                Select role
-              </option>
+              <Input
+                tittle="Your name"
+                name="name"
+                type="text"
+                defaultValue=""
+              />
 
-              {/* <option value="Admin">Admin</option> */}
-              <option value="Vendor">Vendor</option>
-              <option value="User">User</option>
-            </select>
+              <Input tittle="Email" name="email" type="email" defaultValue="" />
+              <Input
+                tittle="Password"
+                name="password"
+                type="password"
+                defaultValue=""
+              />
+              <Input
+                tittle="Confirm Password"
+                name="confirmPassword"
+                type="password"
+                defaultValue=""
+              />
 
-            <input
-              placeholder="Profile Photo"
-              type="file"
-              name="file"
-              className="w-full block outline-none border-black"
-            />
+              <button
+                type="submit"
+                className="w-full bg-yellow-500 text-white py-2 rounded-lg text-lg font-semibold hover:bg-yellow-600"
+              >
+                Submit & Register
+              </button>
+            </form>
 
-            <button className="bg-black text-white py-2 rounded-xl font-bold">
-              Signup
-            </button>
+            <div className=" mt-4 text-start">
+              <p>
+                Need a Vendor account?{" "}
+                <Link to={"/signup/vendor"} className="text-[#f3c614] font-semibold">
+                  Create Now
+                </Link>
+              </p>
+              <p>
+                Already have an account?{" "}
+                <Link to={"/login"} className="text-[#f3c614] font-semibold">
+                  Login
+                </Link>
+              </p>
+            </div>
+
+            <p className="text-gray-500  text-sm mt-4 text-start">
+              Note: Your personal data will be used to support your experience
+              throughout this website, to manage access to your account, and for
+              other purposes described in our privacy policy.
+            </p>
           </div>
-        </form>
-
-        <h1 className="text-sm mt-6">
-          Already have an account?{" "}
-          <Link className="underline font-bold" to={"/login"}>
-            Login
-          </Link>
-        </h1>
+        </div>
       </div>
     </div>
   );

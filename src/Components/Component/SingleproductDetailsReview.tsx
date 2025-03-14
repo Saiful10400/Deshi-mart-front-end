@@ -34,7 +34,7 @@ const SingleproductDetailsReview = ({ product }) => {
   console.log(isOrdered);
 
   return (
-    <div className="mb-6">
+    <div className="mt-6">
       <SectionTittle txt="Reviews" />
 
       {/* reviews. */}

@@ -9,7 +9,7 @@ const CartPageSingleProduct = ({data}:{data:Tproduct}) => {
             <img className="w-[200px] h-[100px] object-contain" src={data.image} alt="" />
             <div>
                 <h1 className="lg:text-2xl font-semibold text-[#fd8134]">{data?.name}</h1>
-                <h1 className="lg:text-lg font-medium p-1 shadow-lg mt-5  rounded-lg">{data?.categoryref?.name}</h1>
+                <h1 className="lg:text-lg font-medium p-1  mt-5  rounded-lg">{data?.categoryref?.name}</h1>
 
             </div>
             <h1 className="lg:text-xl font-semibold">{data?.price} tk</h1>

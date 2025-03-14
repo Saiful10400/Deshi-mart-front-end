@@ -1,27 +1,32 @@
- import "./css/banner.css"
+import "./css/banner.css";
 
- import { Swiper, SwiperSlide } from 'swiper/react';
- import { Autoplay, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
 
-
- import 'swiper/css';
- import 'swiper/css/pagination';
- import 'swiper/css/navigation';
-
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 // import banners.
 
-import banner1 from "../../../assets/banner/banner.png"
-import banner2 from "../../../assets/banner/banner2.jpg"
-import banner3 from "../../../assets/banner/banner3.webp"
-import banner4 from "../../../assets/banner/banner4.webp"
+import { useGetAllBannerQuery } from "../../Redux/api/api";
+import { Link } from "react-router-dom";
 
-
-
+export type Tbanner = {
+  bannerId: string;
+  bannerUrl: string;
+  route: string;
+  created: string; // ISO date string
+  updated: string; // ISO date string
+};
 
 const BannerSlider = () => {
-    return (
-        <div className="lg:w-[50%] h-[200px] lg:h-[720px]">
+  const { data } = useGetAllBannerQuery({ offset: 0, limit: 2000 });
+
+  const banner: Tbanner[] = data?.data?.result;
+
+  return (
+    <div className="w-full h-[200px] lg:h-[500px] mt-6 rounded-lg overflow-hidden">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -36,15 +41,22 @@ const BannerSlider = () => {
         modules={[Autoplay, Pagination]}
         className="mySwiper"
       >
-        <SwiperSlide><img className="w-full h-full object-cover rounded-lg" src={banner1} alt="" /> </SwiperSlide>
-        <SwiperSlide><img className="w-full h-full object-cover rounded-lg" src={banner2} alt="" /> </SwiperSlide>
-        <SwiperSlide><img className="w-full h-full object-cover rounded-lg" src={banner3} alt="" /> </SwiperSlide>
-        <SwiperSlide><img className="w-full h-full object-cover rounded-lg" src={banner4} alt="" /> </SwiperSlide>
-        
+        {banner?.map((item: Tbanner) => {
+          return (
+            <SwiperSlide key={item.bannerId}>
+              <Link to={item.route||"/"}>
+              <img
+                className="w-full h-full object-cover rounded-lg"
+                src={item.bannerUrl}
+                alt=""
+              />{" "}
+              </Link>
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
-      
     </div>
-    );
+  );
 };
 
 export default BannerSlider;

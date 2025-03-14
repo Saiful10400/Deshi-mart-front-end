@@ -124,7 +124,6 @@ const DashboardMyStore = () => {
     id: loggedInUser?.vendor?.shopId?.shopId,
   });
 
-  console.log(Coupnes);
 
   return (
    <>

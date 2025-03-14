@@ -73,7 +73,7 @@ const HomeAllProducts = () => {
       <SectionTittle txt="All products" />
 
       {data?.data?.result?.length > 0 ? (
-        <div className="grid grid-cols-2 lg:grid-cols-5 pl-5 gap-5">
+        <div className="grid grid-cols-2 lg:grid-cols-4 pl-5 gap-5">
           {data?.data?.result?.map((item: Tproduct, idx: number) => (
             <SignleProductCard key={idx} data={item} />
           ))}

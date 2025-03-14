@@ -4,13 +4,21 @@ import { getToken } from "../../Utils/getToken";
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://e-commerce9.vercel.app/api",
-    // baseUrl: "http://localhost:8000/api",
+    // baseUrl: "https://e-commerce9.vercel.app/api",
+    baseUrl: "http://localhost:8000/api",
     prepareHeaders: (header) => {
       if (getToken()) header.set("Authorization", getToken() as string);
     },
   }),
-  tagTypes: ["category", "user", "shop", "product", "review", "coupne"],
+  tagTypes: [
+    "category",
+    "user",
+    "shop",
+    "product",
+    "review",
+    "coupne",
+    "brand",
+  ],
   endpoints: (builder) => {
     return {
       // All Post querys.
@@ -83,7 +91,7 @@ export const baseApi = createApi({
         query: (payload) => ({
           url: "/vendor/create-shop",
           method: "POST",
-          body: payload,
+          body: payload.data,
         }),
         invalidatesTags: ["user"],
       }),
@@ -126,7 +134,7 @@ export const baseApi = createApi({
         query: (payload) => ({
           url: "/vendor/create-product",
           method: "POST",
-          body: payload,
+          body: payload?.data,
         }),
         invalidatesTags: ["product"],
       }),
@@ -137,7 +145,7 @@ export const baseApi = createApi({
           method: "POST",
           body: payload.data,
         }),
-        invalidatesTags: ["user"],
+        invalidatesTags: ["shop", "user"],
       }),
 
       manageProduct: builder.mutation({
@@ -159,9 +167,26 @@ export const baseApi = createApi({
         query: (payload) => ({
           url: "/admin/create-category",
           method: "POST",
-          body: payload,
+          body: payload.data,
         }),
         invalidatesTags: ["category"],
+      }),
+
+      createBrand: builder.mutation({
+        query: (payload) => ({
+          url: "/admin/create-brand",
+          method: "POST",
+          body: payload.data,
+        }),
+        invalidatesTags: ["brand"],
+      }),
+      createBanner: builder.mutation({
+        query: (payload) => ({
+          url: "/admin/create-banner",
+          method: "POST",
+          body: payload.data,
+        }),
+        invalidatesTags: ["brand"],
       }),
 
       manageCategory: builder.mutation({
@@ -182,8 +207,8 @@ export const baseApi = createApi({
       }),
 
       manageStoreAdmin: builder.mutation({
-        query: ({ id, isDelete, ...payload }) => ({
-          url: `/admin/manage-shop/${id}?delete=${isDelete}`,
+        query: ({ id, ...payload }) => ({
+          url: `/admin/manage-shop/${id}?delete=false`,
           method: "POST",
           body: payload,
         }),
@@ -215,20 +240,22 @@ export const baseApi = createApi({
       // get all orders.
 
       getAllorderbyId: builder.query({
-        query: (paload) => {
+        query: (payload) => {
+          console.log(payload)
           return {
-            url: `/order/get-all-order-by-id?id=${paload.id}&role=${
-              paload.role
-            }&offset=${(paload.page - 1) * 10}&limit=${10}`,
+            url: `/order/get-all-order-by-id?id=${payload.id}&role=${
+              payload.role
+            }&offset=${payload.offset}&limit=${payload.limit}`,
             method: "GET",
           };
         },
         providesTags: ["user"],
       }),
+      
       getAllStore: builder.query({
-        query: () => {
+        query: (payload) => {
           return {
-            url: `/store/all-store`,
+            url: `/store/all-store?offset=${payload.offset}&limit=${payload.limit}`,
             method: "GET",
           };
         },
@@ -261,20 +288,20 @@ export const baseApi = createApi({
       }),
 
       getAllUserAndVendors: builder.query({
-        query: (page) => ({
-          url: `/common/user?offset=${(page - 1) * 10}&limit=${10}`,
+        query: (paload) => ({
+          url: `/common/user?offset=${paload.offset}&limit=${paload.limit}`,
           method: "GET",
         }),
         providesTags: ["user"],
       }),
 
       getAStoreAllProduct: builder.query({
-        query: (payload) => ({
-          url: `/common/store-products/${payload.id}?offset=${
-            (payload.page - 1) * 3
-          }&limit=${3}`,
-          method: "GET",
-        }),
+        query: (payload) => {
+          return({
+            url: `/common/store-products/${payload.id}?offset=${payload.offset}&limit=${payload.limit}`,
+            method: "GET",
+          })
+        },
         providesTags: ["product"],
       }),
 
@@ -317,8 +344,8 @@ export const baseApi = createApi({
       }),
 
       getAllCategory: builder.query({
-        query: () => ({
-          url: "/common/category",
+        query: (payload) => ({
+          url: `/common/category?offset=${payload.offset}&limit=${payload.limit}`,
           method: "GET",
         }),
         providesTags: ["category"],
@@ -386,6 +413,24 @@ export const baseApi = createApi({
         }),
         invalidatesTags: ["review"],
       }),
+      getAllBrand: builder.query({
+        query: (paload) => {
+          return {
+            url: `/admin/get-brand?offset=${paload.offset}&limit=${paload.limit}`,
+            method: "GET",
+          };
+        },
+        providesTags: ["brand"],
+      }),
+      getAllBanner: builder.query({
+        query: (paload) => {
+          return {
+            url: `/admin/get-banners?offset=${paload.offset}&limit=${paload.limit}`,
+            method: "GET",
+          };
+        },
+        providesTags: ["brand"],
+      }),
     };
   },
 });
@@ -417,6 +462,8 @@ export const {
   useCreatePaymentLinkMutation,
   usePostAReviewMutation,
   useGetallFollowingProductQuery,
+  useCreateBrandMutation,
+  useCreateBannerMutation,
 
   // Queries
   useGetRecentProductQuery,
@@ -429,7 +476,8 @@ export const {
   useGetSingleOrAllProductsQuery,
   useGetLoggedInUserQuery,
   useGetAllStoreQuery,
-
+  useGetAllBrandQuery,
   useGetAStoreAllProductQuery,
   useGetAllProductQuery,
+  useGetAllBannerQuery,
 } = baseApi;

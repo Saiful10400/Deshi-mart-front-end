@@ -27,6 +27,7 @@ export type Tstore = {
   }[]; // Array of coupons associated with the shop
   _count: {
     followersId: number; // Number of followers of the shop
+    products: number; // Number of followers of the shop
   };
   vendor: {
     name: string; // Vendor's name
@@ -104,7 +105,7 @@ const SingleShopDetails = () => {
       </div>
       <SectionTittle txt="All products" />
 
-      <div className="mt-5 grid grid-cols-2 lg:grid-cols-6 gap-4">
+      <div className="mt-5 grid grid-cols-2 lg:grid-cols-5 gap-4">
         {storeAllProducts?.data?.result?.map((item) => (
           <SignleProductCard key={item.productId} data={item} />
         ))}

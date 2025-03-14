@@ -1,5 +1,5 @@
 const createFormData=(data)=>{
-
+ 
     const keys=Object.keys(data)
 
     const formData=new FormData()
@@ -7,6 +7,7 @@ const createFormData=(data)=>{
     keys.forEach(item=>{
         formData.append(item,data[item])
     })
+    
     return formData
 
 

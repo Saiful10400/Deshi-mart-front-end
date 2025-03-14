@@ -1,7 +1,7 @@
 import { Menu } from "lucide-react";
 import { useAppSelector } from "../../../Redux/feathcer/hoocks";
 import { TuserData } from "../Navbar";
-
+import demoAvatar from "../../../../assets/avatar.png"
 const VendorDashboardHeader = ({ setterFn }) => {
   const {
     loggedInUser,
@@ -26,7 +26,7 @@ const VendorDashboardHeader = ({ setterFn }) => {
       <div className="flex gap-2">
         <img
           className="w-[50px] rounded-full h-[50px] object-cover"
-          src={userData()?.photo}
+          src={userData()?.photo || demoAvatar}
           alt=""
         />
         <div className="font-semibold text-lg">

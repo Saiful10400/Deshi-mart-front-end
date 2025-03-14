@@ -7,12 +7,7 @@ import RecoverPassword from "../Components/Page/RecoverPassword";
 import ResetRecoveryPassword from "../Components/Page/ResetRecoveryPassword";
 import AdminDashboard from "../Components/Page/AdminDashboard";
 import VendorDashboard from "../Components/Page/VendorDashboard";
-
 import DashboardTransections from "../Components/Page/sub-pages/AdminDashboard/DashboardTransections";
-import DashboardShops from "../Components/Page/sub-pages/AdminDashboard/DashboardShops";
-import DashboardUser from "../Components/Page/sub-pages/AdminDashboard/DashboardUser";
-import DashboardCategory from "../Components/Page/sub-pages/AdminDashboard/DashboardCategory";
-import DashboardMyStore from "../Components/Page/sub-pages/VendorDashboard/DashboardMyStore";
 import DashboardMyproducts from "../Components/Page/sub-pages/VendorDashboard/DashboardMyproducts";
 import DashboardCustomersReview from "../Components/Page/sub-pages/VendorDashboard/DashboardCustomersReview";
 import DashboardOrderHistory from "../Components/Page/sub-pages/VendorDashboard/DashboardOrderHistory";
@@ -27,6 +22,24 @@ import AllProducts from "../Components/Page/AllProducts";
 import FollowingShopProducts from "../Components/Page/FollowingShopProducts";
 import ChangePassword from "../Components/Page/ChangePassword";
 import FlashSale from "../Components/Page/FlashSale";
+import VendorSingup from "../Components/Page/VendorSingup";
+import CreateBrand from "../Components/Page/sub-pages/AdminDashboard/CreateBrand";
+import AllBrand from "../Components/Page/sub-pages/AdminDashboard/AllBrand";
+import CreateCategory from "../Components/Page/sub-pages/AdminDashboard/CreateCategory";
+import AllCategory from "../Components/Page/sub-pages/AdminDashboard/AllCategory";
+import Products from "../Components/Page/sub-pages/AdminDashboard/Products";
+import AllShops from "../Components/Page/sub-pages/AdminDashboard/AllShops";
+import AllUser from "../Components/Page/sub-pages/AdminDashboard/AllUser";
+import UpdateShop from "../Components/Page/sub-pages/VendorDashboard/UpdateShop";
+import MyShop from "../Components/Page/sub-pages/VendorDashboard/MyShop";
+import CreateProduct from "../Components/Page/sub-pages/VendorDashboard/CreateProduct";
+import CreateBanner from "../Components/Page/sub-pages/AdminDashboard/CreateBanner";
+import AllBanner from "../Components/Page/sub-pages/AdminDashboard/AllBanner";
+import Shops from "../Components/Page/Shops";
+import CreateShop from "../Components/Page/sub-pages/VendorDashboard/CreateShop";
+import VendorDashboardOverView from "../Components/Page/sub-pages/VendorDashboard/VendorDashboardOverView";
+import AdminDashboardOverView from "../Components/Page/sub-pages/AdminDashboard/AdminDashboardOverView";
+
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -55,6 +68,10 @@ const routes = createBrowserRouter([
         Component: Home,
       },
       {
+        path: "/shops",
+        Component: Shops,
+      },
+      {
         path: "/following-shop",
         Component: FollowingShopProducts,
       },
@@ -71,55 +88,76 @@ const routes = createBrowserRouter([
         Component: SingleProductDetails,
       },
       {
-        path: "/shop/:id",
+        path: "/shops/:id",
         Component: SingleShopDetails,
+      },
+      {
+        path: "/login",
+        Component: Login,
+      },
+      {
+        path: "/change-password",
+        Component: ChangePassword,
+      },
+      {
+        path: "/signup/user",
+        Component: Signup,
+      },
+      {
+        path: "/signup/vendor",
+        Component: VendorSingup,
+      },
+      {
+        path: "/reset-password",
+        Component: ResetRecoveryPassword,
+      },
+
+      {
+        path: "/recover-password",
+        Component: RecoverPassword,
       },
     ],
   },
 
-  {
-    path: "/login",
-    Component: Login,
-  },
-  {
-    path: "/change-password",
-    Component: ChangePassword,
-  },
   {
     path: "/payment-status/:id",
     Component: PaymentStatus,
   },
 
   {
-    path: "/signup",
-    Component: Signup,
-  },
-  {
-    path: "/recover-password",
-    Component: RecoverPassword,
-  },
-  {
-    path: "/reset-password",
-    Component: ResetRecoveryPassword,
-  },
-  {
     path: "/vendor-dashboard",
     Component: VendorDashboard,
     children: [
       {
-        path: "my-shop",
-        Component: DashboardMyStore,
+        index:true,
+        Component: VendorDashboardOverView,
       },
       {
-        path: "my-products",
+        path: "create-shop",
+        Component: CreateShop,
+      },
+      {
+        path: "my-shop",
+        Component: MyShop,
+      },
+      {
+        path: "update-my-shop",
+        Component: UpdateShop,
+      },
+      {
+        path: "all-products",
         Component: DashboardMyproducts,
       },
       {
-        path: "customers-review",
+        path: "create-product",
+        Component: CreateProduct,
+      },
+      {
+        path: "review",
         Component: DashboardCustomersReview,
       },
       {
-        path: "order-history",
+        path: "orders",
         Component: DashboardOrderHistory,
       },
     ],
@@ -129,20 +167,48 @@ const routes = createBrowserRouter([
     Component: AdminDashboard,
     children: [
       {
+        index:true,
+        Component: AdminDashboardOverView,
+      },
+      {
         path: "users",
-        Component: DashboardUser,
+        Component: AllUser,
+      },
+      {
+        path: "create-brand",
+        Component: CreateBrand,
+      },
+      {
+        path: "all-brands",
+        Component: AllBrand,
       },
       {
         path: "shops",
-        Component: DashboardShops,
+        Component: AllShops,
       },
       {
-        path: "categorys",
-        Component: DashboardCategory,
+        path: "create-category",
+        Component: CreateCategory,
+      },
+      {
+        path: "all-categorys",
+        Component: AllCategory,
+      },
+      {
+        path: "create-banner",
+        Component: CreateBanner,
+      },
+      {
+        path: "all-banners",
+        Component: AllBanner,
       },
       {
         path: "transections",
         Component: DashboardTransections,
+      },
+      {
+        path: "products",
+        Component: Products,
       },
     ],
   },

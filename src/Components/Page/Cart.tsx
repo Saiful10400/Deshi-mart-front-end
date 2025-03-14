@@ -84,12 +84,12 @@ console.log(loggedInUser)
 <h1 className="font-semibold text-xl">No product on cart.</h1>
     </div> :
     <div className="flex lg:flex-row flex-col mt-16 gap-10">
-    <div className="flex flex-col gap-3 lg:w-[70%] shadow-xl rounded-xl p-6">
+    <div className="flex flex-col gap-3 lg:w-[70%] rounded-xl p-6">
       {products?.map((item) => (
         <CartPageSingleProduct key={item.productId} data={item} />
       ))}
     </div>
-    <div className="lg:w-[30%] p-5 min-h-12 shadow-xl rounded-xl">
+    <div className="lg:w-[30%] p-5 min-h-12 rounded-xl">
 
       <form onSubmit={checkCoupon} className="flex items-center gap-3 mb-6">
           <input name="code" placeholder="Coupne code" type="text" className="border outline-none border-black rounded-sm text-lg p-1 py-0" />

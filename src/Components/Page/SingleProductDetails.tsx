@@ -15,7 +15,8 @@ import SingleproductDetailsReview from "../Component/SingleproductDetailsReview"
 import Swal from "sweetalert2";
 import { clearCart, setProduct } from "../../Redux/feathcer/CartSlice";
 import notification from "../../Utils/showMessage";
-
+import "./css/ProductDetails.css"
+import parse from "html-react-parser";
 type Tproduct = {
   image: string;
   name: string;
@@ -179,7 +180,7 @@ const[productCount,setProductCount]=useState(1)
 
           <div className="mt-4">
             <SectionTittle txt="Description" />
-            <p className="mt-3">{product?.description}</p>
+            <p className="mt-3 PostContainer">{parse(product?.description || "")}</p>
           </div>
         </div>
         <div className="lg:w-[20%] ">
@@ -213,6 +214,8 @@ const[productCount,setProductCount]=useState(1)
           )}
         </div>
       </div>
+
+      <SingleproductDetailsReview product={product} />
 
       {/* comparison */}
       <div id="compare" className="mt-16">
@@ -364,7 +367,7 @@ const[productCount,setProductCount]=useState(1)
         </div>
       </div>
 
-      <SingleproductDetailsReview product={product} />
+ 
     </div>
   );
 };

@@ -36,7 +36,7 @@ const HorizontalProductCard = ({ data }: { data: Tproduct }) => {
   return (
     <div className="flex flex-col lg:flex-row items-start justify-between shadow-lg rounded-lg p-2 lg:px-5">
       <Link
-        to={`/product/${data.productId}`}
+        to={`/product/${data.slug}`}
         className="flex items-center flex-col lg:flex-row gap-9"
       >
         <img className="w-[150px] h-[150px]" src={data.image} alt="" />

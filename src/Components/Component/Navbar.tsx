@@ -16,7 +16,7 @@ import { addSearchTerm } from "../../Redux/feathcer/FilterSlice";
 import { useEffect, useState } from "react";
 import { removeUser } from "../../Redux/feathcer/AuthSlice";
 import { setSearchTerm } from "../../Redux/feathcer/AllProductSlice";
-
+import demoAvatar from "../../../assets/avatar.png";
 interface TroleData {
   buyerId: string;
   userId: string;
@@ -78,8 +78,6 @@ const Navbar = () => {
 
   const [hideMenu, setHideMenu] = useState(true);
 
-  const dispathc = useAppDispatch();
-
   const logoutHandle = () => {
     dispatch(removeUser());
     localStorage.removeItem("token");
@@ -90,10 +88,10 @@ const Navbar = () => {
     if (!loggedInUser?.role) return;
 
     if (loggedInUser?.role === "Vendor") {
-      move("/vendor-dashboard/my-shop");
+      move("/vendor-dashboard");
     }
     if (loggedInUser?.role === "Admin") {
-      move("/admin-dashboard/users");
+      move("/admin-dashboard");
     }
   };
 
@@ -114,7 +112,7 @@ const Navbar = () => {
           <img className="w-[150px]" src={logo} alt="" />
         </Link>
 
-        <form onSubmit={handleSearch} className="relative flex">
+        <form onSubmit={handleSearch} className="relative flex opacity-0">
           <input
             required
             type="text"
@@ -122,19 +120,22 @@ const Navbar = () => {
             placeholder="Search product"
             className="bg-gray-200 outline-none h-[40px] w-[350px] rounded-l-lg pl-12"
           />
-          <button className="bg-gray-700 px-2 rounded-r-lg">
+          <button className="bg-[#f97316] px-2 rounded-r-lg">
             <Search className="text-gray-200" />
           </button>
-          <Search className="text-gray-400 text-xs absolute block top-[20%] left-2" />
+          <Search className="text-[#f9741679] text-xs absolute block top-[20%] left-2" />
         </form>
 
         <div className="flex justify-between items-center gap-6">
-
           <Link to={"/cart"} className="border p-2 rounded-full relative">
             <ShoppingCart height={20} width={20} />
-            <span className="absolute bottom-[70%] text-sm left-[75%] p-1 bg-[#f97316] text-white font-semibold rounded-full flex justify-center items-center h-[25px] w-[25px]">
-              {10*products?.length}
-            </span>
+            {products.length ? (
+              <span className="absolute bottom-[70%] text-sm left-[75%] p-1 bg-[#f97316] text-white font-semibold rounded-full flex justify-center items-center h-[25px] w-[25px]">
+                {products?.length}
+              </span>
+            ) : (
+              ""
+            )}
           </Link>
 
           {/* <Link to={"/history"} className="flex flex-col items-center">
@@ -145,24 +146,24 @@ const Navbar = () => {
             <div className="relative">
               <button
                 onClick={() => setHideMenu((prev) => !prev)}
-                className="w-[50px] h-[50px]  rounded-full overflow-hidden"
+                className="w-[40px] h-[40px]  rounded-full overflow-hidden"
               >
                 <img
                   className="w-full h-full object-cover"
-                  src={userData()?.photo}
+                  src={userData()?.photo || demoAvatar}
                   alt=""
                 />
               </button>
 
               <div
-                className={`absolute  w-[250px] p-3 h-[280px] top-16 right-0 bg-gray-100 rounded-lg gap-3  flex-col ${
+                className={`absolute  w-[250px] z-50 p-3 h-[280px] top-16 right-0 bg-gray-100 rounded-lg gap-3  flex-col ${
                   hideMenu ? "hidden" : "flex"
                 }`}
               >
                 <div className="flex items-start gap-4">
                   <img
-                    src={userData()?.photo}
-                    className="w-[40px] h-[40px] rounded-lg"
+                    src={userData()?.photo || demoAvatar}
+                    className="w-[40px] h-[40px] rounded-lg object-cover"
                     alt=""
                   />
                   <div>
@@ -175,12 +176,16 @@ const Navbar = () => {
                   </div>
                 </div>
 
-                <button
-                  onClick={manageDashboardRouting}
-                  className="btn btn-ghost w-full  mt-5 flex items-center justify-start gap-2"
-                >
-                  <LayoutDashboard /> Dashboard
-                </button>
+                {loggedInUser?.role === "User" ? (
+                  ""
+                ) : (
+                  <button
+                    onClick={manageDashboardRouting}
+                    className="btn btn-ghost w-full  mt-5 flex items-center justify-start gap-2"
+                  >
+                    <LayoutDashboard /> Dashboard
+                  </button>
+                )}
                 <Link
                   to={"/change-password"}
                   className="btn btn-ghost w-full flex items-center justify-start gap-2"
@@ -208,8 +213,8 @@ const Navbar = () => {
               </button>
 
               {showAuthbtn && (
-                <div className="absolute  top-[150%] border pr-16 pl-2 rounded-lg  right-[0%]">
-                  <Link className="text-base font-medium  " to={"/signup"}>
+                <div className="absolute  top-[150%] border pr-16 pl-2 rounded-lg  right-[0%] z-50 bg-white">
+                  <Link className="text-base font-medium  " to={"/signup/user"}>
                     <button className="text-base flex gap-4 hover:text-[#e75d0b] items-center font-medium  py-2 rounded-3xl">
                       <UserPlus /> Signup
                     </button>
