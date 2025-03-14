@@ -4,8 +4,8 @@ import { getToken } from "../../Utils/getToken";
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
-    // baseUrl: "https://e-commerce9.vercel.app/api",
-    baseUrl: "http://localhost:8000/api",
+    baseUrl: "https://deshi-mart-server.vercel.app/api",
+    // baseUrl: "http://localhost:8000/api",
     prepareHeaders: (header) => {
       if (getToken()) header.set("Authorization", getToken() as string);
     },
