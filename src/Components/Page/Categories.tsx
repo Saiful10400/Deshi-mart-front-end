@@ -27,11 +27,11 @@ const Categories = () => {
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
         {allCategoryes ? (
           allCategoryes?.map((item: tCategory) => (
-            <BrandAndCategoryPageCard key={item.categoryId} item={item} />
+            <BrandAndCategoryPageCard context="category" key={item.categoryId} item={item} />
           ))
         ) : (
           <CloneElement
-            count={isLoading ? 10 : 0}
+            count={isLoading ? 15 : 0}
             element={<BrandAndCategoryPageSkeleton />}
           />
         )}

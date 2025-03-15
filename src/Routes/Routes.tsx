@@ -40,6 +40,7 @@ import CreateShop from "../Components/Page/sub-pages/VendorDashboard/CreateShop"
 import VendorDashboardOverView from "../Components/Page/sub-pages/VendorDashboard/VendorDashboardOverView";
 import AdminDashboardOverView from "../Components/Page/sub-pages/AdminDashboard/AdminDashboardOverView";
 import Categories from "../Components/Page/Categories";
+import BrandsPage from "../Components/Page/BrandsPage";
 
 const routes = createBrowserRouter([
   {
@@ -83,6 +84,10 @@ const routes = createBrowserRouter([
       {
         path: "/categories",
         Component: Categories,
+      },
+      {
+        path: "/brands",
+        Component: BrandsPage,
       },
       {
         path: "/flash-sale",
