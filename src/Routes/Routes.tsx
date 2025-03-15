@@ -129,7 +129,7 @@ const routes = createBrowserRouter([
     Component: VendorDashboard,
     children: [
       {
-        index:true,
+        index: true,
         Component: VendorDashboardOverView,
       },
       {
@@ -167,7 +167,7 @@ const routes = createBrowserRouter([
     Component: AdminDashboard,
     children: [
       {
-        index:true,
+        index: true,
         Component: AdminDashboardOverView,
       },
       {

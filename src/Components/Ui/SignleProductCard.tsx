@@ -78,8 +78,10 @@ const SignleProductCard = ({ data }: { data: Tproduct }) => {
           width={200}
         />
         <section className="text-center w-full">
-          <h2 className="text-base text-start font-bold text-gray-700 mb-2">
-            {data.name}
+          <h2 className="text-base h-[50px] flex justify-start items-end text-start font-bold text-gray-700 mb-2">
+            {data.name?.length <= 70
+              ? data?.name
+              : data.name.slice(0, 70) + "..."}
           </h2>
 
           <div className="flex items-center mb-3 justify-between">
