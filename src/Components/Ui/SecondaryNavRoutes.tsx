@@ -29,6 +29,16 @@ const SecondaryNavRoutes = () => {
             ? "NavActive font-bold"
             : "font-bold pb-1 text-base nav-list hover:text-[#f97316]"
         }
+        to={"/categories"}
+      >
+        Categories
+      </NavLink>
+      <NavLink
+        className={({ isActive }) =>
+          isActive
+            ? "NavActive font-bold"
+            : "font-bold pb-1 text-base nav-list hover:text-[#f97316]"
+        }
         to={"/flash-sale"}
       >
         Flash Sale

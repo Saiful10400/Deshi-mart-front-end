@@ -5,10 +5,10 @@ const PageHeaderRouteing = () => {
   let routes: string | string[] = useLocation()?.pathname;
   routes = routes.split("/")?.filter((item) => item !== "");
 
-
+ 
   return (
     <div className="pt-10 pb-8">
-      <h1 className="text-4xl font-bold">Shops</h1>
+      <h1 className="text-4xl font-bold">{routes[routes.length-1][0].toUpperCase()+routes[routes.length-1].slice(1,routes[routes.length-1].length-1)}</h1>
       <div className="font-semibold flex items-center gap-2 mt-2">
         <Link to={"/"}>HOME</Link>
         <span>{`>`}</span>

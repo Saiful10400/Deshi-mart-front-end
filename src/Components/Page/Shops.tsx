@@ -8,18 +8,18 @@ import { Tstore } from "./SingleShopDetails";
 import scrollTop from "../../Utils/scrollTop";
 
 const Shops = () => {
-  const { data,isLoading } = useGetAllStoreQuery({ offset: 0, limit: 2300 });
+  const { data, isLoading } = useGetAllStoreQuery({ offset: 0, limit: 2300 });
 
   const stores: Tstore[] = data?.data?.result;
-  useEffect(()=>{
-scrollTop()
-  },[])
+  useEffect(() => {
+    scrollTop();
+  }, []);
 
   return (
     <>
       <PageHeaderRouteing />
       <div className="grid grid-cols-4 gap-5">
-        <CloneElement count={isLoading?8:0} element={<ShopSkleton/>}/>
+        <CloneElement count={isLoading ? 8 : 0} element={<ShopSkleton />} />
         {stores?.map((item) => (
           <ShopCard key={item.name} data={item} />
         ))}
