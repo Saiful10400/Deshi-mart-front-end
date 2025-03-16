@@ -5,9 +5,11 @@ import loadingReducer from "./feathcer/loadingSlice";
 import cartReducer from "./feathcer/CartSlice";
 import filterReducer from "./feathcer/FilterSlice";
 import allproductFilterReducer from "./feathcer/AllProductSlice";
+import productSearchReducer from "./feathcer/ProductSearchingSlice";
 
 const store = configureStore({
   reducer: {
+    allProductSearch: productSearchReducer,
     loadingStore: loadingReducer,
     authStore: authReducer,
     cartStore: cartReducer,

@@ -2,13 +2,13 @@ import logo from "../../../assets/logo.jpg";
 import {
   Search,
   ShoppingCart,
-  History,
   LogOut,
   LayoutDashboard,
   RectangleEllipsis,
   User,
   LogIn,
   UserPlus,
+  X,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../Redux/feathcer/hoocks";
@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { removeUser } from "../../Redux/feathcer/AuthSlice";
 import { setSearchTerm } from "../../Redux/feathcer/AllProductSlice";
 import demoAvatar from "../../../assets/avatar.png";
+import { searchBySearchText } from "../../Redux/feathcer/ProductSearchingSlice";
 interface TroleData {
   buyerId: string;
   userId: string;
@@ -66,14 +67,8 @@ const Navbar = () => {
     e.preventDefault();
 
     const text = e.target.searchtext.value;
-
-    if (url.pathname === "/all-product") {
-      console.log("enteredddd.");
-      dispatch(setSearchTerm(text));
-    } else {
-      dispatch(addSearchTerm(text));
-      move("/");
-    }
+    dispatch(searchBySearchText(text));
+    move("/all-product");
   };
 
   const [hideMenu, setHideMenu] = useState(true);
@@ -105,26 +100,49 @@ const Navbar = () => {
     return () => removeEventListener("click", event);
   }, []);
 
-  return (
-    <div className="mt-5 ">
-      <div className="flex flex-col lg:flex-row  items-center justify-between  gap-8 pb-5 lg:pb-0 lg:gap-0 left-0">
-        <Link to={"/"}>
-          <img className="w-[150px]" src={logo} alt="" />
-        </Link>
+  const searchTerms = useAppSelector((s) => s.allProductSearch);
 
-        <form onSubmit={handleSearch} className="relative flex opacity-0">
-          <input
-            required
-            type="text"
-            name="searchtext"
-            placeholder="Search product"
-            className="bg-gray-200 outline-none h-[40px] w-[350px] rounded-l-lg pl-12"
-          />
-          <button className="bg-[#f97316] px-2 rounded-r-lg">
-            <Search className="text-gray-200" />
-          </button>
-          <Search className="text-[#f9741679] text-xs absolute block top-[20%] left-2" />
-        </form>
+  // reset search input field.
+  const [searchFieldText, setSearchfieldText] = useState("");
+
+  return (
+    <div className="mt-5">
+      <div className="flex flex-col lg:flex-row  items-center justify-between  gap-8 pb-5 lg:pb-0 lg:gap-0 left-0">
+        <div className="flex items-center w-[60%] justify-between ">
+          <Link to={"/"}>
+            <img className="w-[150px]" src={logo} alt="" />
+          </Link>
+          <form
+            onSubmit={handleSearch}
+            className="relative flex w-[70%]  justify-end"
+          >
+            <input
+              value={searchFieldText}
+              onInput={(e) => setSearchfieldText(e.target.value)}
+              required
+              type="text"
+              name="searchtext"
+              placeholder="Search by product name or key word"
+              className="bg-gray-200 outline-none h-[40px]   w-full rounded-l-lg pl-12"
+            />
+            <button className="bg-[#f97316] px-2 rounded-r-lg">
+              <Search className="text-gray-200" />
+            </button>
+            {searchTerms.searchText ? (
+              <button
+                type="button"
+                onClick={() =>{
+                  dispatch(searchBySearchText(""))
+                  setSearchfieldText("")
+                }}
+              >
+                <X className="text-[#f9741679] text-xs absolute block top-[20%] left-2" />
+              </button>
+            ) : (
+              <Search className="text-[#f9741679] text-xs absolute block top-[20%] left-2" />
+            )}
+          </form>
+        </div>
 
         <div className="flex justify-between items-center gap-6">
           <Link to={"/cart"} className="border p-2 rounded-full relative">

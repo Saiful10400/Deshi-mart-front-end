@@ -1,6 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getToken } from "../../Utils/getToken";
 
+
+
+interface tProductSearchPayload {
+  searchText: string | undefined;
+  brand: string | undefined;
+  category: string | undefined;
+  priceRange: string | undefined;
+  shop: string | undefined;
+  flashSale: string | undefined;
+}
+
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
@@ -422,6 +433,8 @@ export const baseApi = createApi({
         },
         providesTags: ["brand"],
       }),
+
+
       getAllBanner: builder.query({
         query: (paload) => {
           return {
@@ -431,12 +444,28 @@ export const baseApi = createApi({
         },
         providesTags: ["brand"],
       }),
+
+
+      getAllProductWithSearchFtc: builder.query({
+        query: (payload:tProductSearchPayload) => {
+          return {
+            url: `common/products/search?searchText=${payload.searchText}&shop=${payload.shop}&priceRange=${payload.priceRange}&flashSale=${payload.flashSale}&category=${payload.category}&brand=${payload.brand}`,
+            method: "GET",
+          };
+        },
+        providesTags: ["brand"],
+      }),
+
+
+
+
     };
   },
 });
 
 export const {
   // Mutations
+  useGetAllProductWithSearchFtcQuery,
   useGetAstoreAllreveiwQuery,
   useAShopAllCoupneQuery,
   useSignupMutation,

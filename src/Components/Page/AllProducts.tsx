@@ -1,150 +1,219 @@
-import { useEffect, useState } from "react";
 import {
+  useGetAllBrandQuery,
   useGetAllCategoryQuery,
-  useGetSingleOrAllProductsQuery,
+  useGetAllProductWithSearchFtcQuery,
+  useGetAllStoreQuery,
 } from "../../Redux/api/api";
-import { setCategory, SetPrice } from "../../Redux/feathcer/AllProductSlice";
+import PageHeaderRouteing from "../Ui/PageHeaderRouteing";
 import { useAppDispatch, useAppSelector } from "../../Redux/feathcer/hoocks";
-import HorizontalProductCard from "../Ui/HorizontalProductCard";
-import numberToNumberArray from "../../Utils/numberToNumberArray";
-import SectionTittle from "../Ui/SectionTittle";
+import { searchByBrand, searchByCategory, searchByStore } from "../../Redux/feathcer/ProductSearchingSlice";
+import SignleProductCard from "../Ui/SignleProductCard";
+import { useEffect, useState } from "react";
+import { X } from "lucide-react";
+
+type tCategory = {
+  _count: {
+    productId: number;
+  };
+  categoryId: string;
+  logo: string;
+  name: string;
+  slug: string;
+  created: string; // ISO date string
+  updated: string; // ISO date string
+};
+
+type tBrand = {
+  brandId: string;
+  logo: string;
+  slug: string;
+  created: string; // ISO date string
+  updated: string; // ISO date string
+  name: string;
+  _count: {
+    product: number;
+  };
+};
+
+type tStore = {
+  created: string; // ISO date string
+  logo: string;
+  name: string;
+  status: "Active" | "Inactive"; // Assuming status can have specific values
+  shopId: string;
+  _count: {
+    order: number;
+    products: number;
+    followersId: number;
+  };
+};
+
+type tProduct = {
+  image: string;
+  name: string;
+  slug: string;
+  productId: string;
+  discount: number;
+  categoryref: {
+    name: string;
+  };
+  description: string;
+  flashSale: boolean;
+  inventoryCount: number;
+  price: number;
+  _count: {
+    review: number;
+  };
+  created: string; 
+  shop: {
+    name: string;
+    logo: string;
+    shopId: string;
+  };
+};
+interface tProductSearchPayload {
+  searchText: string | undefined;
+  brand: string | undefined;
+  category: string | undefined;
+  priceRange: string | undefined;
+  shop: string | undefined;
+  flashSale: string | undefined;
+}
+
 
 const AllProducts = () => {
-  const { data } = useGetAllCategoryQuery(null);
+ 
 
-  const formhande = (e) => {
-    e.preventDefault();
-    const min = Number(e.target.min.value);
-    const max = Number(e.target.max.value);
-    dispatch(SetPrice({ min, max }));
-  };
+  const { data: allCategorys } = useGetAllCategoryQuery({
+    limit: 200,
+    offset: 0,
+  });
 
-  const dispatch = useAppDispatch();
+  const { data: allBrands } = useGetAllBrandQuery({
+    limit: 200,
+    offset: 0,
+  });
 
-  //   functionality for all product section.
+  const { data: allStore } = useGetAllStoreQuery({
+    limit: 200,
+    offset: 0,
+  });
 
-  const [crd, setCrd] = useState({ offset: 0, limit: 10 });
+  const categorys: tCategory[] = allCategorys?.data?.result;
+  const brands: tBrand[] = allBrands?.data?.result;
+  const stores: tStore[] = allStore?.data?.result;
 
-  const { data: products } = useGetSingleOrAllProductsQuery(crd);
 
-  const { allProductFilterStore } = useAppSelector((s) => s);
+  // redux.
+  const dispatch=useAppDispatch()
 
-  useEffect(() => {
-    if (allProductFilterStore.price.max && allProductFilterStore.price.min) {
-      setCrd((prev) => ({
-        ...prev,
-        max: allProductFilterStore.price.max,
-        min: allProductFilterStore.price.min,
 
-        exactTotal: true,
-      }));
-    }
 
-    if (allProductFilterStore.searchTerm !== "") {
-      setCrd((prev) => ({
-        ...prev,
+  // all product fetching api. ******
+  
+  const searchTerms=useAppSelector(s=>s.allProductSearch)
+  const{data:allProduct}=useGetAllProductWithSearchFtcQuery(searchTerms)
 
-        exactTotal: true,
-        search: allProductFilterStore.searchTerm,
-      }));
-    }
 
-    if (allProductFilterStore.category !== "") {
-      setCrd((prev) => ({
-        ...prev,
-
-        exactTotal: true,
-        category: allProductFilterStore.category,
-      }));
-    }
-  }, [allProductFilterStore]);
-
-  // pagination logics.
-
-  // const [page,setPage]=useState(1)
-
-  // const { data } = useGetAllProductQuery({offset:(page-1)*10,limit:10,flashSale:true});
-
-  const totalData = products?.data?.total;
-  const steps = numberToNumberArray(Math.ceil(totalData / 10));
+  const products:tProduct[]=allProduct?.data?.result
+ 
+ 
 
   return (
-    <div className="flex flex-col lg:gap-7 gap-3 lg:flex-row">
-      {/* aside nav. */}
+    <>
+      <PageHeaderRouteing />
 
-      <div className="w-full bg-gray-100 lg:h-[calc(100vh-102px)] sticky top-0 lg:p-7 lg:pt-5 p-3 rounded-lg lg:w-[25%]">
-        <h1 className="font-semibold text-xl">Sort by price:</h1>
+      <div className="flex items-start  lg:gap-7 gap-3 lg:flex-row">
+        {/* aside nav. */}
 
-        <form
-          onSubmit={formhande}
-          className="flex justify-center mt-5 flex-col items-center  gap-5"
-        >
-          <div className="flex items-center gap-5 ">
-            <input
-              required
-              className="w-[100px] text-lg text-center rounded-sm"
-              type="number"
-              name="min"
-              placeholder="Min"
-            />
-            <span className="text-xl font-semibold">To</span>
-            <input
-              required
-              className="w-[100px] text-lg text-center rounded-sm"
-              type="number"
-              name="max"
-              placeholder="Max"
-            />
+        <div className="w-full  flex flex-col gap-4 lg:h-[calc(100vh-102px)] sticky top-0    rounded-lg lg:w-[20%]">
+          {/* All categorys. */}
+
+          <div className="bg-gray-100 shadow-sm py-1 rounded-md">
+            <h1 className="font-medium border-b-3 border-[#ff8b0b] text-xl py-2 px-4 flex items-center justify-between">
+              <span>Categorys</span>
+              <button hidden={searchTerms.category?false:true} onClick={()=>dispatch(searchByCategory(""))}><X className="text-[#ff8b0b]"/></button>
+            </h1>
+
+            <div className="flex flex-wrap gap-1 p-2 mt-2">
+              {categorys?.map((item: tCategory) => {
+                return (
+                  <button
+                  onClick={()=>dispatch(searchByCategory(item.name))}
+                    className={`border ${item.name===searchTerms.category?"bg-[#ff8b0b] text-white":"border-[#ff8b0b]"} font-medium text-gray-600 rounded-2xl px-2`}
+                    key={item.categoryId}
+                  >
+                    {item.name}
+                  </button>
+                );
+              })}
+            </div>
           </div>
-          <button className="btn btn-success bg-[#f27f20] hover:bg-[#f27f20] hover:border-none border-none text-white w-[70%] btn-sm">
-            Sort
-          </button>
-        </form>
 
-        <h1 className="font-semibold mt-10 text-xl">Sort by Category:</h1>
+          {/* All brands. */}
 
-        <ul className="flex items-center gap-3 mt-5 flex-wrap">
-          {data?.data?.map((item) => (
-            <button
-              onClick={() => dispatch(setCategory(item.name))}
-              className="font-normal text-lg bg-gray-100 shadow-lg px-3 rounded-md"
-              key={item.categoryId}
-            >
-              {item.name}
-            </button>
-          ))}
-        </ul>
-      </div>
+          <div className="bg-gray-100 shadow-sm py-1 rounded-md">
+          <h1 className="font-medium border-b-3 border-[#ff8b0b] text-xl py-2 px-4 flex items-center justify-between">
+              
+              <span>Brands</span>
+              <button hidden={searchTerms.brand?false:true} onClick={()=>dispatch(searchByBrand(""))}><X className="text-[#ff8b0b]"/></button>
 
-      {/* product cards. */}
+            </h1>
 
-      <div className="w-full lg:w-[75%]">
-        <SectionTittle txt="All products"/>
-        <div className="w-full  flex flex-col gap-5">
-          {products?.data?.result?.map((item) => (
-            <HorizontalProductCard key={item.productId} data={item} />
-          ))}
+            <div className="flex flex-wrap gap-1 p-2 mt-2">
+              {brands?.map((item: tBrand) => {
+                return (
+                  <button
+                  onClick={()=>dispatch(searchByBrand(item.name))}
+                  className={`border ${item.name===searchTerms.brand?"bg-[#ff8b0b] text-white":"border-[#ff8b0b]"} font-medium text-gray-600 rounded-2xl px-2`}
+                    key={item.brandId}
+                  >
+                    {item.name}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* All stores. */}
+
+          <div className="bg-gray-100 shadow-sm py-1 rounded-md">
+          <h1 className="font-medium border-b-3 border-[#ff8b0b] text-xl py-2 px-4 flex items-center justify-between">
+              
+              <span>Stores</span>
+              <button hidden={searchTerms.shop?false:true} onClick={()=>dispatch(searchByStore(""))}><X className="text-[#ff8b0b]"/></button>
+
+            </h1>
+
+            <div className="flex flex-wrap gap-1 p-2 mt-2">
+              {stores?.map((item: tStore) => {
+                return (
+                  <button
+                  onClick={()=>dispatch(searchByStore(item.name))}
+                  className={`border ${item.name===searchTerms.shop?"bg-[#ff8b0b] text-white":"border-[#ff8b0b]"} font-medium text-gray-600 rounded-2xl px-2`}
+                    key={item.shopId}
+                  >
+                    {item.name}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
-        <div className="flex mt-7 justify-center items-center gap-4">
-          {steps?.map((item) => (
-            <button
-              onClick={() => {
-                setCrd((prev) => ({
-                  ...prev,
-                  offset: (item - 1) * 10,
-                  limit: 10,
-                }));
-              }}
-              className="btn btn-primary"
-              key={item}
-            >
-              {item}
-            </button>
-          ))}
+        {/* product cards. */}
+
+        <div className="w-full lg:w-[80%]">
+          <div className="bg-gray-100 min-h-14 rounded-md"></div>
+
+          <div className="w-full grid grid-cols-2 lg:grid-cols-4 mt-5 gap-5">
+            {products?.map((item) => (
+              <SignleProductCard data={item}/>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
