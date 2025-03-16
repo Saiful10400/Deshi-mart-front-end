@@ -9,7 +9,7 @@ const CategoriesList = () => {
 
     return (
         <div>
-           <Tittle text="Browse By Category" /> 
+           <Tittle seeMoreRoute="/categories" text="Browse By Category" /> 
            <CategoryCarosel/>
         </div>
     );

@@ -1,8 +1,10 @@
+ 
 import { useGetAllBrandQuery } from "../../Redux/api/api";
 import CloneElement from "../../Utils/CloneElement";
 import BrandAndCategoryPageCard from "../Ui/card/BrandAndCategoryPageCard";
 import PageHeaderRouteing from "../Ui/PageHeaderRouteing";
 import BrandAndCategoryPageSkeleton from "../Ui/skleton/BrandAndCategoryPageSkeleton";
+ 
 
 type tBrand = {
     brandId: string;
@@ -21,6 +23,8 @@ const BrandsPage = () => {
     const { data, isLoading } = useGetAllBrandQuery({ offset: 0, limit: 200 });
 
     const allBrands :undefined | tBrand[] = data?.data?.result;
+
+  
   
     return (
       <div>

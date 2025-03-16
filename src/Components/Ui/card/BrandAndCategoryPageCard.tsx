@@ -1,3 +1,10 @@
+import { useNavigate } from "react-router";
+import { useAppDispatch } from "../../../Redux/feathcer/hoocks";
+import {
+  searchByBrand,
+  searchByCategory,
+} from "../../../Redux/feathcer/ProductSearchingSlice";
+
 type tCategory = {
   _count: {
     productId: number;
@@ -28,6 +35,11 @@ const BrandAndCategoryPageCard = ({
   item: tBrand | tCategory;
   context: "brand" | "category";
 }) => {
+
+
+  const move = useNavigate();
+  const dispatch = useAppDispatch();
+ 
   if (context === "brand") {
     const data = item as tBrand;
     return (
@@ -42,7 +54,13 @@ const BrandAndCategoryPageCard = ({
         <h1 className="font-semibold text-xl">{item.name}</h1>
         <div className="mt-2 flex justify-between items-center">
           <span>{data?._count?.product} Products</span>
-          <button className="bg-[#f89305] text-white font-medium px-2 py-1 rounded-3xl">
+          <button
+            onClick={() => {
+              dispatch(searchByBrand(data.name));
+              move("/all-product");
+            }}
+            className="bg-[#f89305] text-white font-medium px-2 py-1 rounded-3xl"
+          >
             Explore
           </button>
         </div>
@@ -50,7 +68,11 @@ const BrandAndCategoryPageCard = ({
     );
   }
 
+
   const data: tCategory = item as tCategory;
+
+
+
   return (
     <div key={data.categoryId} className="border rounded-md px-3 py-2">
       <div className="h-[100px] flex justify-center items-center">
@@ -63,7 +85,13 @@ const BrandAndCategoryPageCard = ({
       <h1 className="font-semibold text-xl">{item.name}</h1>
       <div className="mt-2 flex justify-between items-center">
         <span>{data?._count?.productId} Products</span>
-        <button className="bg-[#f89305] text-white font-medium px-2 py-1 rounded-3xl">
+        <button
+          onClick={() => {
+            dispatch(searchByCategory(data.name));
+            move("/all-product");
+          }}
+          className="bg-[#f89305] text-white font-medium px-2 py-1 rounded-3xl"
+        >
           Explore
         </button>
       </div>

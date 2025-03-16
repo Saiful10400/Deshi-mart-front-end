@@ -9,7 +9,7 @@ const BrandList = () => {
 
     return (
         <div>
-           <Tittle text="Popular Brands" /> 
+           <Tittle seeMoreRoute="/brands" text="Popular Brands" /> 
            <BrandCarosel/>
         </div>
     );

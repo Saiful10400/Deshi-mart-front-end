@@ -7,9 +7,11 @@ import "swiper/css/navigation";
 import "./css/CategoryCarosel.css";
 
 import { Navigation, Autoplay } from "swiper/modules";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CloneElement from "../../Utils/CloneElement";
 import HomeBrandAndCategorySkleton from "./skleton/HomeBrandAndCategorySkleton";
+import { useAppDispatch } from "../../Redux/feathcer/hoocks";
+import { searchByCategory } from "../../Redux/feathcer/ProductSearchingSlice";
 interface TproductCategory {
   _count: {
     productId: number;
@@ -25,6 +27,10 @@ interface TproductCategory {
 const CategoryCarosel = () => {
   const { data,isLoading } = useGetAllCategoryQuery({ offset: 0, limit: 200 });
   const category: TproductCategory[] | undefined = data?.data?.result;
+
+    const move=useNavigate()
+    const dispatch=useAppDispatch()
+
 
   return data ? (
     <div>
@@ -42,14 +48,17 @@ const CategoryCarosel = () => {
       >
         {category?.map((item: TproductCategory) => (
           <SwiperSlide>
-            <Link to={"/"} className="">
+          <button onClick={()=>{
+                        dispatch(searchByCategory(item.name))
+                        move("/all-product")
+                      }} >
               <img
                 className="!h-[100px] !w-[150px] !object-contain border-2 p-2 border-gray-200 rounded-md"
                 src={item.logo}
                 alt=""
               />{" "}
               <span className="font-semibold">{item.name}</span>
-            </Link>
+              </button>
           </SwiperSlide>
         ))}
       </Swiper>
