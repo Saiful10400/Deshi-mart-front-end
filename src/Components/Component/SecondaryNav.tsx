@@ -4,11 +4,11 @@ import {
   DropdownMenu,
   DropdownItem,
   Button,
-  Image,
+  
 } from "@nextui-org/react";
-import { CarFront, ChevronDown, Menu } from "lucide-react";
+import {   ChevronDown, Menu } from "lucide-react";
 import { useGetAllCategoryQuery } from "../../Redux/api/api";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 type Tcategory = {
   _count: {
@@ -21,10 +21,13 @@ type Tcategory = {
 };
 import "./css/megaMenu.css";
 import SecondaryNavRoutes from "../Ui/SecondaryNavRoutes";
+import { useAppDispatch } from "../../Redux/feathcer/hoocks";
+import { searchByCategory } from "../../Redux/feathcer/ProductSearchingSlice";
 const SecondaryNav = () => {
   const { data } = useGetAllCategoryQuery({ offset: 0, limit: 200 });
   const move = useNavigate();
   const category: Tcategory[] = data?.data?.result;
+  const dispatch=useAppDispatch()
 
   return (
     <div className="hidden py-4 lg:flex justify-between items-center">
@@ -43,7 +46,10 @@ const SecondaryNav = () => {
             <DropdownItem
               key={item.categoryId}
               onPressChange={(e) => {
-                if (e) move(`/category?id=${item.slug}`);
+                if (e){
+                  dispatch(searchByCategory(item.name))
+                  move(`/all-product`);
+                }
               }}
               shortcut={item._count.productId}
               startContent={

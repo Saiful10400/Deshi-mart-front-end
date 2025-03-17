@@ -15,7 +15,7 @@ const RecentProducts = () => {
   return (
     <div>
       <Tittle seeMoreRoute="/all-product" text="Recent Products" />
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {product?product?.map((item:Tproduct) => (
           <SignleProductCard data={item} key={item.productId} />
         )):<CloneElement count={isLoading?8:0} element={<ProductCardSkeleton/>}/>}

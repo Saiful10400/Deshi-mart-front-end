@@ -6,7 +6,11 @@ import {
 } from "../../Redux/api/api";
 import PageHeaderRouteing from "../Ui/PageHeaderRouteing";
 import { useAppDispatch, useAppSelector } from "../../Redux/feathcer/hoocks";
-import { searchByBrand, searchByCategory, searchByStore } from "../../Redux/feathcer/ProductSearchingSlice";
+import {
+  searchByBrand,
+  searchByCategory,
+  searchByStore,
+} from "../../Redux/feathcer/ProductSearchingSlice";
 import SignleProductCard from "../Ui/SignleProductCard";
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
@@ -64,7 +68,7 @@ type tProduct = {
   _count: {
     review: number;
   };
-  created: string; 
+  created: string;
   shop: {
     name: string;
     logo: string;
@@ -80,10 +84,7 @@ interface tProductSearchPayload {
   flashSale: string | undefined;
 }
 
-
 const AllProducts = () => {
- 
-
   const { data: allCategorys } = useGetAllCategoryQuery({
     limit: 200,
     offset: 0,
@@ -103,44 +104,47 @@ const AllProducts = () => {
   const brands: tBrand[] = allBrands?.data?.result;
   const stores: tStore[] = allStore?.data?.result;
 
-
   // redux.
-  const dispatch=useAppDispatch()
-
-
+  const dispatch = useAppDispatch();
 
   // all product fetching api. ******
-  
-  const searchTerms=useAppSelector(s=>s.allProductSearch)
-  const{data:allProduct}=useGetAllProductWithSearchFtcQuery(searchTerms)
 
+  const searchTerms = useAppSelector((s) => s.allProductSearch);
+  const { data: allProduct } = useGetAllProductWithSearchFtcQuery(searchTerms);
 
-  const products:tProduct[]=allProduct?.data?.result
- 
- 
+  const products: tProduct[] = allProduct?.data?.result;
 
   return (
     <>
       <PageHeaderRouteing />
 
-      <div className="flex items-start  lg:gap-7 gap-3 lg:flex-row">
+      <div className="flex items-start  lg:gap-7 gap-3 flex-col lg:flex-row">
         {/* aside nav. */}
 
-        <div className="w-full  flex flex-col gap-4 lg:h-[calc(100vh-102px)] sticky top-0    rounded-lg lg:w-[20%]">
+        <div className="w-full  flex flex-col gap-4 lg:h-[calc(100vh-102px)] lg:sticky top-[180px]    rounded-lg lg:w-[20%]">
           {/* All categorys. */}
 
           <div className="bg-gray-100 shadow-sm py-1 rounded-md">
             <h1 className="font-medium border-b-3 border-[#ff8b0b] text-xl py-2 px-4 flex items-center justify-between">
               <span>Categorys</span>
-              <button hidden={searchTerms.category?false:true} onClick={()=>dispatch(searchByCategory(""))}><X className="text-[#ff8b0b]"/></button>
+              <button
+                hidden={searchTerms.category ? false : true}
+                onClick={() => dispatch(searchByCategory(""))}
+              >
+                <X className="text-[#ff8b0b]" />
+              </button>
             </h1>
 
             <div className="flex flex-wrap gap-1 p-2 mt-2">
               {categorys?.map((item: tCategory) => {
                 return (
                   <button
-                  onClick={()=>dispatch(searchByCategory(item.name))}
-                    className={`border ${item.name===searchTerms.category?"bg-[#ff8b0b] text-white":"border-[#ff8b0b]"} font-medium text-gray-600 rounded-2xl px-2`}
+                    onClick={() => dispatch(searchByCategory(item.name))}
+                    className={`border ${
+                      item.name === searchTerms.category
+                        ? "bg-[#ff8b0b] text-white"
+                        : "border-[#ff8b0b]"
+                    } font-medium text-gray-600 rounded-2xl px-2`}
                     key={item.categoryId}
                   >
                     {item.name}
@@ -152,20 +156,27 @@ const AllProducts = () => {
 
           {/* All brands. */}
 
-          <div className="bg-gray-100 shadow-sm py-1 rounded-md">
-          <h1 className="font-medium border-b-3 border-[#ff8b0b] text-xl py-2 px-4 flex items-center justify-between">
-              
+          <div className="bg-gray-100 lg:block hidden shadow-sm py-1 rounded-md">
+            <h1 className="font-medium border-b-3 border-[#ff8b0b] text-xl py-2 px-4 flex items-center justify-between">
               <span>Brands</span>
-              <button hidden={searchTerms.brand?false:true} onClick={()=>dispatch(searchByBrand(""))}><X className="text-[#ff8b0b]"/></button>
-
+              <button
+                hidden={searchTerms.brand ? false : true}
+                onClick={() => dispatch(searchByBrand(""))}
+              >
+                <X className="text-[#ff8b0b]" />
+              </button>
             </h1>
 
             <div className="flex flex-wrap gap-1 p-2 mt-2">
               {brands?.map((item: tBrand) => {
                 return (
                   <button
-                  onClick={()=>dispatch(searchByBrand(item.name))}
-                  className={`border ${item.name===searchTerms.brand?"bg-[#ff8b0b] text-white":"border-[#ff8b0b]"} font-medium text-gray-600 rounded-2xl px-2`}
+                    onClick={() => dispatch(searchByBrand(item.name))}
+                    className={`border ${
+                      item.name === searchTerms.brand
+                        ? "bg-[#ff8b0b] text-white"
+                        : "border-[#ff8b0b]"
+                    } font-medium text-gray-600 rounded-2xl px-2`}
                     key={item.brandId}
                   >
                     {item.name}
@@ -177,20 +188,27 @@ const AllProducts = () => {
 
           {/* All stores. */}
 
-          <div className="bg-gray-100 shadow-sm py-1 rounded-md">
-          <h1 className="font-medium border-b-3 border-[#ff8b0b] text-xl py-2 px-4 flex items-center justify-between">
-              
+          <div className="bg-gray-100 lg:block hidden shadow-sm py-1 rounded-md">
+            <h1 className="font-medium border-b-3 border-[#ff8b0b] text-xl py-2 px-4 flex items-center justify-between">
               <span>Stores</span>
-              <button hidden={searchTerms.shop?false:true} onClick={()=>dispatch(searchByStore(""))}><X className="text-[#ff8b0b]"/></button>
-
+              <button
+                hidden={searchTerms.shop ? false : true}
+                onClick={() => dispatch(searchByStore(""))}
+              >
+                <X className="text-[#ff8b0b]" />
+              </button>
             </h1>
 
             <div className="flex flex-wrap gap-1 p-2 mt-2">
               {stores?.map((item: tStore) => {
                 return (
                   <button
-                  onClick={()=>dispatch(searchByStore(item.name))}
-                  className={`border ${item.name===searchTerms.shop?"bg-[#ff8b0b] text-white":"border-[#ff8b0b]"} font-medium text-gray-600 rounded-2xl px-2`}
+                    onClick={() => dispatch(searchByStore(item.name))}
+                    className={`border ${
+                      item.name === searchTerms.shop
+                        ? "bg-[#ff8b0b] text-white"
+                        : "border-[#ff8b0b]"
+                    } font-medium text-gray-600 rounded-2xl px-2`}
                     key={item.shopId}
                   >
                     {item.name}
@@ -208,7 +226,7 @@ const AllProducts = () => {
 
           <div className="w-full grid grid-cols-2 lg:grid-cols-4 mt-5 gap-5">
             {products?.map((item) => (
-              <SignleProductCard data={item}/>
+              <SignleProductCard data={item} />
             ))}
           </div>
         </div>

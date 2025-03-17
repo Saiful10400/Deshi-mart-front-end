@@ -34,7 +34,12 @@ const BrandCarosel = () => {
   return data ? (
     <div>
       <Swiper
-        slidesPerView={5}
+        slidesPerView={2.5}
+        breakpoints={{
+          640: { slidesPerView: 2.5, spaceBetween: 15 },
+          768: { slidesPerView: 3.5, spaceBetween: 20 },
+          1024: { slidesPerView: 5, spaceBetween: 30 },
+        }}
         centeredSlides={false}
         autoplay={{
           delay: 2500,

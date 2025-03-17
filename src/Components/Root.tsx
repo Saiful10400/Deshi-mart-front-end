@@ -32,8 +32,8 @@ const Root = () => {
         <Outlet />
       </div>
       <Footer />
-      <button onClick={scrollToTop} className="fixed bottom-6 right-5">
-        <ArrowUpCircleIcon width={40} height={40} />
+      <button onClick={scrollToTop} className="fixed  z-50 bottom-6 right-5">
+        <ArrowUpCircleIcon className="text-gray-500" width={40} height={40} />
       </button>
     </div>
   );

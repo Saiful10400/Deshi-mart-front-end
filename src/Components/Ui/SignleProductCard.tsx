@@ -65,32 +65,32 @@ const SignleProductCard = ({ data }: { data: Tproduct }) => {
         to={`/product/${data.slug}`}
       >
         {data.flashSale && (
-          <div className="absolute top-[50px] left-[-20px] bg-[#ed2939] text-white text-xs px-2 py-1 font-bold -rotate-90">
+          <div className="absolute top-[50px] z-20 left-[-20px] bg-[#ed2939] text-white text-xs px-2 py-1 font-bold -rotate-90">
             OFF {data?.discount}%
           </div>
         )}
 
         <Image
-          className="h-[200px] rounded-lg w-full object-contain"
+          className="h-[150px] sm:h-[200px] relative z-10 rounded-lg w-full object-contain"
           isZoomed
           alt="Product image"
           src={data.image}
           width={200}
         />
-        <section className="text-center w-full">
-          <h2 className="text-base h-[50px] flex justify-start items-end text-start font-bold text-gray-700 mb-2">
-            {data.name?.length <= 70
+        <section className="text-center w-full relative z-20">
+          <h2 className="text-xs bg-white  sm:text-base h-[50px] flex justify-start items-end text-start font-bold text-gray-700 mb-2">
+            {data.name?.length <= 55
               ? data?.name
-              : data?.name?.slice(0, 70) + "..."}
+              : data?.name?.slice(0, 55) + "..."}
           </h2>
 
           <div className="flex items-center mb-3 justify-between">
             <div className=" flex items-center">
-              <span className="text-orange-500 text-lg font-bold mr-2">
+              <span className="text-orange-500 text-xs sm:text-lg font-bold mr-2">
                 ${data.price - data.price * (data.discount / 100)}
               </span>
               {data?.flashSale && (
-                <span className="text-gray-400 line-through text-sm">
+                <span className="text-gray-400 line-through text-[8px] sm:text-sm">
                   ${data.price}
                 </span>
               )}
@@ -104,7 +104,7 @@ const SignleProductCard = ({ data }: { data: Tproduct }) => {
                     height={20}
                     width={20}
                     fill="#d1d5db"
-                    className="text-transparent"
+                    className="text-transparent md:w-[20px]  w-[12px] md:h-[20px]  h-[12px]"
                   />
                 }
                 fullSymbol={
@@ -112,7 +112,7 @@ const SignleProductCard = ({ data }: { data: Tproduct }) => {
                     height={20}
                     width={20}
                     fill="#fbbf24"
-                    className="text-transparent"
+                    className="text-transparent md:w-[20px]  w-[12px] md:h-[20px]  h-[12px]"
                   />
                 }
               />
@@ -124,7 +124,7 @@ const SignleProductCard = ({ data }: { data: Tproduct }) => {
       <div className="flex items-center justify-between">
         <button
           onClick={productAddandle}
-          className="bg-[#ffceab] duration-150 w-full hover:bg-orange-500 text-[#f9771d] hover:text-white  font-bold py-2 px-4 rounded flex items-center justify-center gap-6"
+          className="bg-[#ffceab] duration-150 w-full hover:bg-orange-500 text-[#f9771d] md:text-lg text-xs hover:text-white  font-bold py-2 px-4 rounded flex items-center justify-center gap-6"
         >
           <ShoppingBag height={20} width={20} /> Add to Cart
         </button>

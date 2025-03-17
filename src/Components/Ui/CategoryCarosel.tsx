@@ -25,17 +25,21 @@ interface TproductCategory {
 }
 
 const CategoryCarosel = () => {
-  const { data,isLoading } = useGetAllCategoryQuery({ offset: 0, limit: 200 });
+  const { data, isLoading } = useGetAllCategoryQuery({ offset: 0, limit: 200 });
   const category: TproductCategory[] | undefined = data?.data?.result;
 
-    const move=useNavigate()
-    const dispatch=useAppDispatch()
-
+  const move = useNavigate();
+  const dispatch = useAppDispatch();
 
   return data ? (
     <div>
       <Swiper
-        slidesPerView={5}
+        slidesPerView={2.5}
+        breakpoints={{
+          640: { slidesPerView: 2.5, spaceBetween: 15 },
+          768: { slidesPerView: 3.5, spaceBetween: 20 },
+          1024: { slidesPerView: 5, spaceBetween: 30 },
+        }}
         centeredSlides={false}
         autoplay={{
           delay: 2500,
@@ -48,17 +52,19 @@ const CategoryCarosel = () => {
       >
         {category?.map((item: TproductCategory) => (
           <SwiperSlide>
-          <button onClick={()=>{
-                        dispatch(searchByCategory(item.name))
-                        move("/all-product")
-                      }} >
+            <button
+              onClick={() => {
+                dispatch(searchByCategory(item.name));
+                move("/all-product");
+              }}
+            >
               <img
                 className="!h-[100px] !w-[150px] !object-contain border-2 p-2 border-gray-200 rounded-md"
                 src={item.logo}
                 alt=""
               />{" "}
               <span className="font-semibold">{item.name}</span>
-              </button>
+            </button>
           </SwiperSlide>
         ))}
       </Swiper>
