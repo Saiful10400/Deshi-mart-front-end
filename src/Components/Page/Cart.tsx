@@ -8,6 +8,7 @@ import useSendPost from "../../Utils/useSendPost";
 import useShowResponse from "../../Utils/useShowResponse";
 import CartPageSingleProduct from "../Ui/CartPageSingleProduct";
 import PageHeaderRouteing from "../Ui/PageHeaderRouteing";
+ 
 
 const Cart = () => {
   const { products } = useAppSelector((s) => s.cartStore);
@@ -23,7 +24,7 @@ const Cart = () => {
   };
 
   const [send, startLoading] = useSendPost(useCheckCouponMutation); //initiate request
-
+  const[address,setAddress]=useState<string>("")
   const showResponse = useShowResponse(); //initiate for manage loading and show res
 
   //  check coupon.
@@ -38,7 +39,7 @@ const Cart = () => {
     startLoading();
     const response = await send({ code, storeId });
     showResponse(response);
-    console.log(response);
+ 
 
     if (response?.data?.statusCode === 200) {
       setCoupneDis(response?.data?.data?.discount);
@@ -53,11 +54,11 @@ const Cart = () => {
   );
 
   const makePayment = async () => {
-    const storeId = products[0]?.shop?.shopId;
+    const storeId = products[0]?.shopId;
 
-    if (!loggedInUser || !storeId) return;
-
-    const productsArr = [];
+    if (!loggedInUser || !storeId || !address) return;
+console.log("not fired.")
+    const productsArr:string[] = [];
     products?.forEach((item) => productsArr.push(item.productId));
 
     const data = {
@@ -65,6 +66,7 @@ const Cart = () => {
       shopId: storeId,
       userId: loggedInUser?.userId,
       productsArr,
+      address
     };
 
     startLoader();
@@ -133,7 +135,7 @@ const Cart = () => {
                 <button className="btn btn-sm bg-[#ff8f00] text-white">Apply</button>
               </form>
 
-              <textarea className="block w-full mt-4 rounded-md resize-none border border-[#ff8f07] pl-2 pt-2 min-h-[100px] focus:outline-[#ff8f00]" placeholder="Delivery Addres "></textarea>
+              <textarea value={address} onInput={(e)=>setAddress(e.target.value)} className="block w-full mt-4 rounded-md resize-none border border-[#ff8f07] pl-2 pt-2 min-h-[100px] focus:outline-[#ff8f00]" placeholder="Delivery Addres "></textarea>
 
               <button
                 disabled={loggedInUser?.status === "Block"}

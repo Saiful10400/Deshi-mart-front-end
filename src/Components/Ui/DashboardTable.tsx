@@ -50,7 +50,7 @@ const DashboardTable = ({ data }: { data: TtableData }) => {
   if (data.name === "User") {
     fetchedData = useGetAllUserAndVendorsQuery(pagination);
   }
- console.log(fetchedData)
+ 
   const typeFormate = (key: string, item) => {
     if (key === "logo" || key === "image"|| key === "bannerUrl"|| key === "userPhoto") {
       return (
@@ -174,13 +174,13 @@ const DashboardTable = ({ data }: { data: TtableData }) => {
         )}
       </div>
 
-      <div className="py-4 lg:px-5 flex justify-between items-center">
+      {/* <div className="py-4 lg:px-5 flex justify-start gap-2 items-center">
         <input
           type="text"
           placeholder="search here..."
-          className="focus:outline-[#f97316] border py-1 pl-2 w-[250px]"
-        />
-      </div>
+          className="focus:outline-[#f97316] border py-1 rounded-md pl-2 w-[250px]"
+        /> <button className="bg-[#f97316] text-white font-medium rounded-md py-1 px-2">Search</button>
+      </div> */}
 
       <div className="lg:px-5 overflow-auto">
         <table className="w-full text-base ">
