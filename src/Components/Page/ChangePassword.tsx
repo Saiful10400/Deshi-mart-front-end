@@ -55,12 +55,12 @@ const ChangePassword = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <div className="text-center min-w-[600px] shadow-2xl rounded-2xl flex flex-col justify-center gap-2 py-11">
-        <h1 className="text-3xl font-bold">Change Password</h1>
-        <h1 className="text-sm font-medium">Please enter your details</h1>
+      <div className="text-center min-w-[600px] text-[#fc7112] shadow-2xl rounded-2xl flex flex-col justify-center gap-2 py-11">
+        <h1 className="text-3xl font-bold ">Change Password</h1>
+        <h1 className="text-sm font-medium text-black">Please enter your details</h1>
 
         <form onSubmit={formSubmitHandle}>
-          <div className="w-[60%] mx-auto flex-col gap-5 flex">
+          <div className="w-[60%] text-black mx-auto flex-col gap-5 flex">
             <input
             required
               placeholder="Old password"
@@ -84,13 +84,13 @@ const ChangePassword = () => {
             />
             
 
-            <button className="bg-black text-white py-2 rounded-xl font-bold">
+            <button className="bg-[#fc7112] text-white py-2 rounded-xl font-bold">
               Update
             </button>
           </div>
         </form>
 
-        <h1 className="text-sm mt-6">
+        {/* <h1 className="text-sm mt-6">
           Dont have an account?{" "}
           <Link className="underline font-bold" to={"/signup"}>
             Sign Up
@@ -98,7 +98,7 @@ const ChangePassword = () => {
         </h1>
         <Link className="underline w-max mx-auto font-bold" to={"/"}>
             Home
-          </Link>
+          </Link> */}
       </div>
     </div>
   );

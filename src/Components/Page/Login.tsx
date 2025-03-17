@@ -30,13 +30,19 @@ const Login = () => {
     showResponse(response);
     setCurrentUser();
 
-    console.log(response.data?.data?.role);
+    console.log(response.data?.data,"user response data.");
 
     if (response.data?.data?.role === "Admin") {
       move("/admin-dashboard/users");
     } else if (response.data?.data?.role === "Vendor") {
-      move("/vendor-dashboard/my-shop");
+       if (response.data?.data?.vendor?.shopId) {
+        move("/vendor-dashboard/my-shop");
+      }
+      else{
+        move("/vendor-dashboard/create-shop");
+      }
     }
+    
   };
 
   const [demoCredentials, setDemoCredentials] = useState({
@@ -100,7 +106,7 @@ const Login = () => {
               <button
                 onClick={() =>
                   setDemoCredentials({
-                    email: "testUser@gmail.com",
+                    email: "user@gmail.com",
                     password: "useruser",
                   })
                 }

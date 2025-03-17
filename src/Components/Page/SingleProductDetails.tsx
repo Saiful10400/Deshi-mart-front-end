@@ -1,11 +1,11 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import {
   useAddRecentProductMutation,
   useGetAllProductQuery,
   useGetSingleOrAllProductsQuery,
 } from "../../Redux/api/api";
 import { Link } from "react-router-dom";
-import { FlipHorizontal, Star, StarHalfIcon } from "lucide-react";
+import { Star, StarHalfIcon } from "lucide-react";
 import SectionTittle from "../Ui/SectionTittle";
 import "./css/singlleProduct.css";
 import { useEffect, useState } from "react";
@@ -17,8 +17,12 @@ import { clearCart, setProduct } from "../../Redux/feathcer/CartSlice";
 import notification from "../../Utils/showMessage";
 import "./css/ProductDetails.css"
 import parse from "html-react-parser";
+import ProductImageCarosel from "../Ui/ProductImageCarosel";
+import SignleProductCard from "../Ui/SignleProductCard";
+import { searchByCategory } from "../../Redux/feathcer/ProductSearchingSlice";
 type Tproduct = {
   image: string;
+  carouselImages: string[];
   name: string;
   productId: string;
   categoryref: {
@@ -44,6 +48,8 @@ const SingleProductDetails = () => {
 
   const { data } = useGetSingleOrAllProductsQuery({ id });
 
+  console.log({data})
+
   const product: Tproduct = data?.data;
   const { data: sameCAtgoryData } = useGetSingleOrAllProductsQuery({
     category: product?.categoryref?.name,
@@ -51,6 +57,8 @@ const SingleProductDetails = () => {
     limit: 4,
     offset: 0,
   });
+
+ 
 
   const thisCategoryDatas: Tproduct[] = sameCAtgoryData?.data?.result;
 
@@ -105,32 +113,35 @@ const SingleProductDetails = () => {
 
 const[productCount,setProductCount]=useState(1)
 
-
-
+// 
+const move=useNavigate()
 
   return (
     <div className="lg:mt-16 lg:px-0 px-3">
       <div className="flex flex-col gap-4 lg:flex-row">
-        <div className="lg:w-[80%]">
+        <div className="w-full">
           {/* product description. */}
-          <div className="flex  flex-col lg:flex-row items-start lg:gap-16">
-            <img
-              className="w-[500px] h-[300px] object-contain"
-              src={product?.image}
-              alt=""
-            />
 
-            <div>
-              <h1 className="text-4xl font-bold">{product?.name}</h1>
+
+
+          <div className="flex w-full flex-col lg:flex-row items-start lg:gap-16 ">
+
+            <ProductImageCarosel data={{image:product?.image,carouselImages:product?.carouselImages}} />
+
+            <div className=" w-full  lg:w-1/2">
+              <h1 className="text-3xl font-bold">{product?.name}</h1>
 
               <div className="mt-5">
-                <span className="bg-gray-200 p-1 rounded-md shadow-md font-semibold">
+                <button onClick={()=>{
+                  dispatch(searchByCategory(product?.categoryref?.name))
+                  move("/all-product")
+                }} className="border border-[#f28020] px-2 py-1 rounded-3xl shadow-md font-semibold">
                   {product?.categoryref?.name}
-                </span>
+                </button>
               </div>
 
               <Link
-                to={`/shop/${product?.shop?.shopId}`}
+                to={`/shops/${product?.shop?.shopId}`}
                 className="flex items-center gap-5 mt-8"
               >
                 <img
@@ -174,45 +185,31 @@ const[productCount,setProductCount]=useState(1)
                 </div>
               </div>
             </div>
+
           </div>
 
           {/* description */}
 
-          <div className="mt-4">
+          <div className="mt-10">
             <SectionTittle txt="Description" />
             <p className="mt-3 PostContainer">{parse(product?.description || "")}</p>
           </div>
+
+
+          <div className="mt-10">
+            <SectionTittle txt="Related Products" />
+
+            <div className="w-full grid grid-cols-2 lg:grid-cols-4 mt-5 gap-5">
+            {thisCategoryDatas?.map(((item:Tproduct) => (
+              <SignleProductCard data={item} />
+            )))}
+          </div>
+            
+          </div>
         </div>
-        <div className="lg:w-[20%] ">
-          {/* same category product. */}
-          <h1 className="font-semibold text-xl mb-4">Related Products</h1>
-          {thisCategoryDatas?.length > 0 ? (
-            <div className="pl-3 flex flex-col gap-2">
-              {thisCategoryDatas?.map((item) => {
-                return (
-                  <Link
-                    className="flex gap-3 p-2 shadow-lg rounded-lg"
-                    to={`/product/${item?.productId}`}
-                  >
-                    <img
-                      className="w-[80px] h-[80px]"
-                      src={item.image}
-                      alt=""
-                    />
-                    <div>
-                      <h1 className="text-xl font-semibold">{item?.name}</h1>
-                      <h1 className="font-semibold text-sm">
-                        {item?.price} tk
-                      </h1>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          ) : (
-            <h1>No product found</h1>
-          )}
-        </div>
+
+        
+        
       </div>
 
       <SingleproductDetailsReview product={product} />

@@ -18,7 +18,7 @@ const Shops = () => {
   return (
     <>
       <PageHeaderRouteing />
-      <div className="grid grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
         <CloneElement count={isLoading ? 8 : 0} element={<ShopSkleton />} />
         {stores?.map((item) => (
           <ShopCard key={item.name} data={item} />

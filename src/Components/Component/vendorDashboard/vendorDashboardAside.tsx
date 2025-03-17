@@ -1,14 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
-import logo from "../../../../assets/logo.jpg";
+import logo from "../../../../assets/dashboardLogo.png";
 import {
   Bike,
   ChevronDown,
   Circle,
-  DollarSign,
   LayoutDashboardIcon,
-  List,
   ShoppingBasket,
-  StarHalf,
   Store,
   X,
 } from "lucide-react";
@@ -198,7 +195,7 @@ const VendorDashboardAside = ({ setterFn, setterState }) => {
       </div> */}
 
       <div className="mt-10">
-        <h1 className="font-semibold text-lg text-gray-700">Management</h1>
+        <h1 className="font-semibold text-lg text-gray-400">Management</h1>
 
         <ul className="pt-5 lg:pl-2 lg:pr-6 flex flex-col gap-3">
           {manageMentRoutes}

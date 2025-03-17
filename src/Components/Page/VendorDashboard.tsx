@@ -16,7 +16,7 @@ const VendorDashboard = () => {
       <div className="lg:w-[15%] fixed lg:sticky top-0">
         <VendorDashboardAside setterFn={setShowAsideBar} setterState={showAsideBar}/>
       </div>
-      <div className="lg:w-[85%]  px-3 w-full min-h-screen flex flex-col gap-7 lg:px-10">
+      <div className="lg:w-[80%]  px-3 w-full min-h-screen flex flex-col gap-7 lg:px-10">
         <VendorDashboardHeader setterFn={setShowAsideBar}  />
         <Outlet />
       </div>

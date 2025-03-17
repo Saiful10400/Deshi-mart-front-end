@@ -1,8 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
-import logo from "../../../../assets/logo.jpg";
+import logo from "../../../../assets/dashboardLogo.png";
 import {
   Building2,
-  ChartBar,
   ChevronDown,
   Circle,
   ImageIcon,
@@ -202,7 +201,7 @@ const DashboardAside = ({ setterFn, setterState }) => {
       <div className="flex items-center justify-between">
         <Link to={"/"}>
           {" "}
-          <img className="w-[70%]" src={logo} alt="" />
+          <img className="w-[20%] lg:w-[70%]" src={logo} alt="" />
         </Link>
         <button onClick={() => setterFn(false)} className="lg:hidden">
           <X />
@@ -218,7 +217,7 @@ const DashboardAside = ({ setterFn, setterState }) => {
       </div> */}
 
       <div className="mt-10">
-        <h1 className="font-semibold text-lg text-gray-700">Management</h1>
+        <h1 className="font-semibold text-lg text-gray-400">Management</h1>
 
         <ul className="pt-5 lg:pl-2 lg:pr-6 flex flex-col gap-3">
           {manageMentRoutes}
