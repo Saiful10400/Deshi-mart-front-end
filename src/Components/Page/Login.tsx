@@ -52,14 +52,14 @@ const Login = () => {
 
   return (
     <div className=" min-h-screen flex justify-center items-center">
-      <div className="text-center w-[60%] shadow-2xl rounded-2xl gap-12 flex items-center justify-between p-10">
+      <div className="text-center lg:w-[60%] shadow-2xl rounded-2xl gap-12 flex flex-col lg:flex-row items-center justify-between p-10">
         <img
           src={loginModel}
-          className="h-[500px] w-1/2 object-cover rounded-2xl"
+          className="lg:h-[500px] h-[300px] w-full lg:w-1/2 object-cover rounded-2xl"
           alt=""
         />
 
-        <div className="w-[50%] ">
+        <div className="lg:w-[50%] ">
           <form className="w-full " onSubmit={formSubmitHandle}>
             <h1 className="text-start font-bold text-5xl mb-10">Login</h1>
             <div className="  mx-auto flex-col gap-5 flex">
