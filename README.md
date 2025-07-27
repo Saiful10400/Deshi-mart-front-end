@@ -10,7 +10,7 @@ For admin access, use the following credentials:
 
 ## Overview
 
-Our e-commerce website is a dynamic and user-friendly platform designed to provide customers with a seamless shopping experience. Featuring a diverse range of products, our website combines modern design with cutting-edge technology to meet the needs of every shopper.
+Our E-commerce website is a dynamic and user-friendly platform designed to provide customers with a seamless shopping experience. Featuring a diverse range of products, our website combines modern design with cutting-edge technology to meet the needs of every shopper.
 
 ### Key Features
 
