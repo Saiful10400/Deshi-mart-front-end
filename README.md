@@ -1,4 +1,4 @@
-# Cartify
+# Deshi Mart
 
 ## Admin Login Credentials
 
