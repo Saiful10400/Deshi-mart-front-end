@@ -29,12 +29,13 @@ const Login = () => {
     ManupulateLocalStorageToken(response.data?.token, "setItem");
     showResponse(response);
     setCurrentUser();
-
-    console.log(response.data?.data,"user response data.");
+ 
 
     if (response.data?.data?.role === "Admin") {
       move("/admin-dashboard/users");
     } else if (response.data?.data?.role === "Vendor") {
+ 
+ 
        if (response.data?.data?.vendor?.shopId) {
         move("/vendor-dashboard/my-shop");
       }

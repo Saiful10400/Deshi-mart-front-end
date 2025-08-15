@@ -20,14 +20,14 @@ const DashboardAside = ({ setterFn, setterState }) => {
 
   const manageMentRoutes = (
     <>
-      <NavLink end
+      <NavLink end onClick={()=>setterFn(false)}
         to={""}
         className="text-[15px] flex items-center gap-2 font-medium pl-2 py-2 rounded-lg hover:bg-gray-700"
       >
         <LayoutDashboardIcon height={20} width={20} /> Dashboard
       </NavLink>
 
-      <NavLink
+      <NavLink onClick={()=>setterFn(false)}
         to={"users"}
         className="text-[15px] flex items-center gap-2 font-medium pl-2 py-2 rounded-lg hover:bg-gray-700"
       >
@@ -57,13 +57,13 @@ const DashboardAside = ({ setterFn, setterState }) => {
               : "-translate-y-20 absolute opacity-0 "
           }`}
         >
-          <NavLink
+          <NavLink onClick={()=>setterFn(false)}
             to={"create-brand"}
             className="text-[14px] flex items-center gap-2 font-medium pl-2 py-2 rounded-lg hover:bg-gray-700"
           >
             <Circle height={6} width={6} /> Create Brand
           </NavLink>
-          <NavLink
+          <NavLink onClick={()=>setterFn(false)}
             to={"all-brands"}
             className="text-[14px] flex items-center gap-2 font-medium pl-2 py-2 rounded-lg hover:bg-gray-700"
           >
@@ -97,13 +97,13 @@ const DashboardAside = ({ setterFn, setterState }) => {
               : "-translate-y-20 absolute opacity-0 "
           }`}
         >
-          <NavLink
+          <NavLink onClick={()=>setterFn(false)}
             to={"create-category"}
             className="text-[14px] flex items-center gap-2 font-medium pl-2 py-2 rounded-lg hover:bg-gray-700"
           >
             <Circle height={6} width={6} /> Create Category
           </NavLink>
-          <NavLink
+          <NavLink onClick={()=>setterFn(false)}
             to={"all-categorys"}
             className="text-[14px] flex items-center gap-2 font-medium pl-2 py-2 rounded-lg hover:bg-gray-700"
           >
@@ -139,13 +139,13 @@ const DashboardAside = ({ setterFn, setterState }) => {
               : "-translate-y-20 absolute opacity-0 "
           }`}
         >
-          <NavLink
+          <NavLink onClick={()=>setterFn(false)}
             to={"create-banner"}
             className="text-[14px] flex items-center gap-2 font-medium pl-2 py-2 rounded-lg hover:bg-gray-700"
           >
             <Circle height={6} width={6} /> Create Banner
           </NavLink>
-          <NavLink
+          <NavLink onClick={()=>setterFn(false)}
             to={"all-banners"}
             className="text-[14px] flex items-center gap-2 font-medium pl-2 py-2 rounded-lg hover:bg-gray-700"
           >
@@ -157,14 +157,14 @@ const DashboardAside = ({ setterFn, setterState }) => {
 
 
 
-      <NavLink
+      <NavLink onClick={()=>setterFn(false)}
         to={"products"}
         className="text-[15px] flex items-center gap-2 font-medium pl-2 py-2 rounded-lg hover:bg-gray-700"
       >
         <ShoppingBasket height={20} width={20} /> Products
       </NavLink>
 
-      <NavLink
+      <NavLink onClick={()=>setterFn(false)}
         to={"shops"}
         className="text-[15px] flex items-center gap-2 font-medium pl-2 py-2 rounded-lg hover:bg-gray-700"
       >
@@ -194,8 +194,8 @@ const DashboardAside = ({ setterFn, setterState }) => {
  
   return (
     <div
-      className={`bg-[#111827]  text-white min-h-screen lg:pt-6 pl-3    ${
-        setterState ? "block" : window.innerWidth < 600 && "hidden"
+      className={`bg-[rgb(17,24,39)]  text-white min-h-screen lg:pt-6 pl-3    ${
+        window.innerWidth > 1023 || setterState ? "block" : "hidden"
       }`}
     >
       <div className="flex items-center justify-between">

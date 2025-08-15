@@ -55,7 +55,7 @@ const VendorDashboardAside = ({ setterFn, setterState }) => {
   const [colaps, setColaps] = useState({ product: false, shop: false });
   const manageMentRoutes = (
     <>
-      <NavLink
+      <NavLink onClick={()=>setterFn(false)}
         end
         to={""}
         className="text-[15px] flex items-center gap-2 font-medium pl-2 py-2 rounded-lg hover:bg-gray-700"
@@ -90,13 +90,13 @@ const VendorDashboardAside = ({ setterFn, setterState }) => {
         >
           {loggedInUser?.vendor?.shopId ? (
             <>
-              <NavLink
+              <NavLink onClick={()=>setterFn(false)}
                 to={"my-shop"}
                 className="text-[14px] flex items-center gap-2 font-medium pl-2 py-2 rounded-lg hover:bg-gray-700"
               >
                 <Circle height={6} width={6} /> Shop Info
               </NavLink>
-              <NavLink
+              <NavLink onClick={()=>setterFn(false)}
                 to={"update-my-shop"}
                 className="text-[14px] flex items-center gap-2 font-medium pl-2 py-2 rounded-lg hover:bg-gray-700"
               >
@@ -104,7 +104,7 @@ const VendorDashboardAside = ({ setterFn, setterState }) => {
               </NavLink>
             </>
           ) : (
-            <NavLink
+            <NavLink onClick={()=>setterFn(false)}
               to={"create-shop"}
               className="text-[14px] flex items-center gap-2 font-medium pl-2 py-2 rounded-lg hover:bg-gray-700"
             >
@@ -140,13 +140,13 @@ const VendorDashboardAside = ({ setterFn, setterState }) => {
               : "-translate-y-20 absolute opacity-0 "
           }`}
         >
-          <NavLink
+          <NavLink onClick={()=>setterFn(false)}
             to={"create-product"}
             className="text-[14px] flex items-center gap-2 font-medium pl-2 py-2 rounded-lg hover:bg-gray-700"
           >
             <Circle height={6} width={6} /> Create Product
           </NavLink>
-          <NavLink
+          <NavLink onClick={()=>setterFn(false)}
             to={"all-products"}
             className="text-[14px] flex items-center gap-2 font-medium pl-2 py-2 rounded-lg hover:bg-gray-700"
           >
@@ -162,7 +162,7 @@ const VendorDashboardAside = ({ setterFn, setterState }) => {
         <List height={20} width={20} /> Reviews
       </NavLink> */}
 
-      <NavLink
+      <NavLink onClick={()=>setterFn(false)}
         to={"orders"}
         className="text-[15px] flex items-center gap-2 font-medium pl-2 py-2 rounded-lg hover:bg-gray-700"
       >
@@ -174,7 +174,7 @@ const VendorDashboardAside = ({ setterFn, setterState }) => {
   return (
     <div
       className={`bg-[#111827]  text-white min-h-screen lg:pt-6 pl-3    ${
-        setterState ? "block" : window.innerWidth < 600 && "hidden"
+        window.innerWidth > 1023 || setterState ? "block" : "hidden"
       }`}
     >
       <div className="flex items-center justify-between">

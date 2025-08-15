@@ -2,7 +2,7 @@ import { Menu } from "lucide-react";
 import { useAppSelector } from "../../../Redux/feathcer/hoocks";
 import { TuserData } from "../Navbar";
 
-const DashboardHeader = ({setterFn}) => {
+const DashboardHeader = ({ setterFn }) => {
   const {
     loggedInUser,
     isLoading,
@@ -35,7 +35,7 @@ const DashboardHeader = ({setterFn}) => {
         </div>
       </div>
 
-<button onClick={()=>setterFn(true)} className="lg:hidden"><Menu/></button>
+      <button onClick={() => setterFn(true)} className="lg:hidden"><Menu /></button>
 
 
     </div>
