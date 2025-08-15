@@ -8,12 +8,13 @@ import useSendPost from "../../Utils/useSendPost";
 import useShowResponse from "../../Utils/useShowResponse";
 import CartPageSingleProduct from "../Ui/CartPageSingleProduct";
 import PageHeaderRouteing from "../Ui/PageHeaderRouteing";
+import { Link } from "react-router-dom";
  
 
 const Cart = () => {
   const { products } = useAppSelector((s) => s.cartStore);
   const { loggedInUser } = useAppSelector((s) => s.authStore);
-
+ 
   const subTotal = () => {
     let total = 0;
     products?.forEach((item) => {
@@ -54,10 +55,11 @@ const Cart = () => {
   );
 
   const makePayment = async () => {
-    const storeId = products[0]?.shopId;
+    const storeId = products[0]?.shop?.shopId;
 
+    console.log(loggedInUser,storeId,address)
+ 
     if (!loggedInUser || !storeId || !address) return;
-console.log("not fired.")
     const productsArr:string[] = [];
     products?.forEach((item) => productsArr.push(item.productId));
 
@@ -138,12 +140,13 @@ console.log("not fired.")
               <textarea value={address} onInput={(e)=>setAddress(e.target.value)} className="block w-full mt-4 rounded-md resize-none border border-[#ff8f07] pl-2 pt-2 min-h-[100px] focus:outline-[#ff8f00]" placeholder="Delivery Addres "></textarea>
 
               <button
-                disabled={loggedInUser?.status === "Block"}
+                disabled={!address||!loggedInUser||loggedInUser?.status === "Block"}
                 onClick={makePayment}
                 className="btn bg-[#ff8f00] w-1/2 mt-5 text-lg text-white"
               >
                 Pay
               </button>
+              <h1 hidden={loggedInUser?true:false} className="text-red-500 mt-3">Please <Link className="font-bold underline text-red-600" to={"/login"}>Login</Link> to order !!</h1>
             </div>
           </div>
         </div>
