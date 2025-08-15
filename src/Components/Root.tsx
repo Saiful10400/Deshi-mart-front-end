@@ -19,18 +19,18 @@ const Root = () => {
     <div className="">
       <div className="bg-white sticky top-0 z-40">
         <div className=" bg-white w-full   lg:border-b">
-          <div className=" z-10 lg:w-[1550px]  bg-white mx-auto  lg:pt-2">
+          <div className=" z-10 lg:max-w-[1550px] lg:px-4 bg-white mx-auto  lg:pt-2">
             <Navbar />
           </div>
         </div>
         <div className="lg:border-b">
-          <div className=" lg:w-[1550px] bg-white mx-auto">
+          <div className=" lg:max-w-[1550px] lg:px-4 bg-white mx-auto">
             <SecondaryNav />
           </div>
         </div>
       </div>
       
-      <div className="relative px-3 mb-6 lg:px-0 lg:w-[1550px] min-h-[calc(100vh-164px)] mx-auto">
+      <div className="relative px-3 mb-6 lg:px-4 lg:max-w-[1550px] min-h-[calc(100vh-164px)] mx-auto">
         <Outlet />
       </div>
      <Footer/>
