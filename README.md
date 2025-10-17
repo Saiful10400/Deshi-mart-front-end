@@ -1,6 +1,6 @@
 # Deshi Mart 
 
-## Admin Login Credentials
+## Admin Login Credentials.
 
 For admin access, use the following credentials: 
 
