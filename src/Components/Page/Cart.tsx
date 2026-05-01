@@ -84,7 +84,7 @@ const Cart = () => {
       <PageHeaderRouteing />
       {products?.length === 0 ? (
         <div className="min-h-[50vh] w-full flex justify-center items-center">
-          <h1 className="font-semibold text-xl">No product on cart.(test push)</h1>
+          <h1 className="font-semibold text-xl">No product on cart.</h1>
         </div>
       ) : (
         <div className="flex lg:flex-row flex-col mt-16 gap-10">
