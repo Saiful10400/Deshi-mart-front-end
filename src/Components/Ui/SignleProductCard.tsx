@@ -1,27 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../Redux/feathcer/hoocks";
 import { clearCart, setProduct } from "../../Redux/feathcer/CartSlice";
 import Swal from "sweetalert2";
-import Rating from "react-rating";
-import { ShoppingBag, Star } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { Image } from "@nextui-org/react";
+
 export type Tproduct = {
   image: string;
   name: string;
   slug: string;
   productId: string;
   discount: number;
-  categoryref: {
-    name: string;
-  };
   description: string;
-  flashSale: boolean;
-  inventoryCount: number;
   price: number;
-  _count: {
-    review: number;
-  };
-  created: string; // ISO date string
+  flashSale: boolean;
   shop: {
     name: string;
     logo: string;
@@ -29,10 +21,15 @@ export type Tproduct = {
   };
 };
 
-const SignleProductCard = ({ data }: { data: Tproduct }) => {
-  // add to cart handle.
-  const dispatch = useAppDispatch();
+// ✅ remove HTML tags
+const stripHtml = (html: string) => {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  return doc.body.textContent || "";
+};
 
+const SignleProductCard = ({ data }: { data: Tproduct }) => {
+  const dispatch = useAppDispatch();
+  const move = useNavigate();
   const { products } = useAppSelector((s) => s.cartStore);
 
   const productAddandle = () => {
@@ -42,15 +39,14 @@ const SignleProductCard = ({ data }: { data: Tproduct }) => {
 
     if (!isexist && products.length > 0) {
       Swal.fire({
-        title: "You cant't add multiple shop product into the cart.",
+        title: "You can't add multiple shop products into the cart.",
         showDenyButton: true,
-        showCancelButton: false,
         confirmButtonText: "Replace all with new",
-        denyButtonText: `Retain the current`,
+        denyButtonText: `Keep current`,
       }).then((result) => {
         if (result.isConfirmed) {
           dispatch(clearCart(data));
-          Swal.fire("All cart product replaced", "", "success");
+          Swal.fire("Cart replaced", "", "success");
         }
       });
     } else {
@@ -58,75 +54,70 @@ const SignleProductCard = ({ data }: { data: Tproduct }) => {
     }
   };
 
+  const discountedPrice =
+    data.price - data.price * (data.discount / 100);
+
+  const plainDescription = stripHtml(data.description);
+
   return (
-    <div className="w-full hover:-translate-y-3 duration-300 p-4 pt-0 border rounded-lg shadow-md bg-white relative">
-      <Link
-        className="flex flex-col pt-2 justify-center items-center"
-        to={`/product/${data.slug}`}
-      >
-        {data.flashSale && (
-          <div className="absolute top-[50px] z-20 left-[-20px] bg-[#ed2939] text-white text-xs px-2 py-1 font-bold -rotate-90">
-            OFF {data?.discount}%
-          </div>
-        )}
-
-        <Image
-          className="h-[150px] sm:h-[200px] relative z-10 rounded-lg w-full object-contain"
-          isZoomed
-          alt="Product image"
-          src={data.image}
-          width={200}
-        />
-        <section className="text-center w-full relative z-20">
-          <h2 className="text-xs bg-white  sm:text-base h-[50px] flex justify-start items-end text-start font-bold text-gray-700 mb-2">
-            {data.name?.length <= 55
-              ? data?.name
-              : data?.name?.slice(0, 55) + "..."}
-          </h2>
-
-          <div className="flex items-center mb-3 justify-between">
-            <div className=" flex items-center">
-              <span className="text-orange-500 text-xs sm:text-lg font-bold mr-2">
-                ${data.price - data.price * (data.discount / 100)}
-              </span>
-              {data?.flashSale && (
-                <span className="text-gray-400 line-through text-[8px] sm:text-sm">
-                  ${data.price}
-                </span>
-              )}
+    <div className="w-full hover:-translate-y-3 duration-300 p-4 border rounded-lg shadow-md bg-white flex flex-col justify-between">
+      
+      {/* Image */}
+      <Link to={`/product/${data.slug}`}>
+        <div className="relative">
+          {data.flashSale && (
+            <div className="absolute top-2 left-[-20px] bg-[#ed2939] text-white text-xs px-2 py-1 font-bold -rotate-90 z-20">
+              OFF {data.discount}%
             </div>
-            <div>
-              <Rating
-                initialRating={2.5}
-                readonly
-                emptySymbol={
-                  <Star
-                    height={20}
-                    width={20}
-                    fill="#d1d5db"
-                    className="text-transparent md:w-[20px]  w-[12px] md:h-[20px]  h-[12px]"
-                  />
-                }
-                fullSymbol={
-                  <Star
-                    height={20}
-                    width={20}
-                    fill="#fbbf24"
-                    className="text-transparent md:w-[20px]  w-[12px] md:h-[20px]  h-[12px]"
-                  />
-                }
-              />
-            </div>
-          </div>
-        </section>
+          )}
+
+          <Image
+            className="h-[150px] sm:h-[180px] rounded-lg w-full object-contain"
+            isZoomed
+            alt="Product image"
+            src={data.image}
+          />
+        </div>
       </Link>
 
-      <div className="flex items-center justify-between">
+      {/* Content */}
+      <div className="flex flex-col gap-2 mt-3">
+        <h2 className="text-sm sm:text-base font-bold text-gray-700 line-clamp-2">
+          {data.name}
+        </h2>
+
+        {/* ✅ Clean description */}
+        <p className="text-xs sm:text-sm text-gray-500 line-clamp-2">
+          {plainDescription}
+        </p>
+
+        {/* Price */}
+        <div className="flex items-center gap-2 mt-1">
+          <span className="text-orange-500 font-bold text-sm sm:text-lg">
+            ${discountedPrice.toFixed(2)}
+          </span>
+
+          {data.flashSale && (
+            <span className="text-gray-400 line-through text-xs sm:text-sm">
+              ${data.price}
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Actions */}
+      <div className="flex flex-col gap-2 mt-4">
+        <Link to={`/product/${data.slug}`}>
+          <button className="w-full border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white font-semibold py-2 rounded transition">
+            View Details
+          </button>
+        </Link>
+
         <button
           onClick={productAddandle}
-          className="bg-[#ffceab] duration-150 w-full hover:bg-orange-500 text-[#f9771d] md:text-lg text-xs hover:text-white  font-bold py-2 px-4 rounded flex items-center justify-center gap-6"
+          className="bg-[#ffceab] hover:bg-orange-500 text-[#f9771d] hover:text-white font-bold py-2 px-4 rounded flex items-center justify-center gap-2 transition"
         >
-          <ShoppingBag height={20} width={20} /> Add to Cart
+          <ShoppingBag size={18} /> Add to Cart
         </button>
       </div>
     </div>
@@ -134,22 +125,3 @@ const SignleProductCard = ({ data }: { data: Tproduct }) => {
 };
 
 export default SignleProductCard;
-
-// <div className="shadow-md rounded-lg relative py-3">
-//    {data?.flashSale && <img className="absolute top-0 left-0 w-[50px] h-[60px] rounded-full object-cover" src={hotDeal} alt="" />}
-
-//     <div className="flex justify-evenly mt-3 items-center">
-//       <Link
-//         to={`/product/${data.productId}`}
-//         className="btn btn-sm btn-primary text-white bg-[#f27f20] border-[#f27f20] hover:bg-[#f27f20] hover:border-none border-none"
-//       >
-//         Details
-//       </Link>
-//       <button
-//         onClick={productAddandle}
-//         className="btn btn-sm btn-primary bg-transparent text-black hover:bg-transparent hover:border-[#f27f20] border-[#f27f20]"
-//       >
-//         Add to cart
-//       </button>
-//     </div>
-//   </div>
