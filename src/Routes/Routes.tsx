@@ -41,6 +41,7 @@ import VendorDashboardOverView from "../Components/Page/sub-pages/VendorDashboar
 import AdminDashboardOverView from "../Components/Page/sub-pages/AdminDashboard/AdminDashboardOverView";
 import Categories from "../Components/Page/Categories";
 import BrandsPage from "../Components/Page/BrandsPage";
+import About from "../Components/Page/About";
 
 const routes = createBrowserRouter([
   {
@@ -88,6 +89,10 @@ const routes = createBrowserRouter([
       {
         path: "/brands",
         Component: BrandsPage,
+      },
+      {
+        path: "/about",
+        Component: About,
       },
       {
         path: "/flash-sale",

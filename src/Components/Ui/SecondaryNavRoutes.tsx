@@ -63,6 +63,16 @@ const SecondaryNavRoutes = () => {
       >
         Shop
       </NavLink>
+      <NavLink
+        className={({ isActive }) =>
+          isActive
+            ? "NavActive font-bold"
+            : "font-bold pb-1 text-base nav-list hover:text-[#f97316]"
+        }
+        to={"/about"}
+      >
+        About
+      </NavLink>
       {/* <NavLink
         className={({ isActive }) =>
           isActive
