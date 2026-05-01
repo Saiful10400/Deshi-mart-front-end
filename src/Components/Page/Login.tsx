@@ -103,7 +103,7 @@ const Login = () => {
               <button
                 type="button"
                 onClick={() =>
-                  handleDemoFill("Admin@g.com", "admin admin")
+                  handleDemoFill("admin@gmail.com", "adminadmin")
                 }
                 className="px-3 py-1 bg-orange-500 text-white rounded-full text-xs"
               >
